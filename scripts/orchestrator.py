@@ -61,6 +61,13 @@ CV_HOSPITALITY = "CV-03-Hospitality.pdf"
 
 GMAIL_USER = os.environ.get("GMAIL_USER", "nuredinmohamedali@gmail.com")
 GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD", "")
+# Optional custom SMTP (Hostinger fallback when Gmail 2FA SMS blocks app password)
+SMTP_HOST = os.environ.get("SMTP_HOST", "smtp.gmail.com")
+SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
+SMTP_USER = os.environ.get("SMTP_USER", GMAIL_USER)
+SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD", GMAIL_APP_PASSWORD)
+SMTP_FROM = os.environ.get("SMTP_FROM", SMTP_USER)
+SMTP_USE_SSL = os.environ.get("SMTP_USE_SSL", "0") == "1"
 DAILY_CAP = int(os.environ.get("JOB_MADINAH_DAILY_CAP", "17"))
 
 SENDABLE_STATUSES = {"MX_VALID"}
@@ -274,11 +281,11 @@ def build_draft(company_row: dict) -> dict:
 
 
 def send_email(draft: dict) -> tuple[bool, str]:
-    """Send one draft via Gmail SMTP 587 STARTTLS. Return (ok, details)."""
-    if not GMAIL_APP_PASSWORD:
-        return False, "GMAIL_APP_PASSWORD not set"
+    """Send one draft via SMTP. Defaults to Gmail STARTTLS; supports Hostinger SSL via env."""
+    if not SMTP_PASSWORD:
+        return False, "SMTP_PASSWORD/GMAIL_APP_PASSWORD not set"
     msg = MIMEMultipart()
-    msg["From"] = GMAIL_USER
+    msg["From"] = SMTP_FROM
     msg["To"] = draft["to"]
     msg["Subject"] = draft["subject"]
     msg.attach(MIMEText(draft["body"], "plain", "utf-8"))
@@ -293,12 +300,17 @@ def send_email(draft: dict) -> tuple[bool, str]:
         log("WARN", f"CV not found at {cv_path} — sending without attachment")
 
     try:
-        with smtplib.SMTP("smtp.gmail.com", 587, timeout=30) as server:
-            server.ehlo()
-            server.starttls()
-            server.ehlo()
-            server.login(GMAIL_USER, GMAIL_APP_PASSWORD)
-            server.send_message(msg)
+        if SMTP_USE_SSL:
+            with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, timeout=30) as server:
+                server.login(SMTP_USER, SMTP_PASSWORD)
+                server.send_message(msg)
+        else:
+            with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=30) as server:
+                server.ehlo()
+                server.starttls()
+                server.ehlo()
+                server.login(SMTP_USER, SMTP_PASSWORD)
+                server.send_message(msg)
         return True, "sent"
     except Exception as e:  # noqa: BLE001
         return False, f"smtp_error: {e}"
