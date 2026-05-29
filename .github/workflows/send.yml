@@ -1,0 +1,79 @@
+name: send
+on:
+  schedule:
+    # 06:00 UTC = 09:00 Madinah (KSA UTC+3) = 07:00 Morocco
+    # Daily warmup window 15-20 mails/day then stable 20/day.
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Render up to 5 mails into artifacts, NO SEND"
+        required: false
+        default: "false"
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          # stdlib smtplib + email + csv cover the pipeline; nothing extra required.
+          # If requirements.txt appears later, install it.
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+
+      - name: Resolve CV directory (skip attachment if absent on runner)
+        run: |
+          # The CV PDFs live on Nuredin's Mac. In CI we send without attachment
+          # so the pipeline still mails — the orchestrator already warns when absent.
+          mkdir -p /tmp/cvs
+          echo "JOB_MADINAH_CV_DIR=/tmp/cvs" >> $GITHUB_ENV
+
+      - name: Run orchestrator (dry-run)
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'true'
+        env:
+          JOB_MADINAH_DAILY_CAP: "5"
+        run: python3 scripts/orchestrator.py --dry-run
+
+      - name: Upload dry-run artifacts
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: dry-run-drafts-${{ github.run_number }}
+          path: /tmp/dry_run_drafts
+          retention-days: 7
+
+      - name: Run orchestrator (live send)
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run != 'true')
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          JOB_MADINAH_DAILY_CAP: "17"
+        run: python3 scripts/orchestrator.py
+
+      - name: Commit updated CSVs back to repo
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run != 'true')
+        run: |
+          git config user.name "job-madinah-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/sent_history.csv data/sent_log.csv data/portal_queue.csv 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "[INFO] No CSV changes to commit"
+          else
+            git commit -m "auto: daily send run $(date -u +'%Y-%m-%d') [skip ci]"
+            git push
+          fi
