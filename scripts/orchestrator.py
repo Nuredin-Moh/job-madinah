@@ -97,7 +97,7 @@ I have attached my CV and would be happy to provide references on request.
 
 Best regards,
 Nuredin Mohamed Ali
-linkedin.com/in/nuredin-mohamedali
++212 626 012 886 | linkedin.com/in/nuredin-mohamedali
 """
 
 TEMPLATE_HIRING = """Dear {first_name},
@@ -112,7 +112,7 @@ CV attached. Happy to share portfolio links and references on request.
 
 Best regards,
 Nuredin Mohamed Ali
-linkedin.com/in/nuredin-mohamedali
++212 626 012 886 | linkedin.com/in/nuredin-mohamedali
 """
 
 TEMPLATE_CEO = """Dear {first_name},
@@ -127,7 +127,7 @@ CV attached.
 
 Best regards,
 Nuredin Mohamed Ali
-linkedin.com/in/nuredin-mohamedali
++212 626 012 886 | linkedin.com/in/nuredin-mohamedali
 """
 
 
