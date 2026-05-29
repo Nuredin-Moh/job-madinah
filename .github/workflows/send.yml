@@ -69,6 +69,7 @@ jobs:
           SMTP_FROM: ${{ secrets.SMTP_FROM }}
           SMTP_USE_SSL: ${{ secrets.SMTP_USE_SSL }}
           JOB_MADINAH_DAILY_CAP: "17"
+          JOB_MADINAH_ALLOW_NO_CV: "1"
         run: python3 scripts/orchestrator.py
 
       - name: Commit updated CSVs back to repo

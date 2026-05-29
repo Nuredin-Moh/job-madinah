@@ -149,10 +149,13 @@ def qa_draft(draft: dict, bounces: set, recent: set) -> tuple[bool, list[str]]:
     if wc > 220:
         failures.append(f"Body too long: {wc} words (max 220)")
 
-    # 5) CV file exists
+    # 5) CV file exists (CI may not have CV PDFs — env flag downgrades to warning)
     cv_path = CV_DIR / cv
     if not cv_path.exists():
-        failures.append(f"CV PDF not found: {cv_path}")
+        if os.environ.get("JOB_MADINAH_ALLOW_NO_CV") == "1":
+            pass  # CI mode: orchestrator will already log a WARN and send without attachment
+        else:
+            failures.append(f"CV PDF not found: {cv_path}")
 
     # 6) Recipients sanity
     for addr in to_list:
