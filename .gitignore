@@ -1,0 +1,16 @@
+.DS_Store
+__pycache__/
+*.pyc
+.env
+.env.local
+*.log
+logs/*.log
+!logs/.gitkeep
+/tmp/
+.venv/
+venv/
+
+# Never commit personal credentials or PII outside CSV/tracking
+secrets/
+credentials.json
+*.pem

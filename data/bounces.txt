@@ -1,0 +1,30 @@
+# Emails confirmed bounced — never retry
+# Source: 07-Tracking/BOUNCES-RAPPORT.md + Tracking-Candidatures.csv BOUNCED rows
+# Updated: 2026-05-29
+hr.almadina@movenpick.com
+h7187-hr@accor.com
+hr@pullman-zamzam-madina.com
+hr.shahd@sofitel.com
+hr.hajartower@accor.com
+hr.daraliman@ihg.com
+hr.daralhijra@ihg.com
+madinah.hr@hyatt.com
+hr.almadina@shazahotels.com
+hr@elaf.com.sa
+hr@dallah-taibah.com
+careers@ruaalmadinah.com
+careers@almosafer.com
+hr@bindawoodholding.com
+hr.makkah@fairmont.com
+hr.zamzam@accor.com
+hr.jabalomar@sofitel.com
+makkah.hr@hyatt.com
+hr.almaqam@swissotel.com
+hr.makkah@raffles.com
+careers@almarai.com
+careers@stc.com.sa
+careers@noon.com
+careers.mena@vml.com
+careers.mena@groupm.com
+conradmakkah.hr@hilton.com
+hilton.makkah@hilton.com

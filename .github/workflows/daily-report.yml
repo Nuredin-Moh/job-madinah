@@ -1,0 +1,44 @@
+name: daily-report
+on:
+  schedule:
+    # 18:00 UTC = 21:00 KSA (end of work day)
+    - cron: "0 18 * * *"
+  workflow_dispatch:
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Resolve tracking CSV source
+        env:
+          TRACKING_GIST_TOKEN: ${{ secrets.TRACKING_GIST_TOKEN }}
+          TRACKING_GIST_ID: ${{ secrets.TRACKING_GIST_ID }}
+        run: |
+          # The tracking CSV lives locally on Nuredin's Mac. For GH Actions runs,
+          # the canonical source is mirrored to a private gist (synced by local Mac).
+          # If gist not configured, fall back to data/tracking.csv in repo.
+          if [ -n "$TRACKING_GIST_ID" ] && [ -n "$TRACKING_GIST_TOKEN" ]; then
+            mkdir -p /tmp/tracking
+            curl -s -H "Authorization: Bearer ${TRACKING_GIST_TOKEN}" \
+              "https://api.github.com/gists/${TRACKING_GIST_ID}" \
+              | python3 -c "import json,sys; d=json.load(sys.stdin); print(list(d['files'].values())[0]['content'])" \
+              > /tmp/tracking/Tracking-Candidatures.csv
+            echo "JOB_MADINAH_TRACKING_CSV=/tmp/tracking/Tracking-Candidatures.csv" >> $GITHUB_ENV
+          else
+            echo "JOB_MADINAH_TRACKING_CSV=$GITHUB_WORKSPACE/data/tracking.csv" >> $GITHUB_ENV
+          fi
+
+      - name: Send daily report
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          REPORT_RECIPIENT: ${{ secrets.REPORT_RECIPIENT }}
+        run: python3 scripts/daily_report.py
