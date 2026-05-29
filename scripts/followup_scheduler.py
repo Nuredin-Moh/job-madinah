@@ -44,7 +44,7 @@ SKIP_STATUSES = {
 }
 
 
-VERSION_A = """Dear {first_name},
+VERSION_A = """{greeting}
 
 Just a quick note to surface my message from {original_date} in case it had been missed.
 
@@ -54,25 +54,21 @@ Happy to share additional materials, references, or a short intro video if usefu
 
 Best regards,
 Nuredin Mohamed Ali
-+212 [phone] | linkedin.com/in/nuredin-mohamedali
++212 626 012 886 | linkedin.com/in/nuredinmohamedali
 """
 
-VERSION_B = """Dear {first_name},
+VERSION_B = """{greeting}
 
 Following up on my note from {original_date}.
 
-In the meantime, I came across this and thought it might be relevant for {company}:
-
-[INSIGHT — 1-2 lines on STR / Vision 2030 / hospitality / e-commerce trend]
-
-Should you reconsider opening conversations for Senior Marketing roles, I remain very interested and available.
+Should you reconsider opening conversations for Senior Marketing roles at {company}, I remain very interested and available — happy to share a short loom walking through a Vision 2030-aligned acquisition plan tailored to your team.
 
 Best regards,
 Nuredin Mohamed Ali
-+212 [phone] | linkedin.com/in/nuredin-mohamedali
++212 626 012 886 | linkedin.com/in/nuredinmohamedali
 """
 
-VERSION_C = """Dear {first_name},
+VERSION_C = """{greeting}
 
 This is my last note on this thread — I will respect your time.
 
@@ -94,13 +90,30 @@ def days_between(date_str: str) -> int:
 
 
 def extract_first_name(contact: str) -> str:
-    if not contact:
-        return "Hiring Manager"
+    """Return contact first name, or empty string. Never 'Hiring Manager'."""
+    if not contact or not contact.strip():
+        return ""
     name_part = contact.split("/")[0].split("(")[0].strip()
     if not name_part or "@" in name_part:
-        return "Hiring Manager"
-    first = name_part.split()[0] if name_part.split() else "Hiring Manager"
+        return ""
+    tokens = name_part.split()
+    if not tokens:
+        return ""
+    first = tokens[0].strip(",.;")
+    if first.lower() in {"hr", "team", "department", "linkedin", "n/a"}:
+        return ""
     return first
+
+
+def build_greeting(contact: str, company: str) -> str:
+    """Personalised greeting — never 'Dear Hiring Manager'."""
+    first = extract_first_name(contact)
+    if first:
+        return f"Dear {first},"
+    company = (company or "").strip()
+    if company:
+        return f"Dear {company} Team,"
+    return "Dear Marketing Team,"
 
 
 def main():
@@ -150,9 +163,10 @@ def main():
             poste = (row.get("Poste") or "").strip()
             contact = (row.get("Personne contactée") or "").strip()
             first_name = extract_first_name(contact)
+            greeting = build_greeting(contact, company)
 
             body = template.format(
-                first_name=first_name,
+                greeting=greeting,
                 company=company,
                 original_date=d_init.strftime("%B %d"),
             )
