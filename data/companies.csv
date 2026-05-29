@@ -1,51 +1,51 @@
 name,sector,priority,website,email,city,source,validation_status,notes
-Rua Al-Madinah Holding,Mega-projet PIF,1,https://www.ruaalmadinah.com,,Médine,https://talent.ruaalmadinah.com/Careers/search,PORTAL_ONLY,PIF Vision 2030 flagship Madinah - careers@ruaalmadinah.com BOUNCED - postuler portail uniquement + LinkedIn HR
-Knowledge Economic City,Mega-projet,1,https://www.madinahkec.com,,Médine,https://www.madinahkec.com/workwithkec,PORTAL_ONLY,20k jobs project - hr@madinahkec.com non vérifié - utiliser formulaire careers
-Taiba Investments,Real Estate,1,https://www.taiba.com.sa,careers@taiba.com.sa,Médine,https://www.taiba.com.sa/en/who-we-are/careers,MX_VALID,PIF Madinah real estate - domaine actif - email pattern standard à valider via SMTP avant envoi
+Rua Al-Madinah Holding,Mega-projet PIF,1,https://www.ruaalmadinah.com,,Médine,https://talent.ruaalmadinah.com/Careers/search,PORTAL_ONLY,PIF Vision 2030 flagship Madinah - careers@ruaalmadinah.com BOUNCED - portail uniquement + LinkedIn HR
+Knowledge Economic City,Mega-projet,1,https://www.madinahkec.com,,Médine,https://www.madinahkec.com/workwithkec,PORTAL_ONLY,20k jobs project - tous patterns @madinahkec.com REJECT Outlook M365 - portail careers uniquement
+Taiba Investments,Real Estate,1,https://www.taiba.com.sa,careers@taiba.com.sa,Médine,https://www.taiba.com.sa/en/who-we-are/careers,RISKY,PIF Madinah real estate - M365 catch-all bloque validation externe - tester par envoi reel
 Anwar Al Madinah Movenpick,Hotel 5*,1,https://all.accor.com,,Médine,https://careers.accor.com/,PORTAL_ONLY,Accor flagship - hr.almadina@movenpick.com BOUNCED - portail Accor central + LinkedIn cluster HR KSA
 Pullman ZamZam Madinah,Hotel 5*,1,https://all.accor.com,,Médine,https://careers.accor.com/,PORTAL_ONLY,Face Haram - h7187-hr@accor.com BOUNCED + hr@pullman-zamzam-madina.com BOUNCED - portail Accor uniquement
 Sofitel Shahd Al Madinah,Hotel luxe,1,https://all.accor.com,,Médine,https://careers.accor.com/,PORTAL_ONLY,Accor luxury - hr.shahd@sofitel.com BOUNCED - portail Accor + LinkedIn KSA luxury cluster
 Novotel Madinah,Hotel 4*,1,https://all.accor.com,,Médine,https://careers.accor.com/,PORTAL_ONLY,DM Manager 2026 actif - novotelmadinah.com DOMAIN_NOT_FOUND - portail Accor uniquement
 Dar Al Iman InterContinental,Hotel 5*,1,https://www.ihg.com,,Médine,https://careers.ihg.com/,PORTAL_ONLY,IHG flagship - hr.daraliman@ihg.com + careers@daraliman.com BOUNCED - portail IHG MENA + DM Sarah Khan LinkedIn
 InterContinental Dar Al Hijra,Hotel 5*,1,https://www.ihg.com,,Médine,https://careers.ihg.com/,PORTAL_ONLY,IHG sister property - hr.daralhijra@ihg.com BOUNCED - portail IHG + LinkedIn HR MENA
-Crowne Plaza Madinah,Hotel 5*,1,https://www.ihg.com,,Médine,https://careers.ihg.com/,PORTAL_ONLY,IHG cluster - hr.cpmadinah@ihg.com non vérifié - portail IHG uniquement
-Hilton Madinah,Hotel 5*,1,https://www.hilton.com,,Médine,https://jobs.hilton.com/,PORTAL_ONLY,357 rooms - madinah.hr@hilton.com + madinahgate.hr@hilton.com non vérifiés - portail Hilton MENA
+Crowne Plaza Madinah,Hotel 5*,1,https://www.ihg.com,,Médine,https://careers.ihg.com/,PORTAL_ONLY,IHG cluster - portail IHG uniquement
+Hilton Madinah,Hotel 5*,1,https://www.hilton.com,,Médine,https://jobs.hilton.com/,PORTAL_ONLY,357 rooms - madinah.hr@hilton.com M365 REJECT - portail Hilton MENA
 Hyatt Regency Madinah,Hotel 5*,1,https://www.hyatt.com,,Médine,https://careers.hyatt.com/,PORTAL_ONLY,Hyatt premium - madinah.hr@hyatt.com BOUNCED - portail Hyatt + LinkedIn MENA HR
-Marriott Madinah Cluster,Hotel 5*,1,https://www.marriott.com,,Médine,https://careers.marriott.com/,PORTAL_ONLY,CLUSTER UNIFIE Marriott + Sheraton + Le Meridien Madinah - 1 candidature corporate dispatch interne - sheraton.madinah@marriott.com et lemeridien.madinah@marriott.com non vérifiés
-The Oberoi Madina,Hotel luxe,1,https://www.oberoihotels.com,careers.madina@oberoihotels.com,Médine,https://oberoihotels.com/careers,MX_VALID,Ultra-luxury - email pattern propriétaire Oberoi - tester via SMTP avant envoi
-Shaza Al Madina,Hotel luxe,1,https://www.shazahotels.com,,Médine,https://www.shazahotels.com/careers,PORTAL_ONLY,Sharia-compliant luxury - hr.almadina@shazahotels.com BOUNCED - portail Shaza + LinkedIn HR
-Elaf Group,Hotel,1,https://www.elafgroup.com,,Médine,https://www.elafgroup.com/careers,PORTAL_ONLY,Saudi chain corporate - elaf.com.sa et aleiman.com BOUNCED - portail elafgroup.com + LinkedIn Elaf Group HR
-Almosafer (Seera Group),OTA,1,https://www.seera.sa,,KSA,https://seera.sa/careers,PORTAL_ONLY,#1 KSA travel - careers@almosafer.com BOUNCED - portail Seera (parent) + LinkedIn Seera HR
-Mawasim (Seera/Almosafer),Travel,1,https://www.seera.sa,,KSA,https://seera.sa/careers,PORTAL_ONLY,Hajj/Umrah international - portail Seera commun avec Almosafer
-Bin Dawood Holding,Retail,1,https://www.bindawoodholding.com,,Médine/Makkah,https://bindawoodholding.com/careers,PORTAL_ONLY,Groupe familial Médine - hr@bindawoodholding.com BOUNCED - portail + LinkedIn HR
-NEOM,Mega-projet PIF,1,https://www.neom.com,careers@neom.com,NEOM,https://careers.neom.com/careers,MX_VALID,905 jobs actifs - email standard portail Workday valide
-Red Sea Global,Mega-projet PIF,1,https://www.redseaglobal.com,careers@redseaglobal.com,Red Sea,https://careers.theredsea.sa/,MX_VALID,EMEA Recruitment Team of the Year - email portail valide
-Royal Commission for AlUla,Mega-projet,1,https://www.rcu.gov.sa,careers@rcu.gov.sa,AlUla,https://careerssf.rcu.gov.sa/,MX_VALID,Heritage UNESCO Hegra - email gov standard
-Diriyah Gate Development Authority,Mega-projet PIF,1,https://www.dgda.gov.sa,careers@dgda.gov.sa,Riyadh,https://www.dgda.gov.sa/en/careers,MX_VALID,At-Turaif UNESCO - email gov standard
-Riyadh Air,Aviation,1,https://www.riyadhair.com,careers@riyadhair.com,Riyadh,https://careers.riyadhair.com/,MX_VALID,Nouvelle flag carrier 2026
-Qiddiya,Mega-projet PIF,1,https://www.qiddiya.com,careers@qiddiya.com,Riyadh,https://careers.qiddiya.com/,MX_VALID,Entertainment city PIF
-New Murabba,Mega-projet PIF,1,https://www.newmurabba.com,careers@newmurabba.com,Riyadh,https://www.newmurabba.com/careers,MX_VALID,The Mukaab giga-quartier
-Saudi Tourism Authority,Gouvernement,1,https://www.sta.gov.sa,careers@sta.gov.sa,Riyadh,https://careers.sta.gov.sa/,MX_VALID,Visit Saudi Vision 2030
-Saudia Airlines,Aviation,1,https://www.saudia.com,,KSA,https://saudia.com/careers,PORTAL_ONLY,Hub Madinah PMIA - portail uniquement
-noon,E-commerce,1,https://www.noon.com,,Riyadh,https://careers.noon.com/,PORTAL_ONLY,#1 KSA e-commerce - careers@noon.com BOUNCED - Workday portal uniquement + LinkedIn TA
-Tamara,FinTech BNPL,2,https://tamara.co,careers@tamara.co,Riyadh,https://tamara.co/careers,MX_VALID,Saudi BNPL leader
-Ru'Ya GCC,Agence digitale,1,https://ruyagcc.com,,Médine,,LINKEDIN_ONLY,HQ Médine = fit parfait - pas de page careers publique - LinkedIn DM CEO uniquement
-Social Clinic,Agence,1,https://socialclinic.sa,,KSA,https://socialclinic.sa/careers,PORTAL_ONLY,Top agence KSA bureau Médine
-Publicis Groupe Riyadh,Agence,1,https://www.publicisgroupe.com,,Riyadh,https://careers.publicisgroupe.com/,PORTAL_ONLY,Ex-Publicis Geneve reseau direct - LinkedIn priority
-GroupM Riyadh,Agence média,2,https://www.groupm.com,,Riyadh,https://www.groupm.com/careers/,PORTAL_ONLY,careers.mena@groupm.com BOUNCED - Workday + LinkedIn TA
-VML MENA,Agence,2,https://www.vml.com,,Riyadh,https://www.vml.com/careers,PORTAL_ONLY,careers.mena@vml.com BOUNCED - portail + LinkedIn
-Almarai,FMCG,2,https://www.almarai.com,,Riyadh,https://www.almarai.com/en/careers/,PORTAL_ONLY,FMCG leader - careers@almarai.com BOUNCED - portail uniquement
-Cenomi Retail,Retail,2,https://www.cenomiretail.com,,Riyadh,,PORTAL_ONLY,51 brands fashion - cenomiretail.com DOMAIN_NO_MX - LinkedIn uniquement
-STC Group,Telco,2,https://www.stc.com.sa,,Riyadh,https://www.stc.com.sa/en/careers,PORTAL_ONLY,Telco leader - careers@stc.com.sa BOUNCED - portail STC + LinkedIn
+Marriott Madinah Cluster,Hotel 5*,1,https://www.marriott.com,,Médine,https://careers.marriott.com/,PORTAL_ONLY,CLUSTER UNIFIE Marriott + Sheraton + Le Meridien Madinah - portail corporate Marriott - LinkedIn MENA Talent
+The Oberoi Madina,Hotel luxe,1,https://www.oberoihotels.com,careers.madina@oberoihotels.com,Médine,https://oberoihotels.com/careers,RISKY,Ultra-luxury - M365 catch-all bloque validation externe - tester par envoi reel
+Shaza Al Madina,Hotel luxe,1,https://www.shazahotels.com,info@shazahotels.com,Médine,https://www.shazahotels.com/careers,MX_VALID,Sharia-compliant luxury - info@shazahotels.com SMTP 250 OK Google - hr.almadina@shazahotels.com BOUNCED
+Elaf Group,Hotel,1,https://www.elafgroup.com,,Médine,https://www.elafgroup.com/careers,PORTAL_ONLY,Saudi chain corporate - tous patterns @elafgroup.com M365 REJECT + elaf.com.sa BOUNCED - portail + LinkedIn Elaf HR
+Almosafer (Seera Group),OTA,1,https://www.seera.sa,careers@seera.sa,KSA,https://seera.sa/careers,MX_VALID,#1 KSA travel - careers@seera.sa SMTP 250 OK Cloudflare - careers@almosafer.com BOUNCED utiliser seera.sa
+Mawasim (Seera/Almosafer),Travel,1,https://www.seera.sa,hr@seera.sa,KSA,https://seera.sa/careers,MX_VALID,Hajj/Umrah international - hr@seera.sa SMTP 250 OK Cloudflare - meme parent que Almosafer
+Bin Dawood Holding,Retail,1,https://www.bindawoodholding.com,,Médine/Makkah,https://bindawoodholding.com/careers,PORTAL_ONLY,Groupe familial Médine - tous patterns Google Workspace REJECT - portail + LinkedIn HR
+NEOM,Mega-projet PIF,1,https://www.neom.com,careers@neom.com,NEOM,https://careers.neom.com/careers,MX_VALID,905 jobs actifs - M365 catch-all - email portail Workday officiel
+Red Sea Global,Mega-projet PIF,1,https://www.redseaglobal.com,careers@redseaglobal.com,Red Sea,https://careers.theredsea.sa/,MX_VALID,EMEA Recruitment Team of the Year - SMTP 250 OK Pphosted
+Royal Commission for AlUla,Mega-projet,1,https://www.rcu.gov.sa,careers@rcu.gov.sa,AlUla,https://careerssf.rcu.gov.sa/,RISKY,Heritage UNESCO Hegra - MX self-hosted PTR issue bloque test - tester par envoi reel
+Diriyah Gate Development Authority,Mega-projet PIF,1,https://www.dgda.gov.sa,careers@dgda.gov.sa,Riyadh,https://www.dgda.gov.sa/en/careers,MX_VALID,At-Turaif UNESCO - SMTP 250 OK Pphosted - hr@dgda.gov.sa et info@dgda.gov.sa egalement valides
+Riyadh Air,Aviation,1,https://www.riyadhair.com,careers@riyadhair.com,Riyadh,https://careers.riyadhair.com/,MX_VALID,Nouvelle flag carrier 2026 - SMTP 250 OK Pphosted - info@riyadhair.com fallback
+Qiddiya,Mega-projet PIF,1,https://www.qiddiya.com,careers@qiddiya.com,Riyadh,https://careers.qiddiya.com/,MX_VALID,Entertainment city PIF - SMTP 250 OK Pphosted - hr@qiddiya.com + info@qiddiya.com fallbacks
+New Murabba,Mega-projet PIF,1,https://www.newmurabba.com,careers@newmurabba.com,Riyadh,https://www.newmurabba.com/careers,RISKY,The Mukaab giga-quartier - M365 catch-all bloque validation externe - email portail officiel
+Saudi Tourism Authority,Gouvernement,1,https://www.sta.gov.sa,careers@sta.gov.sa,Riyadh,https://careers.sta.gov.sa/,RISKY,Visit Saudi Vision 2030 - M365 catch-all bloque validation externe - tester par envoi reel
+Saudia Airlines,Aviation,1,https://www.saudia.com,careers@saudia.com,KSA,https://saudia.com/careers,MX_VALID,Hub Madinah PMIA - SMTP 250 OK Pphosted - hr@saudia.com fallback
+noon,E-commerce,1,https://www.noon.com,hr@noon.com,Riyadh,https://careers.noon.com/,MX_VALID,#1 KSA e-commerce - hr@noon.com SMTP 250 OK Google - careers@noon.com BOUNCED utiliser hr@
+Tamara,FinTech BNPL,2,https://tamara.co,careers@tamara.co,Riyadh,https://tamara.co/careers,RISKY,Saudi BNPL leader - Mimecast catch-all bloque validation externe - email portail officiel
+Ru'Ya GCC,Agence digitale,1,https://ruyagcc.com,hello@ruyagcc.com,Médine,https://ruyagcc.com,MX_VALID,HQ Médine = fit parfait - hello@ruyagcc.com SMTP 250 OK Jellyfish - DM CEO LinkedIn en parallele
+Social Clinic,Agence,1,https://socialclinic.sa,,KSA,https://socialclinic.sa/careers,PORTAL_ONLY,Top agence KSA bureau Médine - M365 catch-all bloque tous patterns - portail + LinkedIn TA
+Publicis Groupe Riyadh,Agence,1,https://www.publicisgroupe.com,,Riyadh,https://careers.publicisgroupe.com/,PORTAL_ONLY,Ex-Publicis Geneve reseau direct - M365 catch-all bloque tous patterns - LinkedIn priority
+GroupM Riyadh,Agence média,2,https://www.groupm.com,careers@groupm.com,Riyadh,https://www.groupm.com/careers/,MX_VALID,careers@groupm.com SMTP 250 OK Pphosted - careers.mena@groupm.com BOUNCED utiliser careers@
+VML MENA,Agence,2,https://www.vml.com,careers@vml.com,Riyadh,https://www.vml.com/careers,MX_VALID,careers@vml.com SMTP 250 OK Pphosted - careers.mena@vml.com BOUNCED utiliser careers@
+Almarai,FMCG,2,https://www.almarai.com,hr@almarai.com,Riyadh,https://www.almarai.com/en/careers/,MX_VALID,FMCG leader - hr@almarai.com SMTP 250 OK Pphosted - careers@almarai.com BOUNCED utiliser hr@
+Cenomi Retail,Retail,2,https://www.cenomiretail.com,,Riyadh,,LINKEDIN_ONLY,51 brands fashion - cenomiretail.com NO_MX confirme - LinkedIn uniquement
+STC Group,Telco,2,https://www.stc.com.sa,,Riyadh,https://www.stc.com.sa/en/careers,PORTAL_ONLY,Telco leader - MX self-hosted PTR REJECT tous patterns - portail STC + LinkedIn
 Ritz-Carlton Riyadh,Hotel luxe,2,https://www.ritzcarlton.com,,Riyadh,https://careers.marriott.com/,OUT_OF_SCOPE,Hors Médine - portail Marriott central - priorité 2
 Four Seasons Jeddah,Hotel luxe,2,https://www.fourseasons.com,,Jeddah,https://careers.fourseasons.com/,OUT_OF_SCOPE,Hors Médine - priorité 2
 Banyan Tree AlUla,Hotel luxe,2,https://www.banyantree.com,,AlUla,https://www.banyantree.com/careers,OUT_OF_SCOPE,Hors Médine - wellness AlUla - priorité 2
 Conrad Makkah,Hotel luxe,2,https://www.hilton.com,,Makkah,https://jobs.hilton.com/,OUT_OF_SCOPE,Hors Médine - conradmakkah.hr@hilton.com BOUNCED - priorité 2
 Raffles Makkah Palace,Hotel ultra-luxe,2,https://all.accor.com,,Makkah,https://careers.accor.com/,OUT_OF_SCOPE,Hors Médine - hr.makkah@raffles.com BOUNCED - priorité 2
 Madinah Region Development Authority,Gouvernement,1,https://madinah.gov.sa,,Médine,https://madinah.gov.sa,LINKEDIN_ONLY,Smart city Madinah partenariats Almosafer - pas d'email careers public - LinkedIn DM
-Tibah Airports,Aviation,2,https://tibahairports.com,,Médine,https://tibahairports.com/careers,PORTAL_ONLY,Operateur aeroport Madinah - portail + LinkedIn
-Dur Hospitality,Hospitality,1,https://www.dur.sa,,Médine,https://www.dur.sa/careers,PORTAL_ONLY,AJOUT - operateur hotelier PIF avec presence Madinah - tester careers@dur.sa apres validation MX
-Marafiq Madinah,Utilities,2,https://www.marafiq.com.sa,,Médine,https://www.marafiq.com.sa/careers,PORTAL_ONLY,AJOUT - utilities Madinah Knowledge Economic City
-SEVEN,Entertainment PIF,1,https://www.seven.sa,careers@seven.sa,Riyadh/KSA,https://www.seven.sa/careers,MX_VALID,AJOUT - Saudi Entertainment Ventures PIF - sites Médine prévus Vision 2030
-Diriyah Company,Mega-projet PIF,1,https://www.diriyah.sa,,Riyadh,https://www.diriyah.sa/careers,PORTAL_ONLY,AJOUT - successeur DGDA - heritage UNESCO
-Nusuk Platform,Travel Tech,1,https://www.nusuk.sa,,KSA,https://www.nusuk.sa/careers,PORTAL_ONLY,AJOUT - plateforme officielle Hajj/Umrah - Madinah core scope
+Tibah Airports,Aviation,2,https://tibahairports.com,,Médine,https://tibahairports.com/careers,PORTAL_ONLY,Operateur aeroport Madinah - SMTP timeout serveur down - portail + LinkedIn
+Dur Hospitality,Hospitality,1,https://www.dur.sa,,Médine,https://www.dur.sa/careers,PORTAL_ONLY,Operateur hotelier PIF avec presence Madinah - M365 catch-all bloque - portail uniquement
+Marafiq Madinah,Utilities,2,https://www.marafiq.com.sa,,Médine,https://www.marafiq.com.sa/careers,PORTAL_ONLY,Utilities Madinah Knowledge Economic City - M365 catch-all bloque - portail uniquement
+SEVEN,Entertainment PIF,1,https://www.seven.sa,careers@seven.sa,Riyadh/KSA,https://www.seven.sa/careers,MX_VALID,Saudi Entertainment Ventures PIF - SMTP 250 OK Pphosted - hr@seven.sa + info@seven.sa fallbacks
+Diriyah Company,Mega-projet PIF,1,https://www.diriyah.sa,careers@diriyah.sa,Riyadh,https://www.diriyah.sa/careers,MX_VALID,Successeur DGDA heritage UNESCO - SMTP 250 OK Pphosted - hr@diriyah.sa + info@diriyah.sa fallbacks
+Nusuk Platform,Travel Tech,1,https://www.nusuk.sa,info@nusuk.sa,KSA,https://www.nusuk.sa/careers,MX_VALID,Plateforme officielle Hajj/Umrah Madinah core scope - info@nusuk.sa SMTP 250 OK Nourmail
