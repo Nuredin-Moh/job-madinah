@@ -1,0 +1,391 @@
+{
+  "audit_date": "2026-05-30",
+  "auditor": "Thomas Sauber",
+  "profile_target": "Senior Marketing Manager / Brand Manager / Marketing Director / Digital Marketing - Madinah KSA",
+  "methodology": "WebSearch + WebFetch en parallele (portails Workday/SuccessFactors bloquent scraping direct, indexation Google fiable)",
+  "summary": {
+    "portals_audited": 17,
+    "portals_with_madinah_match": 7,
+    "portals_with_ksa_match_only": 5,
+    "portals_no_match": 5,
+    "total_madinah_jobs_found": 9,
+    "total_ksa_wider_jobs_found": 11
+  },
+  "companies": [
+    {
+      "company": "Rua Al-Madinah Holding",
+      "portal_url": "https://talent.ruaalmadinah.com/Careers/search",
+      "ats_type": "Workday-like (custom portal, JS-rendered)",
+      "account_required": true,
+      "madinah_jobs": [],
+      "ksa_wider_jobs": [],
+      "status": "Portail JS-only non indexe par Google - inspection manuelle requise via Chrome MCP avec login. Pas de matching marketing visible en mode liste publique au 2026-05-30.",
+      "next_action": "Creer compte sur talent.ruaalmadinah.com puis filtrer Marketing / Communications"
+    },
+    {
+      "company": "Knowledge Economic City (KEC)",
+      "portal_url": "https://www.madinahkec.com/workwithkec",
+      "ats_type": "Form natif sur site WordPress",
+      "account_required": false,
+      "madinah_jobs": [],
+      "ksa_wider_jobs": [],
+      "status": "Aucune annonce marketing publiee actuellement. KEC en phase developpement (20k jobs annonces mais portail non encore actif pour roles marketing senior).",
+      "next_action": "Soumettre CV en candidature spontanee via formulaire portail + LinkedIn HR (Talent Acquisition team)"
+    },
+    {
+      "company": "Anwar Al Madinah Movenpick",
+      "portal_url": "https://careers.accor.com/",
+      "ats_type": "SmartRecruiters (via Accor central)",
+      "account_required": true,
+      "madinah_jobs": [],
+      "ksa_wider_jobs": [
+        {
+          "title": "Digital Marketing & Social Media Manager",
+          "job_id": "jid-40816",
+          "url": "https://careers.accor.com/global/en/job/digital-marketing-and-social-media-manager-in-movenpick-resort-al-marjan-island-ras-al-khaimah-u-jid-40816",
+          "location": "Movenpick Resort Al Marjan Island, Ras Al-Khaimah, UAE (cluster GCC)",
+          "requirements": "Digital marketing + social media management hospitality"
+        }
+      ],
+      "status": "Pas d'offre Marketing Madinah pour Movenpick au 2026-05-30. Cluster Accor GCC ouvre Movenpick UAE. Surveillance hebdomadaire recommandee.",
+      "next_action": "Talent profile sur careers.accor.com + alert jobs Movenpick KSA"
+    },
+    {
+      "company": "Pullman ZamZam Madinah",
+      "portal_url": "https://careers.accor.com/",
+      "ats_type": "SmartRecruiters (via Accor central)",
+      "account_required": true,
+      "madinah_jobs": [],
+      "ksa_wider_jobs": [],
+      "status": "Aucune annonce marketing Pullman Madinah publiee. Pullman ZamZam tres reactif sur LinkedIn HR mais portail vide pour roles senior marketing.",
+      "next_action": "Inscrire alerte Pullman + Madinah sur compte Accor"
+    },
+    {
+      "company": "Sofitel Shahd Al Madinah",
+      "portal_url": "https://careers.accor.com/",
+      "ats_type": "SmartRecruiters (via Accor central)",
+      "account_required": true,
+      "madinah_jobs": [
+        {
+          "title": "Marketing Manager (Saudis only)",
+          "job_id": "jid-88535",
+          "url": "https://careers.accor.com/global/en/job/marketing-manager-saudis-only-in-sofitel-shahd-al-madinah-madinah-saudi-arabia-jid-88535",
+          "location": "Sofitel Shahd Al Madinah, Madinah, Saudi Arabia",
+          "requirements": "Saudi National only - critere Saudization bloque candidature non-Saudi",
+          "blocker": "SAUDIZATION_LOCK"
+        }
+      ],
+      "ksa_wider_jobs": [],
+      "status": "Match parfait Madinah Sofitel MAIS Saudization lock. Sauf si parrainage Sofitel cluster MEA en interne -> candidature impossible directement.",
+      "next_action": "Cibler Sofitel cluster MEA Director Sales & Marketing role via LinkedIn DM Mahmoud Shaban (recemment nomme DSM Sofitel Shahd)"
+    },
+    {
+      "company": "Novotel Madinah",
+      "portal_url": "https://careers.accor.com/",
+      "ats_type": "SmartRecruiters (via Accor central)",
+      "account_required": true,
+      "madinah_jobs": [
+        {
+          "title": "Marketing & Communications Manager",
+          "job_id": "jid-69051",
+          "url": "https://careers.accor.com/global/en/job/marketing-and-communications-manager-in-novotel-madinah-madinah-saudi-arabia-jid-69051",
+          "location": "Novotel Madinah, Madinah, Saudi Arabia",
+          "requirements": "Strategies marketing & communications integrees, leadership digital marketing initiatives, hospitalite 5+ ans souhaitee",
+          "fit_score": "HIGH"
+        },
+        {
+          "title": "Digital Marketing Manager",
+          "job_id": "REF101647I (jid-92547)",
+          "url": "https://careers.accor.com/global/en/job/digital-marketing-manager-in-novotel-madinah-madinah-saudi-arabia-jid-92547",
+          "location": "Novotel Madinah, Madinah, Saudi Arabia",
+          "requirements": "4-5+ ans digital marketing/e-commerce hospitality ou retail, degree marketing/communications, anglais courant, expertise digital strategy/analytics/paid media/CRM",
+          "apply_via": "SmartRecruiters https://jobs.smartrecruiters.com/AccorHotel/744000121884117-digital-marketing-manager",
+          "fit_score": "PERFECT"
+        },
+        {
+          "title": "Director of Sales & Marketing (With Holy Cities Experience)",
+          "job_id": "jid-58504",
+          "url": "https://careers.accor.com/global/en/job/director-of-sales-and-marketing-with-holy-cities-experience-in-novotel-novotel-madinah-madinah-saudi-arabia-jid-58504",
+          "location": "Novotel Madinah, Madinah, Saudi Arabia",
+          "requirements": "Lead sales & marketing strategies, expertise Holy Cities (Madinah/Makkah) requise, seniority Director level",
+          "fit_score": "HIGH"
+        }
+      ],
+      "ksa_wider_jobs": [
+        {
+          "title": "Digital Marketing Manager",
+          "job_id": "jid-74834",
+          "url": "https://careers.accor.com/global/en/job/digital-marketing-manager-in-moevenpick-hotel-waad-al-shamal-turaif-saudi-arabi-jid-74834",
+          "location": "Movenpick Hotel Waad Al Shamal, Turaif, Saudi Arabia"
+        }
+      ],
+      "status": "JACKPOT - 3 jobs Madinah dont 1 PERFECT FIT (Digital Marketing Manager). Compte SmartRecruiters / Accor requis.",
+      "next_action": "PRIORITE 1 - Apply Digital Marketing Manager Novotel Madinah immediately"
+    },
+    {
+      "company": "Dar Al Iman InterContinental",
+      "portal_url": "https://careers.ihg.com/",
+      "ats_type": "Workday IHG",
+      "account_required": true,
+      "madinah_jobs": [],
+      "ksa_wider_jobs": [],
+      "status": "Pas de matching marketing actif au 2026-05-30 pour Dar Al Iman. Indexation Google montre seulement Income Auditor role recent (Wizbii). Compte IHG requis pour voir queue interne.",
+      "next_action": "Creer compte careers.ihg.com + filtre Madinah + Sales/Marketing + alert"
+    },
+    {
+      "company": "InterContinental Dar Al Hijra",
+      "portal_url": "https://careers.ihg.com/",
+      "ats_type": "Workday IHG",
+      "account_required": true,
+      "madinah_jobs": [],
+      "ksa_wider_jobs": [],
+      "status": "Aucune annonce marketing publique. Hotel actif LinkedIn (posts staff) mais portail vide pour roles senior.",
+      "next_action": "Compte IHG + alert Dar Al Hijra + LinkedIn DM HR cluster MENA"
+    },
+    {
+      "company": "Crowne Plaza Madinah",
+      "portal_url": "https://careers.ihg.com/",
+      "ats_type": "Workday IHG",
+      "account_required": true,
+      "madinah_jobs": [],
+      "ksa_wider_jobs": [],
+      "status": "Crowne Plaza Madinah actif sur LinkedIn mais aucune offre marketing senior visible.",
+      "next_action": "Compte IHG + alert Crowne Plaza KSA"
+    },
+    {
+      "company": "Hilton Madinah",
+      "portal_url": "https://jobs.hilton.com/",
+      "ats_type": "Workday Hilton (jobs.hilton.com)",
+      "account_required": true,
+      "madinah_jobs": [
+        {
+          "title": "Marketing Executive",
+          "job_id": "HOT0BPPL",
+          "url": "https://jobs.hilton.com/us/en/job/HOT0BPPL/Marketing-Executive",
+          "location": "Madinah Station, Al Hadra District, Madinah, Saudi Arabia",
+          "requirements": "Executive level marketing (mid-level - junior pour profil Nuredin mais entrypoint)",
+          "posted": "2025-06-19",
+          "fit_score": "MEDIUM (entry level)"
+        },
+        {
+          "title": "Marketing Coordinator",
+          "job_id": "HOT0CJXB",
+          "url": "https://jobs.hilton.com/apac/zh/job/HOT0CJXB/Marketing-Coordinator",
+          "location": "Madinah Station, Al Hadra District, Madinah, Saudi Arabia",
+          "requirements": "Coordinateur niveau junior",
+          "posted": "~2026-05",
+          "fit_score": "LOW (junior)"
+        },
+        {
+          "title": "Sales Director",
+          "job_id": "HOT0B6AI",
+          "url": "https://jobs.hilton.com/emea/en/job/HOT0B6AI/Sales-Director",
+          "location": "6991 Pedestrian Walkway, Central Area, Madinah 42311, Saudi Arabia",
+          "requirements": "Sales Director - role senior, profile commercial + marketing",
+          "posted": "2024-11-28",
+          "fit_score": "HIGH (senior, central Madinah)"
+        }
+      ],
+      "ksa_wider_jobs": [],
+      "status": "Hilton Madinah Station tres actif. 3 roles ouverts dont Sales Director central Madinah (PARFAIT FIT senior).",
+      "next_action": "PRIORITE 2 - Apply Sales Director Hilton Madinah HOT0B6AI"
+    },
+    {
+      "company": "Hyatt Regency Madinah",
+      "portal_url": "https://careers.hyatt.com/",
+      "ats_type": "Workday Hyatt (Taleo legacy)",
+      "account_required": true,
+      "madinah_jobs": [],
+      "ksa_wider_jobs": [],
+      "status": "Aucune annonce marketing Hyatt Madinah visible. 3376 jobs globaux Hyatt mais aucun matching Madinah marketing au 2026-05-30.",
+      "next_action": "Creer compte careers.hyatt.com + alert Madinah Marketing"
+    },
+    {
+      "company": "Marriott Madinah Cluster (Marriott + Sheraton + Le Meridien)",
+      "portal_url": "https://careers.marriott.com/",
+      "ats_type": "Workday Marriott + chatbot Olivia",
+      "account_required": true,
+      "madinah_jobs": [],
+      "ksa_wider_jobs": [
+        {
+          "title": "Senior Manager of Sales - Government (Saudi National Only)",
+          "job_id": "03063A4EB9B1206D1AC6888AADC0FE12",
+          "url": "https://careers.marriott.com/senior-manager-of-sales-government-saudi-national-only/job/03063A4EB9B1206D1AC6888AADC0FE12",
+          "location": "KSA (probable Riyadh)",
+          "blocker": "SAUDIZATION_LOCK"
+        },
+        {
+          "title": "Dir-Marketing Communications (Saudi Only)",
+          "job_id": "F8FDEB09E9F0D2D7E93E884E44066902",
+          "url": "https://careers.marriott.com/dir-marketing-communications-saudi-only/job/F8FDEB09E9F0D2D7E93E884E44066902",
+          "location": "KSA",
+          "blocker": "SAUDIZATION_LOCK"
+        },
+        {
+          "title": "Cluster F&B Marketing Manager",
+          "job_id": "A5822EFC0EDCB4F5EEC9DADEE5395775",
+          "url": "https://careers.marriott.com/cluster-f-b-marketing-manager/job/A5822EFC0EDCB4F5EEC9DADEE5395775",
+          "location": "KSA (region cluster)",
+          "fit_score": "MEDIUM (F&B specifique)"
+        }
+      ],
+      "status": "Marriott KSA tres axe Saudization sur roles marketing senior - 2/3 jobs visibles bloques par Saudi National Only. Pas de Madinah-specific marketing au 2026-05-30.",
+      "next_action": "Creer compte careers.marriott.com + Cluster F&B Marketing Manager + alert Madinah"
+    },
+    {
+      "company": "Elaf Group",
+      "portal_url": "https://www.elafgroup.com/career/",
+      "ats_type": "Form natif + careers.elafgroup.com/jobs.php (custom)",
+      "account_required": false,
+      "madinah_jobs": [],
+      "ksa_wider_jobs": [],
+      "status": "Portail careers.elafgroup.com/jobs.php = custom legacy, contenu non indexe. Inspection via Chrome requise. Elaf HQ Jeddah, presence Madinah forte (hotels Al-Taqwa, Bakkah).",
+      "next_action": "Inspecter careers.elafgroup.com/jobs.php + candidature spontanee HR via formulaire"
+    },
+    {
+      "company": "Bin Dawood Holding",
+      "portal_url": "https://www.bindawoodholding.com/careers/",
+      "ats_type": "Custom bindawoodapps.com/CAREER/ + LinkedIn",
+      "account_required": false,
+      "madinah_jobs": [],
+      "ksa_wider_jobs": [],
+      "status": "Portail interne bindawoodapps.com - contenu non indexe Google. LinkedIn page Jobs active mais aucun marketing manager senior public.",
+      "next_action": "Inspecter bindawoodapps.com/CAREER/ + LinkedIn Easy Apply + DM HR"
+    },
+    {
+      "company": "Social Clinic",
+      "portal_url": "https://socialclinic.sa/careers",
+      "ats_type": "Form natif WordPress",
+      "account_required": false,
+      "madinah_jobs": [],
+      "ksa_wider_jobs": [],
+      "status": "Social Clinic confirme bureau Madinah (Riyadh, Jeddah, Khobar, Madinah). 120+ talents. Page careers existe mais contenu non indexe (probable formulaire candidature spontanee).",
+      "next_action": "Candidature spontanee Senior Digital / Brand via formulaire + LinkedIn DM TA team Social Clinic"
+    },
+    {
+      "company": "Publicis Groupe Riyadh",
+      "portal_url": "https://careers.publicisgroupe.com/",
+      "ats_type": "iCIMS / SmartRecruiters Publicis",
+      "account_required": true,
+      "madinah_jobs": [],
+      "ksa_wider_jobs": [
+        {
+          "title": "Business Director - Communications Consultancy",
+          "job_id": "46231",
+          "url": "https://careers.publicisgroupe.com/jobs/46231?lang=en-us",
+          "location": "Riyadh, Saudi Arabia",
+          "fit_score": "HIGH (senior, MarComms)"
+        },
+        {
+          "title": "Manager - Content Delivery",
+          "job_id": "132628",
+          "url": "https://careers.publicisgroupe.com/jobs/132628",
+          "location": "Riyadh, Saudi Arabia",
+          "fit_score": "MEDIUM"
+        },
+        {
+          "title": "Business Director - Content",
+          "job_id": "111082",
+          "url": "https://careers.publicisgroupe.com/jobs/111082?lang=en-us",
+          "location": "Riyadh, Saudi Arabia",
+          "fit_score": "HIGH"
+        },
+        {
+          "title": "Associate Business Director - Gaming Strategy & Consultancy",
+          "job_id": "46795",
+          "url": "https://careers.publicisgroupe.com/jobs/46795?lang=en-us",
+          "location": "Riyadh, Saudi Arabia",
+          "fit_score": "MEDIUM (Gaming niche)"
+        },
+        {
+          "title": "Future Opportunities - Riyadh Talent Network",
+          "job_id": "115794",
+          "url": "https://careers.publicisgroupe.com/jobs/115794?lang=en-us",
+          "location": "Riyadh, Saudi Arabia",
+          "fit_score": "TALENT_POOL"
+        }
+      ],
+      "status": "Publicis Riyadh tres actif - 4 roles Business Director / Manager ouverts + talent pool. Pas de Madinah mais ex-Publicis Geneve reseau exploitable.",
+      "next_action": "PRIORITE 3 - Apply Business Director Communications Consultancy Riyadh ID 46231 + activer reseau ex-Publicis Geneve"
+    },
+    {
+      "company": "Dur Hospitality",
+      "portal_url": "https://www.dur.sa/careers",
+      "ats_type": "Custom + acquis par Taiba Investments 2024",
+      "account_required": false,
+      "madinah_jobs": [],
+      "ksa_wider_jobs": [],
+      "status": "Dur acquis par Taiba en 2024 - portail Dur peut etre fusionne avec Taiba. PIF backed, 1k employes. Aucune annonce marketing senior visible 2026-05-30.",
+      "next_action": "Inspecter dur.sa/careers + cross-check taiba.com.sa/careers (merger)"
+    }
+  ],
+  "priority_actions": [
+    {
+      "rank": 1,
+      "action": "Apply Digital Marketing Manager Novotel Madinah",
+      "url": "https://careers.accor.com/global/en/job/digital-marketing-manager-in-novotel-madinah-madinah-saudi-arabia-jid-92547",
+      "rationale": "Perfect fit profile Nuredin - 4-5y digital marketing, hospitality, anglais courant"
+    },
+    {
+      "rank": 2,
+      "action": "Apply Sales Director Hilton Madinah",
+      "url": "https://jobs.hilton.com/emea/en/job/HOT0B6AI/Sales-Director",
+      "rationale": "Senior role central Madinah, fit marketing/sales executive"
+    },
+    {
+      "rank": 3,
+      "action": "Apply Marketing & Communications Manager Novotel Madinah",
+      "url": "https://careers.accor.com/global/en/job/marketing-and-communications-manager-in-novotel-madinah-madinah-saudi-arabia-jid-69051",
+      "rationale": "Backup Novotel - role MarComms strategic"
+    },
+    {
+      "rank": 4,
+      "action": "Apply Director of Sales & Marketing Novotel Madinah (Holy Cities exp)",
+      "url": "https://careers.accor.com/global/en/job/director-of-sales-and-marketing-with-holy-cities-experience-in-novotel-novotel-madinah-madinah-saudi-arabia-jid-58504",
+      "rationale": "Director level - haute valeur ajoutee, exp Madinah valorisee"
+    },
+    {
+      "rank": 5,
+      "action": "Apply Business Director Publicis Communications Consultancy Riyadh",
+      "url": "https://careers.publicisgroupe.com/jobs/46231?lang=en-us",
+      "rationale": "Reseau ex-Publicis Geneve activable + senior role KSA agence"
+    },
+    {
+      "rank": 6,
+      "action": "Candidature spontanee Social Clinic bureau Madinah",
+      "url": "https://socialclinic.sa/careers",
+      "rationale": "Agence avec bureau physique Madinah - unique opportunite locale agence"
+    }
+  ],
+  "blockers": {
+    "saudization_lock": [
+      "Sofitel Shahd Al Madinah - Marketing Manager Saudis only",
+      "Marriott Senior Manager Sales Gov Saudi only",
+      "Marriott Dir-Marketing Communications Saudi only"
+    ],
+    "portal_js_only_non_indexed": [
+      "Rua Al-Madinah (talent.ruaalmadinah.com)",
+      "Elaf Group (careers.elafgroup.com)",
+      "Bin Dawood (bindawoodapps.com/CAREER/)",
+      "Knowledge Economic City",
+      "Dur Hospitality"
+    ],
+    "account_required_for_full_visibility": [
+      "Marriott (Workday)",
+      "IHG (Workday)",
+      "Hilton (Workday)",
+      "Accor (SmartRecruiters)",
+      "Hyatt (Taleo)",
+      "Publicis (iCIMS)"
+    ]
+  },
+  "portals_no_matching_at_all": [
+    "Hyatt Regency Madinah",
+    "Crowne Plaza Madinah",
+    "InterContinental Dar Al Hijra",
+    "Dar Al Iman InterContinental",
+    "Pullman ZamZam Madinah",
+    "Knowledge Economic City",
+    "Rua Al-Madinah Holding"
+  ]
+}
