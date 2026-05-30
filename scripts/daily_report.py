@@ -1,19 +1,29 @@
 #!/usr/bin/env python3
 """
-Daily report — sends a summary of the job-madinah pipeline to Nuredin's Gmail.
+Daily report — summarizes the job-madinah pipeline and emails it to Nuredin.
 
-Reads tracking CSV → counts statuses → renders markdown report → sends via SMTP or stdout.
+Reads the repo's committed data files, so it works on GitHub Actions without any
+external CSV/gist dependency:
+  - data/sent_history.csv        cold-email outreach (date, company, email, persona, cv, subject, status)
+  - data/sent_log.csv            send attempts (timestamp, company, email, persona, result, details)
+  - data/portal_applications.csv portal / Easy-Apply submissions (portal, job_title, ..., status, notes)
+  - data/portal_queue.csv        portals requiring manual application (date, company, sector, portal_url, status, notes)
 
-Run via GitHub Actions cron 18:00 UTC daily.
+Sends via SMTP using the same configuration as orchestrator.py (SMTP_* secrets, with
+GMAIL_* as fallback). If no SMTP password is set, prints the report to stdout.
 
-Env vars expected:
-- GMAIL_USER (sender, defaults to nuredinmohamedali@gmail.com)
-- GMAIL_APP_PASSWORD (Gmail app password — store as GitHub secret)
-- REPORT_RECIPIENT (defaults to nuredinmohamedali@gmail.com)
+Resilience: missing/empty data never hard-fails the job — it still produces a report and
+exits 0, so the daily cron does not spam failure notifications. A non-zero exit is reserved
+for a genuine SMTP send failure (a real problem worth surfacing).
+
+Run via GitHub Actions cron 18:00 UTC daily (= 21:00 KSA).
+
+Env vars:
+  SMTP_HOST / SMTP_PORT / SMTP_USER / SMTP_PASSWORD / SMTP_FROM / SMTP_USE_SSL
+  (or GMAIL_USER / GMAIL_APP_PASSWORD), REPORT_RECIPIENT
 """
 
 import csv
-import json
 import os
 import smtplib
 import sys
@@ -23,183 +33,199 @@ from email.mime.text import MIMEText
 from pathlib import Path
 
 
-TRACKING_CSV = Path(
-    os.environ.get(
-        "JOB_MADINAH_TRACKING_CSV",
-        "/Users/nuredin.mohamedali/Desktop/Arabie/Recherche Emploi Médine/07-Tracking/Tracking-Candidatures.csv",
-    )
-)
+ROOT = Path(os.environ.get("JOB_MADINAH_ROOT", Path(__file__).resolve().parent.parent))
+DATA = ROOT / "data"
+
 GMAIL_USER = os.environ.get("GMAIL_USER", "nuredinmohamedali@gmail.com")
 GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD", "")
+# SMTP config mirrors orchestrator.py: Gmail STARTTLS by default, Hostinger SSL via env.
+SMTP_HOST = os.environ.get("SMTP_HOST", "smtp.gmail.com")
+SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
+SMTP_USER = os.environ.get("SMTP_USER", GMAIL_USER)
+SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD", GMAIL_APP_PASSWORD)
+SMTP_FROM = os.environ.get("SMTP_FROM", SMTP_USER)
+SMTP_USE_SSL = os.environ.get("SMTP_USE_SSL", "0") == "1"
 REPORT_RECIPIENT = os.environ.get("REPORT_RECIPIENT", "nuredinmohamedali@gmail.com")
 
+TARGET_DAILY = int(os.environ.get("JOB_MADINAH_DAILY_CAP", "17"))
 
-def load_tracking():
-    if not TRACKING_CSV.exists():
-        print(f"[ERROR] Tracking CSV not found: {TRACKING_CSV}", file=sys.stderr)
+
+def read_csv(name):
+    """Read data/<name> as a list of dicts; return [] if missing/unreadable."""
+    path = DATA / name
+    if not path.exists():
+        print(f"[INFO] {path} not found — section skipped", file=sys.stderr)
         return []
-    with TRACKING_CSV.open("r", encoding="utf-8", newline="") as f:
-        return list(csv.DictReader(f))
+    try:
+        with path.open("r", encoding="utf-8", newline="") as f:
+            return list(csv.DictReader(f))
+    except Exception as e:  # noqa: BLE001
+        print(f"[WARN] could not read {path}: {e}", file=sys.stderr)
+        return []
 
 
-def summarize(rows):
-    """Return dict of metrics."""
+def date_only(value):
+    """Normalize 2026-05-30 / 2026-05-30T19:23:00Z / '2026-05-30 18:17:28' -> '2026-05-30'."""
+    s = (value or "").strip()
+    if not s:
+        return ""
+    return s.replace("T", " ").split(" ")[0][:10]
+
+
+def summarize():
     now = datetime.now()
-    today_str = now.strftime("%Y-%m-%d")
+    today = now.strftime("%Y-%m-%d")
     yesterday = (now - timedelta(days=1)).strftime("%Y-%m-%d")
-    last_7d_cutoff = now - timedelta(days=7)
+    cutoff_7d = (now - timedelta(days=7)).strftime("%Y-%m-%d")
 
-    status_counts = {}
-    sent_today = 0
-    sent_yesterday = 0
-    sent_last_7d = 0
-    pending_followups_today = []
-    hot_responses = []
-    interviews = []
+    sent = read_csv("sent_history.csv")
+    log = read_csv("sent_log.csv")
+    portal_apps = read_csv("portal_applications.csv")
+    portal_queue = read_csv("portal_queue.csv")
 
-    for row in rows:
-        statut = (row.get("Statut") or "").strip()
-        date_str = (row.get("Date candidature") or "").strip()
-        next_followup = (row.get("Date prochaine relance") or "").strip()
+    emails_today = sum(1 for r in sent if date_only(r.get("date")) == today)
+    emails_yesterday = sum(1 for r in sent if date_only(r.get("date")) == yesterday)
+    emails_7d = sum(1 for r in sent if date_only(r.get("date")) >= cutoff_7d)
 
-        status_counts[statut] = status_counts.get(statut, 0) + 1
+    log_today = [r for r in log if date_only(r.get("timestamp")) == today]
+    ok_today = sum(1 for r in log_today if (r.get("result") or "").strip().lower() == "ok")
+    err_today = [r for r in log_today if (r.get("result") or "").strip().lower() not in ("ok", "")]
 
-        # Volume metrics
-        if date_str == today_str:
-            sent_today += 1
-        if date_str == yesterday:
-            sent_yesterday += 1
-        try:
-            d = datetime.strptime(date_str, "%Y-%m-%d")
-            if d >= last_7d_cutoff:
-                sent_last_7d += 1
-        except ValueError:
-            pass
+    portal_status = {}
+    for r in portal_apps:
+        st = (r.get("status") or "unknown").strip() or "unknown"
+        portal_status[st] = portal_status.get(st, 0) + 1
+    # Anything not cleanly submitted is actionable (blocked uploads, opened-but-not-submitted, etc.)
+    portal_blocked = [
+        r for r in portal_apps
+        if "BLOCK" in (r.get("status") or "").upper()
+        or "REQUIRED" in (r.get("status") or "").upper()
+        or "OPENED" in (r.get("status") or "").upper()
+    ]
 
-        # Pending follow-ups due today or overdue
-        if next_followup:
-            try:
-                d_followup = datetime.strptime(next_followup, "%Y-%m-%d")
-                if d_followup.date() <= now.date() and statut not in ("Refus", "Hired"):
-                    pending_followups_today.append(row)
-            except ValueError:
-                pass
-
-        # Hot signals
-        if statut in ("Réponse", "Entretien", "Interview", "Hired"):
-            if statut in ("Réponse",):
-                hot_responses.append(row)
-            elif statut in ("Entretien", "Interview"):
-                interviews.append(row)
+    pending_manual = [
+        r for r in portal_queue
+        if (r.get("status") or "").strip().lower() not in ("done", "applied", "submitted", "")
+    ]
 
     return {
-        "total": len(rows),
-        "status_counts": status_counts,
-        "sent_today": sent_today,
-        "sent_yesterday": sent_yesterday,
-        "sent_last_7d": sent_last_7d,
-        "pending_followups_today": pending_followups_today,
-        "hot_responses": hot_responses,
-        "interviews": interviews,
-        "today": today_str,
+        "today": today,
+        "emails_total": len(sent),
+        "emails_today": emails_today,
+        "emails_yesterday": emails_yesterday,
+        "emails_7d": emails_7d,
+        "ok_today": ok_today,
+        "err_today": err_today,
+        "portal_total": len(portal_apps),
+        "portal_status": portal_status,
+        "portal_blocked": portal_blocked,
+        "pending_manual": pending_manual,
+        "has_any_data": bool(sent or log or portal_apps or portal_queue),
     }
 
 
-def render_text(summary):
-    """Render plain-text report."""
-    lines = []
-    lines.append(f"=== JOB MADINAH — Daily Report — {summary['today']} ===\n")
-    lines.append(f"Pipeline total: {summary['total']} applications\n")
-    lines.append("--- Volume ---")
-    lines.append(f"  Sent today:       {summary['sent_today']}")
-    lines.append(f"  Sent yesterday:   {summary['sent_yesterday']}")
-    lines.append(f"  Sent last 7 days: {summary['sent_last_7d']}")
-    target_daily = 17  # midpoint of 15-20
-    if summary["sent_today"] < target_daily:
-        lines.append(
-            f"  ⚠ Behind daily target ({summary['sent_today']}/{target_daily}). Catch up before EOD."
-        )
-    lines.append("")
+def render_text(s):
+    L = []
+    L.append(f"=== JOB MADINAH — Daily Report — {s['today']} ===")
+    L.append("")
 
-    lines.append("--- Status breakdown ---")
-    for status, count in sorted(
-        summary["status_counts"].items(), key=lambda kv: -kv[1]
-    ):
-        lines.append(f"  {status:40} {count}")
-    lines.append("")
+    if not s["has_any_data"]:
+        L.append("No pipeline data found in data/ yet (sent_history.csv, portal_applications.csv...).")
+        L.append("Nothing to report today.")
+        L.append("")
+        L.append("Generated by job-madinah/scripts/daily_report.py")
+        return "\n".join(L)
 
-    if summary["interviews"]:
-        lines.append("🔥 INTERVIEWS (act fast):")
-        for r in summary["interviews"]:
-            lines.append(
-                f"  [{r.get('ID')}] {r.get('Entreprise')} — {r.get('Poste')} — {r.get('Personne contactée')}"
-            )
-        lines.append("")
+    L.append("--- Cold-email outreach ---")
+    L.append(f"  Total emails sent:   {s['emails_total']}")
+    L.append(f"  Sent today:          {s['emails_today']}")
+    L.append(f"  Sent yesterday:      {s['emails_yesterday']}")
+    L.append(f"  Sent last 7 days:    {s['emails_7d']}")
+    L.append(f"  Send results today:  {s['ok_today']} ok, {len(s['err_today'])} error(s)")
+    if s["emails_today"] < TARGET_DAILY:
+        L.append(f"  /!\\ Behind daily target ({s['emails_today']}/{TARGET_DAILY}). Catch up before EOD.")
+    L.append("")
 
-    if summary["hot_responses"]:
-        lines.append("📨 ACTIVE REPLIES (respond < 24h):")
-        for r in summary["hot_responses"]:
-            lines.append(
-                f"  [{r.get('ID')}] {r.get('Entreprise')} — {r.get('Poste')} — {r.get('Notes')}"
-            )
-        lines.append("")
+    if s["err_today"]:
+        L.append("SEND ERRORS TODAY:")
+        for r in s["err_today"][:15]:
+            L.append(f"  {r.get('company')} <{r.get('email')}> — {r.get('result')}: {r.get('details')}")
+        L.append("")
 
-    if summary["pending_followups_today"]:
-        lines.append(f"📅 FOLLOW-UPS DUE TODAY ({len(summary['pending_followups_today'])}):")
-        for r in summary["pending_followups_today"][:20]:
-            lines.append(
-                f"  [{r.get('ID')}] {r.get('Entreprise')} — {r.get('Poste')} — next: {r.get('Date prochaine relance')}"
-            )
-        if len(summary["pending_followups_today"]) > 20:
-            lines.append(f"  ... and {len(summary['pending_followups_today']) - 20} more")
-        lines.append("")
+    L.append("--- Portal / Easy-Apply applications ---")
+    L.append(f"  Total portal applications: {s['portal_total']}")
+    for status, count in sorted(s["portal_status"].items(), key=lambda kv: -kv[1]):
+        L.append(f"    {status:50} {count}")
+    L.append("")
 
-    lines.append("--- Action items ---")
-    lines.append("- Send today's follow-ups (template 05 in templates-EN-persona/)")
-    lines.append("- Reply to any active threads within 24h")
-    lines.append("- Push pipeline to 17/day if behind")
-    lines.append("")
-    lines.append("Generated by job-madinah/scripts/daily_report.py")
-    return "\n".join(lines)
+    if s["portal_blocked"]:
+        L.append(f"PORTAL APPLICATIONS NEEDING MANUAL ACTION ({len(s['portal_blocked'])}):")
+        for r in s["portal_blocked"][:20]:
+            L.append(f"  {r.get('portal')} — {r.get('job_title')} — {r.get('status')}")
+            if r.get("job_url"):
+                L.append(f"      {r.get('job_url')}")
+        L.append("")
+
+    if s["pending_manual"]:
+        L.append(f"PORTALS PENDING MANUAL APPLICATION ({len(s['pending_manual'])}):")
+        for r in s["pending_manual"][:20]:
+            L.append(f"  {r.get('company')} ({r.get('sector')}) — {r.get('portal_url')}")
+        L.append("")
+
+    L.append("--- Action items ---")
+    L.append(f"- Keep cold-email volume at {TARGET_DAILY}/day")
+    L.append("- Manually finish blocked portal applications (CV upload steps)")
+    L.append("- Reply to any active threads within 24h")
+    L.append("")
+    L.append("Generated by job-madinah/scripts/daily_report.py")
+    return "\n".join(L)
 
 
-def send_via_smtp(body, summary):
-    """Send the report via Gmail SMTP."""
-    if not GMAIL_APP_PASSWORD:
-        print("[INFO] GMAIL_APP_PASSWORD not set — printing report to stdout instead")
+def send_report(body, subject):
+    """Send via SMTP (SSL or STARTTLS). Print to stdout if no password configured.
+
+    Returns 0 on success / stdout fallback, 1 on a real SMTP failure.
+    """
+    if not SMTP_PASSWORD:
+        print("[INFO] No SMTP password set (SMTP_PASSWORD/GMAIL_APP_PASSWORD) — printing report:\n")
         print(body)
         return 0
 
     msg = MIMEMultipart()
-    msg["From"] = GMAIL_USER
+    msg["From"] = SMTP_FROM
     msg["To"] = REPORT_RECIPIENT
-    msg["Subject"] = (
-        f"[Job Madinah] Daily {summary['today']} — "
-        f"{summary['sent_today']} sent, {len(summary['interviews'])} interviews, "
-        f"{len(summary['hot_responses'])} replies"
-    )
+    msg["Subject"] = subject
     msg.attach(MIMEText(body, "plain", "utf-8"))
 
     try:
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-            server.login(GMAIL_USER, GMAIL_APP_PASSWORD)
-            server.send_message(msg)
+        if SMTP_USE_SSL:
+            with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, timeout=30) as server:
+                server.login(SMTP_USER, SMTP_PASSWORD)
+                server.send_message(msg)
+        else:
+            with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=30) as server:
+                server.ehlo()
+                server.starttls()
+                server.ehlo()
+                server.login(SMTP_USER, SMTP_PASSWORD)
+                server.send_message(msg)
         print(f"[OK] Report sent to {REPORT_RECIPIENT}")
         return 0
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"[ERROR] SMTP send failed: {e}", file=sys.stderr)
-        print(body)  # fallback to stdout
+        print(body)  # keep the content visible in the run log
         return 1
 
 
 def main():
-    rows = load_tracking()
-    if not rows:
-        print("[ERROR] No tracking data", file=sys.stderr)
-        return 1
-    summary = summarize(rows)
+    summary = summarize()
     body = render_text(summary)
-    return send_via_smtp(body, summary)
+    subject = (
+        f"[Job Madinah] Daily {summary['today']} — "
+        f"{summary['emails_today']} emails, "
+        f"{summary['portal_total']} portal apps"
+    )
+    return send_report(body, subject)
 
 
 if __name__ == "__main__":

@@ -17,28 +17,16 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Resolve tracking CSV source
-        env:
-          TRACKING_GIST_TOKEN: ${{ secrets.TRACKING_GIST_TOKEN }}
-          TRACKING_GIST_ID: ${{ secrets.TRACKING_GIST_ID }}
-        run: |
-          # The tracking CSV lives locally on Nuredin's Mac. For GH Actions runs,
-          # the canonical source is mirrored to a private gist (synced by local Mac).
-          # If gist not configured, fall back to data/tracking.csv in repo.
-          if [ -n "$TRACKING_GIST_ID" ] && [ -n "$TRACKING_GIST_TOKEN" ]; then
-            mkdir -p /tmp/tracking
-            curl -s -H "Authorization: Bearer ${TRACKING_GIST_TOKEN}" \
-              "https://api.github.com/gists/${TRACKING_GIST_ID}" \
-              | python3 -c "import json,sys; d=json.load(sys.stdin); print(list(d['files'].values())[0]['content'])" \
-              > /tmp/tracking/Tracking-Candidatures.csv
-            echo "JOB_MADINAH_TRACKING_CSV=/tmp/tracking/Tracking-Candidatures.csv" >> $GITHUB_ENV
-          else
-            echo "JOB_MADINAH_TRACKING_CSV=$GITHUB_WORKSPACE/data/tracking.csv" >> $GITHUB_ENV
-          fi
-
       - name: Send daily report
         env:
-          GMAIL_USER: ${{ secrets.GMAIL_USER }}
-          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          # SMTP (Hostinger/Gmail) — same secrets the send pipeline uses.
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          SMTP_USE_SSL: ${{ secrets.SMTP_USE_SSL }}
           REPORT_RECIPIENT: ${{ secrets.REPORT_RECIPIENT }}
+        # The report reads the repo's committed data/ files (sent_history.csv,
+        # portal_applications.csv, ...). No external tracking CSV / gist needed.
         run: python3 scripts/daily_report.py
