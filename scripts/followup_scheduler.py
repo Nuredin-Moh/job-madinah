@@ -1,47 +1,53 @@
 #!/usr/bin/env python3
 """
-Follow-up scheduler — reads tracking CSV, identifies candidates due for follow-up,
-generates draft texts ready to copy into Gmail.
+Follow-up scheduler — reads the committed cold-email history, identifies companies
+due for a follow-up, and generates draft texts ready to copy into Gmail.
 
-Triggers used:
-- J+7 from initial send → Version A (simple bump)
+Data source: data/sent_history.csv (date, company, email, persona, cv, subject, status).
+This works on GitHub Actions with no external CSV/gist dependency.
+
+Triggers (days since the initial email was sent):
+- J+7  → Version A (simple bump)
 - J+14 → Version B (value-add)
 - J+21 → Version C (graceful goodbye)
 
-Skip if status in: Refus, Hired, BOUNCED, STOP, or Date prochaine relance is empty.
+Skips rows whose status indicates the thread is closed (replied / bounced / stop).
 
-Output: writes /tmp/followups_to_send.json + a markdown drafts file.
+Output: /tmp/followups_to_send.json + /tmp/followups_<date>.md
 
-Run via GitHub Actions cron 8:00 UTC daily.
+Resilience: missing/empty data never hard-fails (exit 0) so the cron does not spam
+failure notifications.
+
+Run via GitHub Actions cron (Sun–Wed 08:00 UTC).
 """
 
 import csv
 import json
 import os
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 
 
-TRACKING_CSV = Path(
-    os.environ.get(
-        "JOB_MADINAH_TRACKING_CSV",
-        "/Users/nuredin.mohamedali/Desktop/Arabie/Recherche Emploi Médine/07-Tracking/Tracking-Candidatures.csv",
-    )
-)
+ROOT = Path(os.environ.get("JOB_MADINAH_ROOT", Path(__file__).resolve().parent.parent))
+# Primary source = committed cold-email history. A custom path can still be forced
+# via JOB_MADINAH_TRACKING_CSV (back-compat); we then read it with flexible columns.
+SENT_HISTORY = ROOT / "data" / "sent_history.csv"
+OVERRIDE_CSV = os.environ.get("JOB_MADINAH_TRACKING_CSV", "").strip()
 OUTPUT_DIR = Path("/tmp")
 
-SKIP_STATUSES = {
-    "Refus",
-    "Hired",
-    "Embauche",
-    "BOUNCED - email invalide",
-    "BOUNCED probable - à vérifier",
-    "STOP",
-    "Stopped",
-    "SKIP - profil 404 LinkedIn",
-    "SKIP - page entreprise pas profil individuel",
-}
+# Status substrings that mean "do not follow up".
+SKIP_STATUS_SUBSTRINGS = (
+    "repl",      # replied
+    "répond",    # répondu
+    "bounce",    # bounced
+    "invalid",
+    "stop",
+    "refus",
+    "reject",
+    "hired",
+    "embauch",
+)
 
 
 VERSION_A = """{greeting}
@@ -54,23 +60,23 @@ Happy to share additional materials, references, or a short intro video if usefu
 
 Best regards,
 Nuredin Mohamed Ali
-+212 626 012 886 | linkedin.com/in/nuredinmohamedali
++41 79 884 05 33 | linkedin.com/in/nuredinmohamedali
 """
 
 VERSION_B = """{greeting}
 
 Following up on my note from {original_date}.
 
-Should you reconsider opening conversations for Senior Marketing roles at {company}, I remain very interested and available — happy to share a short loom walking through a Vision 2030-aligned acquisition plan tailored to your team.
+Should you reconsider opening conversations for Senior Marketing roles at {company}, I remain very interested and available - happy to share a short Loom walking through a Vision 2030-aligned acquisition plan tailored to your team.
 
 Best regards,
 Nuredin Mohamed Ali
-+212 626 012 886 | linkedin.com/in/nuredinmohamedali
++41 79 884 05 33 | linkedin.com/in/nuredinmohamedali
 """
 
 VERSION_C = """{greeting}
 
-This is my last note on this thread — I will respect your time.
+This is my last note on this thread - I will respect your time.
 
 {company} remains high on my shortlist, and I would welcome the chance to reconnect whenever the timing makes sense. If a different team or division might be a better fit, I would be grateful for an introduction.
 
@@ -81,16 +87,39 @@ Nuredin Mohamed Ali
 """
 
 
-def days_between(date_str: str) -> int:
+def load_rows():
+    """Load outreach rows from the override CSV if set, else sent_history.csv.
+
+    Returns a list of normalized dicts: {date, company, email, subject, status}.
+    Handles both the cold-email schema (date/company/email/subject/status) and the
+    older French tracking schema (Date candidature/Entreprise/Statut) if an override
+    CSV is provided.
+    """
+    path = Path(OVERRIDE_CSV) if OVERRIDE_CSV else SENT_HISTORY
+    if not path.exists():
+        print(f"[INFO] No outreach data found at {path} - nothing to schedule", file=sys.stderr)
+        return []
+    rows = []
     try:
-        d = datetime.strptime(date_str, "%Y-%m-%d")
-        return (datetime.now() - d).days
-    except ValueError:
-        return -1
+        with path.open("r", encoding="utf-8", newline="") as f:
+            for r in csv.DictReader(f):
+                rows.append(
+                    {
+                        "date": (r.get("date") or r.get("Date candidature") or "").strip(),
+                        "company": (r.get("company") or r.get("Entreprise") or "").strip(),
+                        "email": (r.get("email") or "").strip(),
+                        "subject": (r.get("subject") or "").strip(),
+                        "status": (r.get("status") or r.get("Statut") or "").strip(),
+                        "contact": (r.get("Personne contactée") or "").strip(),
+                    }
+                )
+    except Exception as e:  # noqa: BLE001
+        print(f"[WARN] could not read {path}: {e}", file=sys.stderr)
+        return []
+    return rows
 
 
 def extract_first_name(contact: str) -> str:
-    """Return contact first name, or empty string. Never 'Hiring Manager'."""
     if not contact or not contact.strip():
         return ""
     name_part = contact.split("/")[0].split("(")[0].strip()
@@ -106,7 +135,7 @@ def extract_first_name(contact: str) -> str:
 
 
 def build_greeting(contact: str, company: str) -> str:
-    """Personalised greeting — never 'Dear Hiring Manager'."""
+    """Personalised greeting - never 'Dear Hiring Manager'."""
     first = extract_first_name(contact)
     if first:
         return f"Dear {first},"
@@ -117,89 +146,73 @@ def build_greeting(contact: str, company: str) -> str:
 
 
 def main():
-    if not TRACKING_CSV.exists():
-        print(f"[ERROR] Tracking CSV not found: {TRACKING_CSV}", file=sys.stderr)
-        return 1
-
+    rows = load_rows()
     today_str = datetime.now().strftime("%Y-%m-%d")
     today_date = datetime.now().date()
 
     followups = []
-    with TRACKING_CSV.open("r", encoding="utf-8", newline="") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            statut = (row.get("Statut") or "").strip()
-            if any(skip in statut for skip in SKIP_STATUSES):
-                continue
+    for row in rows:
+        status = row["status"].lower()
+        if any(sub in status for sub in SKIP_STATUS_SUBSTRINGS):
+            continue
 
-            date_str = (row.get("Date candidature") or "").strip()
-            if not date_str:
-                continue
-            try:
-                d_init = datetime.strptime(date_str, "%Y-%m-%d").date()
-            except ValueError:
-                continue
+        date_str = row["date"]
+        if not date_str:
+            continue
+        try:
+            d_init = datetime.strptime(date_str[:10], "%Y-%m-%d").date()
+        except ValueError:
+            continue
 
-            days_since = (today_date - d_init).days
-            if days_since < 7:
-                continue
-            if days_since > 25:
-                continue  # past J+21 + buffer, stop
+        days_since = (today_date - d_init).days
 
-            # Pick template version
-            if 7 <= days_since <= 9:
-                version = "A"
-                template = VERSION_A
-            elif 13 <= days_since <= 16:
-                version = "B"
-                template = VERSION_B
-            elif 20 <= days_since <= 22:
-                version = "C"
-                template = VERSION_C
-            else:
-                continue
+        if 7 <= days_since <= 9:
+            version, template = "A", VERSION_A
+        elif 13 <= days_since <= 16:
+            version, template = "B", VERSION_B
+        elif 20 <= days_since <= 22:
+            version, template = "C", VERSION_C
+        else:
+            continue
 
-            company = (row.get("Entreprise") or "").strip()
-            poste = (row.get("Poste") or "").strip()
-            contact = (row.get("Personne contactée") or "").strip()
-            first_name = extract_first_name(contact)
-            greeting = build_greeting(contact, company)
+        company = row["company"]
+        contact = row["contact"]
+        greeting = build_greeting(contact, company)
+        subject = row["subject"] or f"Senior Digital Marketing Manager - {company}"
+        if not subject.lower().startswith("re:"):
+            subject = f"Re: {subject}"
 
-            body = template.format(
-                greeting=greeting,
-                company=company,
-                original_date=d_init.strftime("%B %d"),
-            )
+        body = template.format(
+            greeting=greeting,
+            company=company,
+            original_date=d_init.strftime("%B %d"),
+        )
 
-            followups.append(
-                {
-                    "csv_id": row.get("ID"),
-                    "version": version,
-                    "company": company,
-                    "poste": poste,
-                    "contact": contact,
-                    "first_name": first_name,
-                    "original_date": date_str,
-                    "days_since": days_since,
-                    "subject": f"Re: Senior Digital Marketing Manager — {company}",
-                    "body": body,
-                }
-            )
+        followups.append(
+            {
+                "version": version,
+                "company": company,
+                "email": row["email"],
+                "contact": contact,
+                "original_date": date_str,
+                "days_since": days_since,
+                "subject": subject,
+                "body": body,
+            }
+        )
 
-    # Write JSON
+    # Always write outputs (even if empty) so downstream steps are predictable.
     out_json = OUTPUT_DIR / "followups_to_send.json"
     with out_json.open("w", encoding="utf-8") as f:
         json.dump(followups, f, indent=2, ensure_ascii=False)
 
-    # Write markdown
     out_md = OUTPUT_DIR / f"followups_{today_str}.md"
     with out_md.open("w", encoding="utf-8") as f:
         f.write(f"# Follow-ups due {today_str}\n\n")
-        f.write(f"Total: {len(followups)} contacts\n\n")
-        f.write("---\n\n")
+        f.write(f"Total: {len(followups)} contacts\n\n---\n\n")
         for fu in followups:
-            f.write(f"## [{fu['csv_id']}] {fu['company']} — Version {fu['version']} (J+{fu['days_since']})\n\n")
-            f.write(f"- Contact: {fu['contact']}\n")
+            f.write(f"## {fu['company']} - Version {fu['version']} (J+{fu['days_since']})\n\n")
+            f.write(f"- Contact: {fu['contact'] or fu['email'] or 'n/a'}\n")
             f.write(f"- Subject: `{fu['subject']}`\n\n")
             f.write("```\n")
             f.write(fu["body"])
@@ -208,7 +221,6 @@ def main():
     print(f"[OK] {len(followups)} follow-ups generated")
     print(f"  JSON: {out_json}")
     print(f"  Markdown: {out_md}")
-
     by_version = {}
     for fu in followups:
         by_version[fu["version"]] = by_version.get(fu["version"], 0) + 1

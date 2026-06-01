@@ -1,8 +1,8 @@
 name: followup-scheduler
 on:
   schedule:
-    # 08:00 UTC = 11:00 KSA (peak send window)
-    - cron: "0 8 * * 0,1,2,3" # Sunday-Wednesday only (KSA work week)
+    # 08:00 UTC = 11:00 KSA (peak send window) — Sunday-Wednesday only (KSA work week)
+    - cron: "0 8 * * 0,1,2,3"
   workflow_dispatch:
 
 jobs:
@@ -17,23 +17,8 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Resolve tracking CSV source
-        env:
-          TRACKING_GIST_TOKEN: ${{ secrets.TRACKING_GIST_TOKEN }}
-          TRACKING_GIST_ID: ${{ secrets.TRACKING_GIST_ID }}
-        run: |
-          if [ -n "$TRACKING_GIST_ID" ] && [ -n "$TRACKING_GIST_TOKEN" ]; then
-            mkdir -p /tmp/tracking
-            curl -s -H "Authorization: Bearer ${TRACKING_GIST_TOKEN}" \
-              "https://api.github.com/gists/${TRACKING_GIST_ID}" \
-              | python3 -c "import json,sys; d=json.load(sys.stdin); print(list(d['files'].values())[0]['content'])" \
-              > /tmp/tracking/Tracking-Candidatures.csv
-            echo "JOB_MADINAH_TRACKING_CSV=/tmp/tracking/Tracking-Candidatures.csv" >> $GITHUB_ENV
-          else
-            echo "JOB_MADINAH_TRACKING_CSV=$GITHUB_WORKSPACE/data/tracking.csv" >> $GITHUB_ENV
-          fi
-
       - name: Generate follow-ups
+        # Reads data/sent_history.csv (committed). No external tracking CSV / gist needed.
         run: python3 scripts/followup_scheduler.py
 
       - name: Upload follow-ups as artifact
@@ -45,8 +30,12 @@ jobs:
 
       - name: Email follow-ups markdown to Nuredin
         env:
-          GMAIL_USER: ${{ secrets.GMAIL_USER }}
-          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          SMTP_USE_SSL: ${{ secrets.SMTP_USE_SSL }}
           REPORT_RECIPIENT: ${{ secrets.REPORT_RECIPIENT }}
         run: |
           python3 - <<'PYEOF'
@@ -55,35 +44,48 @@ jobs:
           from email.mime.text import MIMEText
           from email.mime.application import MIMEApplication
 
-          gmail_user = os.environ.get("GMAIL_USER", "nuredinmohamedali@gmail.com")
-          gmail_pw = os.environ.get("GMAIL_APP_PASSWORD", "")
+          smtp_host = os.environ.get("SMTP_HOST", "smtp.gmail.com")
+          smtp_port = int(os.environ.get("SMTP_PORT", "587"))
+          smtp_user = os.environ.get("SMTP_USER", "")
+          smtp_pw = os.environ.get("SMTP_PASSWORD", "")
+          smtp_from = os.environ.get("SMTP_FROM", smtp_user)
+          smtp_ssl = os.environ.get("SMTP_USE_SSL", "0") == "1"
           recipient = os.environ.get("REPORT_RECIPIENT", "nuredinmohamedali@gmail.com")
 
-          if not gmail_pw:
-              print("[INFO] GMAIL_APP_PASSWORD missing, skipping email send")
+          if not smtp_pw:
+              print("[INFO] SMTP_PASSWORD missing, skipping email send")
               raise SystemExit(0)
 
           md_files = sorted(glob.glob("/tmp/followups_*.md"))
           if not md_files:
-              print("[INFO] No follow-ups generated today")
+              print("[INFO] No follow-ups file generated")
+              raise SystemExit(0)
+
+          with open(md_files[-1], "r", encoding="utf-8") as fh:
+              content = fh.read()
+          if "Total: 0 contacts" in content:
+              print("[INFO] 0 follow-ups due today, skipping email")
               raise SystemExit(0)
 
           msg = MIMEMultipart()
-          msg["From"] = gmail_user
+          msg["From"] = smtp_from
           msg["To"] = recipient
           msg["Subject"] = "[Job Madinah] Daily follow-ups ready to send"
-
-          with open(md_files[-1], "r", encoding="utf-8") as f:
-              content = f.read()
           msg.attach(MIMEText("Daily follow-ups generated. See attached markdown for ready-to-copy drafts.\n\nPaste each block into a Gmail REPLY to the original thread.", "plain", "utf-8"))
+          with open(md_files[-1], "rb") as fh:
+              part = MIMEApplication(fh.read(), Name=os.path.basename(md_files[-1]))
+          part["Content-Disposition"] = 'attachment; filename="' + os.path.basename(md_files[-1]) + '"'
+          msg.attach(part)
 
-          with open(md_files[-1], "rb") as f:
-              part = MIMEApplication(f.read(), Name=os.path.basename(md_files[-1]))
-              part["Content-Disposition"] = f'attachment; filename="{os.path.basename(md_files[-1])}"'
-              msg.attach(part)
-
-          with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-              server.login(gmail_user, gmail_pw)
-              server.send_message(msg)
-          print(f"[OK] Follow-ups emailed to {recipient}")
+          if smtp_ssl:
+              server = smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=30)
+          else:
+              server = smtplib.SMTP(smtp_host, smtp_port, timeout=30)
+              server.ehlo()
+              server.starttls()
+              server.ehlo()
+          server.login(smtp_user, smtp_pw)
+          server.send_message(msg)
+          server.quit()
+          print("[OK] Follow-ups emailed to " + recipient)
           PYEOF
