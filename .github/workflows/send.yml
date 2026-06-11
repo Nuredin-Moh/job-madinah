@@ -36,12 +36,10 @@ jobs:
             pip install -r requirements.txt
           fi
 
-      - name: Resolve CV directory (skip attachment if absent on runner)
+      - name: Resolve CV directory (committed PDFs in data/cvs)
         run: |
-          # The CV PDFs live on Nuredin's Mac. In CI we send without attachment
-          # so the pipeline still mails — the orchestrator already warns when absent.
-          mkdir -p /tmp/cvs
-          echo "JOB_MADINAH_CV_DIR=/tmp/cvs" >> $GITHUB_ENV
+          # CV PDFs are committed in the private repo so CI attaches them.
+          echo "JOB_MADINAH_CV_DIR=$GITHUB_WORKSPACE/data/cvs" >> $GITHUB_ENV
 
       - name: Run orchestrator (dry-run)
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'true'
