@@ -679,3 +679,20 @@ date,company,sector,portal_url,status,notes
 2026-07-05,Publicis Groupe Riyadh,Agence,https://careers.publicisgroupe.com/,manual_application_required,Ex-Publicis Geneve reseau direct - M365 catch-all bloque tous patterns - LinkedIn priority
 2026-07-05,Dur Hospitality,Hospitality,https://www.dur.sa/careers,manual_application_required,Operateur hotelier PIF avec presence Madinah - M365 catch-all bloque - portail uniquement
 2026-07-05,Dallah Taibah,Hospitality,https://dallahtaibah.com/careers,manual_application_required,Operateur hotelier Madinah - hr@dallah-taibah.com BOUNCED (bounces.txt) + dallahtaibah.com M365 catch-all - portail uniquement
+2026-07-06,Rua Al-Madinah Holding,Mega-projet PIF,https://talent.ruaalmadinah.com/Careers/search,manual_application_required,PIF Vision 2030 flagship Madinah - careers@ruaalmadinah.com BOUNCED - portail uniquement + LinkedIn HR
+2026-07-06,Knowledge Economic City,Mega-projet,https://www.madinahkec.com/workwithkec,manual_application_required,20k jobs project - tous patterns @madinahkec.com REJECT Outlook M365 - portail careers uniquement
+2026-07-06,Anwar Al Madinah Movenpick,Hotel 5*,https://careers.accor.com/,manual_application_required,Accor flagship - hr.almadina@movenpick.com BOUNCED - portail Accor central + LinkedIn cluster HR KSA
+2026-07-06,Pullman ZamZam Madinah,Hotel 5*,https://careers.accor.com/,manual_application_required,Face Haram - h7187-hr@accor.com BOUNCED + hr@pullman-zamzam-madina.com BOUNCED - portail Accor uniquement
+2026-07-06,Sofitel Shahd Al Madinah,Hotel luxe,https://careers.accor.com/,manual_application_required,Accor luxury - hr.shahd@sofitel.com BOUNCED - portail Accor + LinkedIn KSA luxury cluster
+2026-07-06,Novotel Madinah,Hotel 4*,https://careers.accor.com/,manual_application_required,DM Manager 2026 actif - novotelmadinah.com DOMAIN_NOT_FOUND - portail Accor uniquement
+2026-07-06,Dar Al Iman InterContinental,Hotel 5*,https://careers.ihg.com/,manual_application_required,IHG flagship - hr.daraliman@ihg.com + careers@daraliman.com BOUNCED - portail IHG MENA + DM Sarah Khan LinkedIn
+2026-07-06,InterContinental Dar Al Hijra,Hotel 5*,https://careers.ihg.com/,manual_application_required,IHG sister property - hr.daralhijra@ihg.com BOUNCED - portail IHG + LinkedIn HR MENA
+2026-07-06,Crowne Plaza Madinah,Hotel 5*,https://careers.ihg.com/,manual_application_required,IHG cluster - portail IHG uniquement
+2026-07-06,Hilton Madinah,Hotel 5*,https://jobs.hilton.com/,manual_application_required,357 rooms - madinah.hr@hilton.com M365 REJECT - portail Hilton MENA
+2026-07-06,Hyatt Regency Madinah,Hotel 5*,https://careers.hyatt.com/,manual_application_required,Hyatt premium - madinah.hr@hyatt.com BOUNCED - portail Hyatt + LinkedIn MENA HR
+2026-07-06,Marriott Madinah Cluster,Hotel 5*,https://careers.marriott.com/,manual_application_required,CLUSTER UNIFIE Marriott + Sheraton + Le Meridien Madinah - portail corporate Marriott - LinkedIn MENA Talent
+2026-07-06,Bin Dawood Holding,Retail,https://bindawoodholding.com/careers,manual_application_required,Groupe familial Médine - tous patterns Google Workspace REJECT - portail + LinkedIn HR
+2026-07-06,Social Clinic,Agence,https://socialclinic.sa/careers,manual_application_required,Top agence KSA bureau Médine - M365 catch-all bloque tous patterns - portail + LinkedIn TA
+2026-07-06,Publicis Groupe Riyadh,Agence,https://careers.publicisgroupe.com/,manual_application_required,Ex-Publicis Geneve reseau direct - M365 catch-all bloque tous patterns - LinkedIn priority
+2026-07-06,Dur Hospitality,Hospitality,https://www.dur.sa/careers,manual_application_required,Operateur hotelier PIF avec presence Madinah - M365 catch-all bloque - portail uniquement
+2026-07-06,Dallah Taibah,Hospitality,https://dallahtaibah.com/careers,manual_application_required,Operateur hotelier Madinah - hr@dallah-taibah.com BOUNCED (bounces.txt) + dallahtaibah.com M365 catch-all - portail uniquement
