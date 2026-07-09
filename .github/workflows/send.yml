@@ -71,7 +71,9 @@ jobs:
         run: python3 scripts/orchestrator.py
 
       - name: Commit updated CSVs back to repo
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run != 'true')
+        # always() : même si l'envoi plante/timeout en cours de route, l'historique
+        # partiel est commité — sinon le run suivant renverrait des doublons.
+        if: always() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run != 'true'))
         run: |
           git config user.name "job-madinah-bot"
           git config user.email "actions@users.noreply.github.com"

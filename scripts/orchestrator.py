@@ -32,6 +32,11 @@ import json
 import os
 import re
 import smtplib
+import socket
+
+# Hard global network timeout — a hanging SMTP/DNS peer must never freeze the whole run
+# (2026-07-09: scheduled run hung >15min and was killed by the job timeout).
+socket.setdefaulttimeout(60)
 import subprocess
 import sys
 from datetime import datetime
