@@ -1,0 +1,30 @@
+name: inbox-watch
+on:
+  schedule:
+    # 05:00 & 13:00 UTC = 08:00 & 16:00 KSA — surveille les réponses 2x/jour
+    - cron: "0 5,13 * * *"
+  workflow_dispatch:
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Scan inbox for replies / screenings
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          SMTP_USE_SSL: ${{ secrets.SMTP_USE_SSL }}
+          IMAP_HOST: ${{ secrets.IMAP_HOST }}
+          REPORT_RECIPIENT: ${{ secrets.REPORT_RECIPIENT }}
+        run: python3 scripts/inbox_watch.py

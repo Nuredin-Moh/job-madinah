@@ -28,7 +28,19 @@ jobs:
           path: /tmp/followups_*.md
           retention-days: 30
 
+      - name: Auto-send due follow-ups (then summary to Nuredin)
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          SMTP_USE_SSL: ${{ secrets.SMTP_USE_SSL }}
+          REPORT_RECIPIENT: ${{ secrets.REPORT_RECIPIENT }}
+        run: python3 scripts/send_followups.py
+
       - name: Email follow-ups markdown to Nuredin
+        if: ${{ false }}  # remplacé par l'auto-envoi ci-dessus ; conservé pour rollback
         env:
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
