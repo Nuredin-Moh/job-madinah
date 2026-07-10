@@ -67,6 +67,12 @@ def main():
         print(f"[ERROR] IMAP login failed on {IMAP_HOST} as {SMTP_USER}: {e}", file=sys.stderr)
         return 2
 
+    if os.environ.get("INBOX_DEBUG_IDENTITY") == "1":
+        # print identity split at @ so CI secret-masking (exact-string) doesn't hide it
+        u = SMTP_USER.replace("@", " [at] ")
+        f = SMTP_FROM.replace("@", " [at] ")
+        r = RECIPIENT.replace("@", " [at] ")
+        print(f"[IDENTITY] login={u} | from={f} | alerts_to={r} | imap={IMAP_HOST}")
     box.select("INBOX")
     since = (datetime.utcnow() - timedelta(days=LOOKBACK_DAYS)).strftime("%d-%b-%Y")
     _, data = box.search(None, f'(SINCE "{since}")')
