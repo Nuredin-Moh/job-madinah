@@ -96,12 +96,12 @@ SUBJECT_TPL = "Senior Digital Marketing Manager — interest in {company}"
 
 TEMPLATE_HR = """Dear {first_name},
 
-I am Nuredin Mohamed Ali, a Senior Digital Marketing Manager with 10+ years of experience across hospitality, e-commerce and Vision 2030-aligned brands. I came across {company} while mapping marketing teams in Madinah, and the trajectory of the organisation stood out.
+I am Nuredin Mohamed Ali, a Senior Digital Marketing Manager with 10+ years of experience across hospitality, e-commerce and Vision 2030-aligned brands. I came across {company} while mapping marketing teams across Saudi Arabia, and the trajectory of the organisation stood out.
 
 What I bring:
 - Multi-million euro media plans across Meta, Google, TikTok and programmatic
 - Full-funnel team leadership (brand, performance, CRM, content)
-- Operating experience in MENA and multicultural contexts (English, French, Arabic basics)
+- Native Arabic and French speaker (English C1) — rare for a European-trained marketer
 
 Could we open a 15-minute conversation in the coming weeks to explore whether my profile fits a current or upcoming Senior Marketing role on your team?
 
@@ -109,14 +109,14 @@ I have attached my CV and would be happy to provide references on request.
 
 Best regards,
 Nuredin Mohamed Ali
-+212 626 012 886 | linkedin.com/in/nuredin-mohamedali
++41 79 884 05 33 | linkedin.com/in/nuredinmohamedali
 """
 
 TEMPLATE_HIRING = """Dear {first_name},
 
 I am writing to express strong interest in joining the marketing team at {company} as a Senior Digital Marketing Manager / Director.
 
-In my last roles I led 360 acquisition and brand programs combining performance media, content, CRM and creative production, with measurable impact on revenue and LTV. I am now relocating my professional focus to Madinah / KSA and looking specifically for senior marketing leadership opportunities aligned with Vision 2030.
+In my last roles I led 360 acquisition and brand programs combining performance media, content, CRM and creative production, with measurable impact on revenue and LTV. I am now relocating to Saudi Arabia (ready within 3 months) and looking specifically for senior marketing leadership opportunities aligned with Vision 2030.
 
 I would value a 15-minute exchange to share how my profile could plug into your roadmap.
 
@@ -124,14 +124,14 @@ CV attached. Happy to share portfolio links and references on request.
 
 Best regards,
 Nuredin Mohamed Ali
-+212 626 012 886 | linkedin.com/in/nuredin-mohamedali
++41 79 884 05 33 | linkedin.com/in/nuredinmohamedali
 """
 
 TEMPLATE_CEO = """Dear {first_name},
 
 I am Nuredin Mohamed Ali, Senior Digital Marketing Manager with 10+ years building and leading marketing organisations across Europe and MENA. I am writing directly because I have been following {company} and would like to be considered for a senior marketing leadership role on your team.
 
-In short: full-funnel ownership, multi-million budgets, team building, and a strong cultural fit for Madinah / KSA — I speak English, French, and operate confidently in multicultural environments.
+In short: full-funnel ownership, multi-million budgets, team building, and a strong cultural fit for Saudi Arabia — I am a native Arabic and French speaker (English C1) and operate confidently in multicultural environments.
 
 Could we book a 15-minute introduction call in the coming weeks? I am happy to share concrete case studies that match your context.
 
@@ -139,7 +139,7 @@ CV attached.
 
 Best regards,
 Nuredin Mohamed Ali
-+212 626 012 886 | linkedin.com/in/nuredin-mohamedali
++41 79 884 05 33 | linkedin.com/in/nuredinmohamedali
 """
 
 
