@@ -64,6 +64,7 @@ def main():
         msg["From"] = SMTP_FROM
         msg["To"] = to
         msg["Subject"] = fu["subject"]
+    msg["Reply-To"] = os.environ.get("REPLY_TO_ADDRESS", "nuredinmohamedali@gmail.com")
         msg.attach(MIMEText(fu["body"], "plain", "utf-8"))
         try:
             with smtp_connect() as server:

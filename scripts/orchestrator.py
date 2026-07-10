@@ -293,6 +293,7 @@ def send_email(draft: dict) -> tuple[bool, str]:
     msg["From"] = SMTP_FROM
     msg["To"] = draft["to"]
     msg["Subject"] = draft["subject"]
+    msg["Reply-To"] = os.environ.get("REPLY_TO_ADDRESS", "nuredinmohamedali@gmail.com")
     msg.attach(MIMEText(draft["body"], "plain", "utf-8"))
 
     cv_path = CV_DIR / draft["cv"]
