@@ -39,7 +39,7 @@ LOOKBACK_DAYS = int(os.environ.get("INBOX_LOOKBACK_DAYS", "2"))
 HOT = re.compile(
     r"interview|screening|assessment|shortlist|next step|schedule a call|"
     r"your availability|move forward|video call|teams meeting|zoom|"
-    r"accepted your invitation|entretien|has replied|re:\s",
+    r"accepted your invitation|entretien|has replied",
     re.I,
 )
 NOISE_SENDERS = re.compile(
