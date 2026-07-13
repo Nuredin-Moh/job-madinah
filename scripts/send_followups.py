@@ -19,6 +19,7 @@ from pathlib import Path
 socket.setdefaulttimeout(60)
 
 INPUT = Path("/tmp/followups_to_send.json")
+SENT_LOG = Path(__file__).resolve().parent.parent / "data" / "followups_sent.csv"
 CAP = int(os.environ.get("FOLLOWUP_DAILY_CAP", "10"))
 
 SMTP_HOST = os.environ.get("SMTP_HOST", "smtp.gmail.com")
@@ -54,6 +55,21 @@ def main():
         print("[INFO] 0 follow-ups due - nothing to send")
         return 0
 
+    # Memory: never send the same (company, version) twice.
+    already = set()
+    if SENT_LOG.exists():
+        for line in SENT_LOG.read_text(encoding="utf-8").splitlines()[1:]:
+            parts = line.split(",")
+            if len(parts) >= 2:
+                already.add((parts[0].strip().lower(), parts[1].strip()))
+    before = len(followups)
+    followups = [f for f in followups if (f.get("company", "").strip().lower(), f.get("version", "")) not in already]
+    if before != len(followups):
+        print(f"[INFO] {before - len(followups)} already sent earlier - skipped")
+    if not followups:
+        print("[INFO] all due follow-ups were already sent - nothing to do")
+        return 0
+
     sent, failed = [], []
     for fu in followups[:CAP]:
         to = (fu.get("email") or "").strip()
@@ -70,6 +86,10 @@ def main():
             with smtp_connect() as server:
                 server.send_message(msg)
             sent.append((fu["company"], to, fu["version"]))
+            if not SENT_LOG.exists():
+                SENT_LOG.write_text("company,version,date\n", encoding="utf-8")
+            with SENT_LOG.open("a", encoding="utf-8") as lg:
+                lg.write(f"{fu['company']},{fu['version']},{os.environ.get('TODAY_OVERRIDE','') or __import__('datetime').date.today().isoformat()}\n")
             print(f"[OK] follow-up {fu['version']} -> {fu['company']} <{to}>")
         except Exception as e:  # noqa: BLE001
             failed.append((fu["company"], str(e)))

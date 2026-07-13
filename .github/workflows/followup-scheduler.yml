@@ -9,6 +9,8 @@ jobs:
   schedule_followups:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -38,6 +40,20 @@ jobs:
           SMTP_USE_SSL: ${{ secrets.SMTP_USE_SSL }}
           REPORT_RECIPIENT: ${{ secrets.REPORT_RECIPIENT }}
         run: python3 scripts/send_followups.py
+
+      - name: Commit follow-up memory back to repo
+        # always() : la mémoire anti-doublon doit être sauvée même si l'étape précédente échoue
+        if: always()
+        run: |
+          git config user.name "job-madinah-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/followups_sent.csv 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "[INFO] no follow-up memory changes"
+          else
+            git commit -m "auto: follow-ups sent $(date -u +'%Y-%m-%d') [skip ci]"
+            git push
+          fi
 
       - name: Email follow-ups markdown to Nuredin
         if: ${{ false }}  # remplacé par l'auto-envoi ci-dessus ; conservé pour rollback
