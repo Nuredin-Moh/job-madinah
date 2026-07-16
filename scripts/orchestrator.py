@@ -261,6 +261,25 @@ def select_today_batch(companies: list[dict], already_sent: set, cap: int) -> tu
 # ---------- Draft building ----------
 
 
+
+
+GULF_MARKERS = ("country:uae", "country:qatar", "country:kuwait", "country:bahrain",
+                "country:oman", "country:gulf", "dubai", "abu dhabi", "doha",
+                "kuwait", "manama", "muscat", "sharjah")
+
+
+def adapt_for_gulf(body: str, company_row: dict) -> str:
+    """Non-KSA Gulf targets must not get KSA-specific wording (Vision 2030, relocating to Saudi)."""
+    blob = ((company_row.get("notes") or "") + " " + (company_row.get("city") or "")).lower()
+    if not any(m in blob for m in GULF_MARKERS):
+        return body
+    return (body
+            .replace("across Saudi Arabia", "across the Gulf")
+            .replace("relocating to Saudi Arabia", "relocating to the Gulf")
+            .replace("a strong cultural fit for Saudi Arabia", "a strong cultural fit for the Gulf")
+            .replace("aligned with Vision 2030", "in the region's fast-growing market")
+            .replace("Vision 2030-aligned brands", "high-growth Gulf brands"))
+
 def build_draft(company_row: dict) -> dict:
     name = (company_row.get("name") or "").strip()
     sector = (company_row.get("sector") or "").strip()
@@ -268,6 +287,7 @@ def build_draft(company_row: dict) -> dict:
     persona, template = pick_template(email)
     first_name = first_name_from_email(email)
     body = template.format(first_name=first_name, company=name)
+    body = adapt_for_gulf(body, company_row)
     cv = pick_cv(sector)
     return {
         "csv_id": name,
