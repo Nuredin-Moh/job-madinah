@@ -318,9 +318,11 @@ def send_email(draft: dict) -> tuple[bool, str]:
 
     cv_path = CV_DIR / draft["cv"]
     if cv_path.exists():
+        # Recruiter-facing filename: clean, professional (never internal names like CV-08-Generic)
+        display_name = "CV-Senior-Marketing-Nuredin-Mohamed-Ali.pdf"
         with cv_path.open("rb") as f:
-            part = MIMEApplication(f.read(), Name=draft["cv"])
-        part["Content-Disposition"] = f'attachment; filename="{draft["cv"]}"'
+            part = MIMEApplication(f.read(), Name=display_name)
+        part["Content-Disposition"] = f'attachment; filename="{display_name}"'
         msg.attach(part)
     else:
         log("WARN", f"CV not found at {cv_path} — sending without attachment")
