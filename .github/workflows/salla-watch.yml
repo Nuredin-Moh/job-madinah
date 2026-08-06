@@ -1,0 +1,44 @@
+name: salla-watch
+
+on:
+  schedule:
+    # 07:00 UTC le 1er de chaque mois = 10:00 Médine (KSA UTC+3) = 08:00 Maroc
+    - cron: "13 7 1 * *"
+  workflow_dispatch:
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Check Salla careers for new marketing roles
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          REPORT_RECIPIENT: ${{ secrets.REPORT_RECIPIENT }}
+        run: python3 scripts/salla_watch.py
+
+      - name: Commit seen-state back to repo
+        if: always()
+        run: |
+          git config user.name "job-madinah-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/salla_seen.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "[INFO] no state change"
+          else
+            git commit -m "auto: salla watch state $(date -u +'%Y-%m-%d') [skip ci]"
+            git push
+          fi
