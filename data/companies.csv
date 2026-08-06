@@ -403,3 +403,89 @@ Mezzan Holding,FMCG / catering / retail holding,1,https://www.mezzan.com,info@me
 The Zubair Corporation,"Diversified conglomerate (automotive, real estate, ICT, tourism)",1,https://www.zubaircorp.com,careers@zubaircorp.com,Muscat,https://jobs.zubaircorp.com/,RISKY,WF-sourced 2026-08 (pattern) | Marketing / Communications Manager | country:Oman | SMTP:RISKY host=cluster1a.eu.messagelabs.com cand=421 fake=421 | src:https://jobs.zubaircorp.com/
 OTE Group,Automotive / electronics / retail conglomerate (Saud Bahwan group),1,https://www.otegroup.com,careers@otegroup.com,Muscat,https://www.otegroup.com/en/careers,MX_VALID,WF-sourced 2026-08 (pattern) | Marketing Manager | country:Oman | SMTP:MX_VALID host=otegroup-com.mail.protection.outlook.com cand=250 fake= | src:https://www.otegroup.com/en/careers
 Bank Muscat,Banking (in-house marketing / brand),1,https://www.bankmuscat.com,careers@bankmuscat.com,Muscat,https://www.bankmuscat.com/en/aboutus/Pages/Careers.aspx,RISKY,WF-sourced 2026-08 (pattern) | Marketing Coordinator / Marketing Manager | country:Oman | SMTP:RISKY host=bankmuscat-com.mail.protection.outlook.com cand=250 fak | src:https://www.bankmuscat.com/en/aboutus/Pages/Careers.aspx
+Sipchem,Industrial,1,https://www.sipchem.com,talentacquisition@sipchem.com,Jubail,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
+Saudi Arabian Amiantit Company,Industrial,1,https://amiantit.com,info@amiantit.com,Dammam,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+Khusheim Holding,Industrial,1,https://khusheim.com,careers@khusheim.com,Dammam,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+Al Suwaidi Holding,Industrial,1,https://www.suwaidi.com,sales@alsuwaidi.com.sa,Dammam,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+Yanbu Cement Company,Industrial,1,https://ycc.sa,customercare@ycc.sa,Yanbu,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
+SENAAT,Industrial,1,https://senaat.com,info@senaat.com,Dammam,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+Saudi Global Ports,Logistics,1,https://www.saudiglobalports.com.sa,SGPC-ContactUs@globalpsa.com,Dammam,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+Prince Mohammad Bin Fahd University,Education,1,https://www.pmu.edu.sa,pr-mar-adv-dep@pmu.edu.sa,Al Khobar,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+King Fahd University of Petroleum and Minerals,Education,1,https://www.kfupm.edu.sa,hrconnect@kfupm.edu.sa,Dhahran,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+King Faisal University,Education,1,https://www.kfu.edu.sa,info@kfu.edu.sa,Al Ahsa,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+Nada Dairy,Food and Beverage,1,https://nada.com.sa,nada@nadadairy.com,Al Ahsa,auto-refill-routine,MX_VALID,Brand Manager | cv:brand
+United Group,Food and Beverage,1,https://www.unitedgroup.com.sa,contact@unitedgroup.com.sa,Al Khobar,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+Al Hugayet Group,Industrial,1,https://www.alhugayet.com,info@alhugayet.com,Al Khobar,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+Alkifah Holding,Construction,1,https://www.alkifah.com.sa,info@alkifah.com,Dammam,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
+Saudi Readymix,Construction,1,https://www.saudireadymix.com,info@saudireadymix.com.sa,Dammam,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+Right Click,Marketing Agency,1,https://www.rightclick.sa,info@rightclick.sa,Riyadh,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:brand
+Tihama Advertising and Public Relations,Marketing Agency,1,https://www.tihama.com,info@tihama.com,Riyadh,auto-refill-routine,MX_VALID,Marketing Director | cv:brand
+Leads,Marketing Agency,1,https://leads.sa,info@leads.sa,Al Khobar,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:brand
+Room 11,Marketing Agency,1,https://room11.sa,info@room11.sa,Jeddah,auto-refill-routine,MX_VALID,Performance Marketing Manager | cv:brand
+Seven Dimensions,Marketing Agency,1,https://7di.sa,contact@7di.sa,Riyadh,auto-refill-routine,MX_VALID,Head of Digital | cv:brand
+Jusoor,Marketing Agency,1,https://jusoor.com.sa,careers@jusoor.com.sa,Riyadh,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:brand
+Kaden Investment,Real Estate,1,https://www.kaden-sa.com,info@kaden-sa.com,Riyadh,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+Midad Real Estate,Real Estate,1,https://midad.com.sa,info@midad.com.sa,Riyadh,auto-refill-routine,MX_VALID,Marketing Director | cv:generic
+Ajwaad Group,Tourism,1,https://ajwaadgroup.com,info@ajwaadgroup.com,Riyadh,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+Saudi Premier Group,Tourism,1,https://saudipremiergroup.com,info@saudipremiergroup.com,Riyadh,auto-refill-routine,MX_VALID,Brand Marketing Manager | cv:brand
+Umrah Travel Agency,Tourism,1,https://www.umrahtravel.com,info@umrahtravel.com,Makkah,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
+Saudi Event Services,Events,1,https://saudieventservices.com,info@saudieventservices.com,Riyadh,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+Next Productions,Media,1,https://www.nextproductions.sa,info@nextproductions.sa,Riyadh,auto-refill-routine,MX_VALID,Marketing Manager | cv:brand
+Idea Factory Films,Media,1,http://ideafactory-films.com,info@ideafactory-films.com,Riyadh,auto-refill-routine,MX_VALID,Marketing Manager | cv:brand
+British International School Riyadh,Education,1,https://www.bisr.com.sa,baeadmissions@bisr.com.sa,Riyadh,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+AlMeswak Medical Group,Healthcare,1,https://www.almeswak.com,info@almeswak.com,Riyadh,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
+The Clinics,Healthcare,1,https://the-clinics.com,hello@the-clinics.com,Riyadh,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
+Al Jawdah Clinics,Healthcare,1,https://aljawdahclinics.sa,info@aljawdahclinic.com,Jeddah,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
+TAM Dental,Healthcare,1,https://tamdental.sa,info@tamdental.sa,Jeddah,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
+Al Alam Medical Complex,Healthcare,1,https://alalammedical.sa,info@alalammedical.sa,Abha,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
+Al Madinah Medical Center,Healthcare,1,https://madinahclinic.com,info@madinahclinic.com,Madinah,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
+Shifa Jeddah Polyclinic,Healthcare,1,https://shifajeddah.com,contact@shifajeddahksa.com,Jeddah,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+Hosn Clinics,Healthcare,1,https://hosnclinics.sa,info@hosnclinics.sa,Al Khobar,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
+Bateel International,Retail,1,https://www.bateel.com,talent.ksa@bateel.com,Riyadh,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+HB Brands,Food and Beverage,1,https://www.hbbrands.com,info@hbbrands.com,Riyadh,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
+Saudi Coffee Company,Food and Beverage,1,https://www.saudicoffee.com,info@saudicoffee.com,Riyadh,auto-refill-routine,MX_VALID,Brand Marketing Manager | cv:brand
+FBH Group,Food and Beverage,1,https://fbh.sa,info@fbh.sa,Jeddah,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
+Overdose Coffee,Food and Beverage,1,https://overdosecoffee.co,hello@overdosecoffee.co,Jeddah,auto-refill-routine,MX_VALID,Social Media Manager | cv:generic
+Raydan Food Company,Food and Beverage,1,https://www.raydan.com.sa,info@raydan.com.sa,Jeddah,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+Namariq Arabian Services,Food and Beverage,1,https://www.namariq.com.sa,Recruitment.Unit@namariq.com.sa,Jeddah,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+Saudi Marketing Company Farm Superstores,Retail,1,https://www.farm.com.sa,info@farm.com.sa,Dammam,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+SACO,Retail,1,https://www.saco.sa,crm@saco-ksa.com,Riyadh,auto-refill-routine,MX_VALID,E-commerce Manager | cv:generic
+Al Raya Markets,Retail,1,https://alraya.sa,info@alraya.sa,Jeddah,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+Al-Dawaa Pharmacies,Retail,1,https://www.al-dawaa.com.sa,info@al-dawaa.com.sa,Al Khobar,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
+Almadina Pharmacy,Retail,1,https://almadina.com.sa,info@almadina.com.sa,Riyadh,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+Leejam Sports Company,Fitness,1,https://leejam.com.sa,info@leejam.com.sa,Riyadh,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
+Armah Sports Company,Fitness,1,https://armahsports.com,info@armahsports.com,Riyadh,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+KUN Sports,Fitness,1,https://kunsports.com,info@kunsports.com,Jeddah,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
+NuYu Fitness,Fitness,1,https://nuyu-ksa.com,community@nuyu-ksa.com,Riyadh,auto-refill-routine,MX_VALID,Brand Manager | cv:brand
+Mabanee,Real Estate,2,https://www.mabanee.com,info@mabanee.com,Kuwait City,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Kuwait
+Ali Abdulwahab Al Mutawa Commercial Co,Retail,2,https://www.aaw.com,info@aaw.com,Kuwait City,auto-refill-routine,MX_VALID,E-commerce Manager | cv:generic | country:Kuwait
+Salhia Real Estate Company,Real Estate,2,https://www.salhia.com,info@salhia.com,Kuwait City,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Kuwait
+Kuwait Hospital,Healthcare,2,https://kuwaithospital.com.kw,info@kuwaithospital.com.kw,Kuwait City,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Kuwait
+Barwa Real Estate Group,Real Estate,2,https://www.barwa.com.qa,recruitment@barwa.com.qa,Doha,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Qatar
+Doha Bank,Banking,2,https://www.dohabank.com.qa,careers@dohabank.com.qa,Doha,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:Qatar
+Baladna,F&B,2,https://www.baladna.com,info@baladna.com,Doha,auto-refill-routine,MX_VALID,Brand Manager | cv:brand | country:Qatar
+Al Emadi Hospital,Healthcare,2,https://alemadihospital.com.qa,hr.recruitment@alemadiholding.com.qa,Doha,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Qatar
+Kuwait Danish Dairy Company,F&B,2,https://www.kddc.com,hr@kddc.com,Kuwait City,auto-refill-routine,MX_VALID,Brand Manager | cv:brand | country:Kuwait
+Al Sayer Group,Automotive,2,https://www.alsayergroup.com,recruitment@alsayergroup.com,Kuwait City,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:Kuwait
+New Mowasat Hospital,Healthcare,2,https://www.newmowasat.com,recruitment@newmowasat.com,Kuwait City,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Kuwait
+United Real Estate Company,Real Estate,2,https://www.urc.com.kw,info@urc.com.kw,Kuwait City,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Kuwait
+International Hospital Kuwait,Healthcare,2,https://www.internationalhospital-kw.com,careers@internationalhospital-kw.com,Kuwait City,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:Kuwait
+Seef Properties,Real Estate,2,https://www.seef.com.bh,info@seef.com.bh,Manama,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Bahrain
+Al Salam Bank,Banking,2,https://www.alsalambank.com,connect@alsalambank.com,Manama,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:Bahrain
+Al Kindi Hospital,Healthcare,2,https://alkindihospital.com,careers@alkindihospital.com,Manama,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Bahrain
+The Domain Hotel and Spa,Hospitality,2,https://www.thedomainhotels.com,connect@thedomainhotels.com,Manama,auto-refill-routine,MX_VALID,Marketing Manager | cv:hospitality | country:Bahrain
+Ramli Mall,Retail,2,https://www.ramlimall.com,info@ramlimall.com,Manama,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Bahrain
+Ramee Group of Hotels,Hospitality,2,https://rameehotels.com,recruitments@rameehotels.com,Dubai,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:hospitality | country:UAE
+The First Group Hospitality,Hospitality,2,https://www.tfghospitality.com,Info@tfghospitality.com,Dubai,auto-refill-routine,MX_VALID,Marketing Manager | cv:hospitality | country:UAE
+Al Khoory Hotels,Hospitality,2,https://www.alkhooryhotels.com,info@alkhooryhotels.com,Dubai,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:hospitality | country:UAE
+Lals Group,Retail,2,https://www.lalsgroup.com,Info@lalsgroup.com,Dubai,auto-refill-routine,MX_VALID,E-commerce Manager | cv:generic | country:UAE
+Sharaf Group,Retail,2,https://www.sharafgroup.com,info@sharaf.ae,Dubai,auto-refill-routine,MX_VALID,Performance Marketing Manager | cv:generic | country:UAE
+MERED,Real Estate,2,https://mered.ae,career@mered.ae,Dubai,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:UAE
+Emirates Hospitals Group,Healthcare,2,https://emirateshospitals.ae,recruitment@emirateshospital.ae,Dubai,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:UAE
+Emirates European Hospital,Healthcare,2,https://www.eehospital.com,hr@eehospital.com,Sharjah,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:UAE
+Amity School Dubai,Education,2,https://amityschooldubai.com,careers@amitydubai.ae,Dubai,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:UAE
+Petra,E-commerce,2,https://www.petra.ae,hr@petracosmetics.co.uk,Dubai,auto-refill-routine,MX_VALID,E-commerce Manager | cv:generic | country:UAE
+Belad Bont Resort,Hospitality,2,https://www.beladbont.com,info@beladbont.com,Salalah,auto-refill-routine,MX_VALID,Marketing Manager | cv:hospitality | country:Oman
+Oman Reinsurance Company,Insurance,2,https://www.omanre.com,recruitment@omanre.com.om,Muscat,auto-refill-routine,MX_VALID,Brand Manager | cv:brand | country:Oman
+Muscat Multimedia,Marketing Agency,2,https://muscatmultimedia.com,info@muscatmultimedia.com,Muscat,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:brand | country:Oman
+Burjeel Medical Centre Oman,Healthcare,2,https://www.bmcoman.com,careers.bmc@bmcoman.com,Muscat,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:Oman
