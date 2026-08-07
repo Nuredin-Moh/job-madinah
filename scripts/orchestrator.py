@@ -63,6 +63,11 @@ CV_DIR = Path(
 )
 CV_DEFAULT = "CV-08-Generic-Senior-Marketing.pdf"
 CV_HOSPITALITY = "CV-03-Hospitality.pdf"
+# Variantes Golfe non-saoudien : meme contenu, ciblage geographique neutre.
+# Sans elles, un mail adapte "across the Gulf" partait avec un CV "Madinah /
+# Saudi Arabia" en piece jointe (incoherence visible par le recruteur).
+CV_DEFAULT_GULF = "CV-08-Generic-Senior-Marketing-Gulf.pdf"
+CV_HOSPITALITY_GULF = "CV-03-Hospitality-Gulf.pdf"
 
 GMAIL_USER = os.environ.get("GMAIL_USER", "nuredinmohamedali@gmail.com")
 GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD", "")
@@ -181,11 +186,17 @@ def first_name_from_email(email: str) -> str:
     return first.capitalize()
 
 
-def pick_cv(sector: str) -> str:
+def pick_cv(sector: str, company_row=None) -> str:
+    """Choisit le CV par metier ET par pays.
+
+    Le corps du mail est deja neutralise pour le Golfe non-saoudien par
+    adapt_for_gulf(); la piece jointe doit suivre, sinon le CV contredit le mail.
+    """
     s = (sector or "").lower()
-    if any(h in s for h in HOSPITALITY_HINTS):
-        return CV_HOSPITALITY
-    return CV_DEFAULT
+    hospitality = any(h in s for h in HOSPITALITY_HINTS)
+    if company_row is not None and is_gulf_non_ksa(company_row):
+        return CV_HOSPITALITY_GULF if hospitality else CV_DEFAULT_GULF
+    return CV_HOSPITALITY if hospitality else CV_DEFAULT
 
 
 # ---------- Sent history ----------
@@ -268,10 +279,19 @@ GULF_MARKERS = ("country:uae", "country:qatar", "country:kuwait", "country:bahra
                 "kuwait", "manama", "muscat", "sharjah")
 
 
+def is_gulf_non_ksa(company_row: dict) -> bool:
+    """True si la cible est dans le Golfe hors Arabie Saoudite.
+
+    Sert a la fois au corps du mail (adapt_for_gulf) et au choix du CV joint
+    (pick_cv) : les deux doivent toujours dire la meme chose.
+    """
+    blob = ((company_row.get("notes") or "") + " " + (company_row.get("city") or "")).lower()
+    return any(m in blob for m in GULF_MARKERS)
+
+
 def adapt_for_gulf(body: str, company_row: dict) -> str:
     """Non-KSA Gulf targets must not get KSA-specific wording (Vision 2030, relocating to Saudi)."""
-    blob = ((company_row.get("notes") or "") + " " + (company_row.get("city") or "")).lower()
-    if not any(m in blob for m in GULF_MARKERS):
+    if not is_gulf_non_ksa(company_row):
         return body
     return (body
             .replace("across Saudi Arabia", "across the Gulf")
@@ -288,7 +308,7 @@ def build_draft(company_row: dict) -> dict:
     first_name = first_name_from_email(email)
     body = template.format(first_name=first_name, company=name)
     body = adapt_for_gulf(body, company_row)
-    cv = pick_cv(sector)
+    cv = pick_cv(sector, company_row)
     return {
         "csv_id": name,
         "to": email,
@@ -298,6 +318,8 @@ def build_draft(company_row: dict) -> dict:
         "persona": persona,
         "sector": sector,
         "company": name,
+        # Expose pour la QA : le corps ET la piece jointe doivent viser le meme pays.
+        "gulf_non_ksa": is_gulf_non_ksa(company_row),
         "portal_url": (company_row.get("source") or "").strip(),
     }
 

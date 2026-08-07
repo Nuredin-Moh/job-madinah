@@ -46,6 +46,8 @@ TRACKING_CSV = Path(
 BOUNCES_FILE = ROOT / "data" / "bounces.txt"
 
 PLACEHOLDER_PATTERN = re.compile(r"\[[A-Z_]{2,}\]")
+# Termes qui ne doivent JAMAIS apparaitre dans un mail vise hors Arabie Saoudite.
+KSA_TOKENS = ("saudi arabia", "vision 2030", "madinah", "medina", " ksa")
 GENERIC_GREETINGS = {
     "dear hiring manager",
     "dear sir or madam",
@@ -156,6 +158,21 @@ def qa_draft(draft: dict, bounces: set, recent: set) -> tuple[bool, list[str]]:
             pass  # CI mode: orchestrator will already log a WARN and send without attachment
         else:
             failures.append(f"CV PDF not found: {cv_path}")
+
+    # 5b) Coherence geographique corps <-> piece jointe.
+    # Incident 07.08.2026 : le corps etait neutralise "across the Gulf" mais le CV
+    # joint restait cible "Madinah / Saudi Arabia" -> incoherence visible.
+    if draft.get("gulf_non_ksa"):
+        if not cv.endswith("-Gulf.pdf"):
+            failures.append(
+                f"Gulf (non-KSA) target but KSA-targeted CV attached: {cv}"
+            )
+        for token in KSA_TOKENS:
+            if token in body_lower:
+                failures.append(f"Gulf (non-KSA) target but body mentions '{token}'")
+    else:
+        if cv.endswith("-Gulf.pdf"):
+            failures.append(f"KSA target but Gulf-targeted CV attached: {cv}")
 
     # 6) Recipients sanity
     for addr in to_list:
