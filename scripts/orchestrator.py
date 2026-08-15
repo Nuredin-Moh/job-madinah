@@ -79,6 +79,8 @@ SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD", GMAIL_APP_PASSWORD)
 SMTP_FROM = os.environ.get("SMTP_FROM", SMTP_USER)
 SMTP_USE_SSL = os.environ.get("SMTP_USE_SSL", "0") == "1"
 DAILY_CAP = int(os.environ.get("JOB_MADINAH_DAILY_CAP", "17"))
+# Seuil d'alerte (en jours d'envoi restants) avant que la file ne soit vide.
+QUEUE_WARN_DAYS = float(os.environ.get("JOB_MADINAH_QUEUE_WARN_DAYS", "3"))
 
 SENDABLE_STATUSES = {"MX_VALID"}
 PORTAL_STATUSES = {"PORTAL_ONLY"}
@@ -265,6 +267,17 @@ def select_today_batch(companies: list[dict], already_sent: set, cap: int) -> tu
             sendable.append(row)
         elif status in PORTAL_STATUSES:
             portal_only.append(row)
+    # Alerte de profondeur de file : le 12.08.2026 la file s'est videe en
+    # silence (11 envois le 11, 0 le 12) et personne ne l'a su avant coup.
+    days_left = len(sendable) / cap if cap else 0
+    if len(sendable) < cap:
+        log("WARN", f"QUEUE EMPTY TODAY: only {len(sendable)} sendable targets left "
+                    f"(cap {cap}) — refill data/companies.csv NOW")
+    elif days_left < QUEUE_WARN_DAYS:
+        log("WARN", f"QUEUE LOW: {len(sendable)} sendable targets left = "
+                    f"{days_left:.1f} days at {cap}/day — refill soon")
+    else:
+        log("INFO", f"Queue depth: {len(sendable)} sendable = {days_left:.1f} days")
     # Cap the daily batch on the SENDABLE side first; portal_only is observational.
     return sendable[:cap], portal_only[:cap]
 
