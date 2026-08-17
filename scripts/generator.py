@@ -150,7 +150,7 @@ I am {name}, {title}.
 
 {fit_block}
 
-I am relocating to Madinah within 3 months and would value a 15-minute call to explore how my profile could support {entreprise}'s 2026 plans for the {poste} role you posted{source_note}.
+I am relocating to Madinah within 1 month and would value a 15-minute call to explore how my profile could support {entreprise}'s 2026 plans for the {poste} role you posted{source_note}.
 
 CV attached.
 

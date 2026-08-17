@@ -123,7 +123,7 @@ TEMPLATE_HIRING = """Dear {first_name},
 
 I am writing to express strong interest in joining the marketing team at {company} as a Senior Digital Marketing Manager / Director.
 
-In my last roles I led 360 acquisition and brand programs combining performance media, content, CRM and creative production, with measurable impact on revenue and LTV. I am now relocating to Saudi Arabia (ready within 3 months) and looking specifically for senior marketing leadership opportunities aligned with Vision 2030.
+In my last roles I led 360 acquisition and brand programs combining performance media, content, CRM and creative production, with measurable impact on revenue and LTV. I am now relocating to Saudi Arabia (ready within 1 month) and looking specifically for senior marketing leadership opportunities aligned with Vision 2030.
 
 I would value a 15-minute exchange to share how my profile could plug into your roadmap.
 
