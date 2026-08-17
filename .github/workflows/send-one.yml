@@ -1,0 +1,62 @@
+name: send-one
+
+# Envoi d'UN mail cible (reponse chaude, relance nominative) hors batch,
+# avec le meme canal SMTP + CV que le pipeline. Declenchement manuel :
+#   gh workflow run send-one.yml -f draft_json='{"to":...}'
+# Le mail est journalise dans sent_history / sent_log comme un envoi normal.
+
+on:
+  workflow_dispatch:
+    inputs:
+      draft_json:
+        description: 'JSON: {"to","subject","body","cv","company","persona"}'
+        required: true
+        type: string
+      dry_run:
+        description: "Afficher sans envoyer"
+        required: false
+        default: "false"
+        type: choice
+        options: ["false", "true"]
+
+jobs:
+  send-one:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Resolve CV directory
+        run: echo "JOB_MADINAH_CV_DIR=$GITHUB_WORKSPACE/data/cvs" >> $GITHUB_ENV
+
+      - name: Send
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          SMTP_USE_SSL: ${{ secrets.SMTP_USE_SSL }}
+          DRAFT_JSON: ${{ github.event.inputs.draft_json }}
+        run: |
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            python3 scripts/send_one.py --json "$DRAFT_JSON" --dry-run
+          else
+            python3 scripts/send_one.py --json "$DRAFT_JSON"
+          fi
+
+      - name: Commit sent-state
+        if: always() && github.event.inputs.dry_run != 'true'
+        run: |
+          git config user.name "job-madinah-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/sent_history.csv data/sent_log.csv 2>/dev/null || true
+          if git diff --cached --quiet; then echo "[INFO] nothing to commit"; else
+            git commit -m "auto: send-one $(date -u +'%Y-%m-%d') [skip ci]" && git push
+          fi
