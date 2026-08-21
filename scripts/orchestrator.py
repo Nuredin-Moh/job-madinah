@@ -301,19 +301,54 @@ def select_today_batch(companies: list[dict], already_sent: set, cap: int) -> tu
 
 
 
+# --- Determination du pays : par DEFAUT tout est traite comme Golfe NEUTRE. ---
+# Le risque est asymetrique : un mail neutre a une entreprise saoudienne ne
+# choque personne, alors qu'un mail "Vision 2030 / relocating to Saudi Arabia"
+# avec un CV "Madinah" envoye a une entreprise emiratie est une faute visible.
+# On ne bascule donc en mode Arabie que si on RECONNAIT positivement le pays.
+# (21.08.2026 : "Gulf Craft / Umm Al Quwain" passait en mode Arabie faute de
+# marqueur — la ville manquait simplement dans la liste.)
+KSA_CITIES = (
+    "riyadh", "riyad", "jeddah", "jedda", "dammam", "khobar", "al khobar",
+    "dhahran", "jubail", "al jubail", "yanbu", "makkah", "mecca", "la mecque",
+    "madinah", "medina", "medine", "al madinah", "taif", "al taif", "abha",
+    "tabuk", "qassim", "buraydah", "hail", "najran", "jizan", "al ahsa",
+    "hofuf", "khamis mushait", "neom", "diriyah", "qiddiya", "red sea",
+)
+KSA_MARKERS = ("country:saudi", "country:ksa", "saudi arabia", "ksa")
+
+# Conserve pour compatibilite : marqueurs Golfe explicites (non-KSA).
 GULF_MARKERS = ("country:uae", "country:qatar", "country:kuwait", "country:bahrain",
                 "country:oman", "country:gulf", "dubai", "abu dhabi", "doha",
                 "kuwait", "manama", "muscat", "sharjah")
 
 
-def is_gulf_non_ksa(company_row: dict) -> bool:
-    """True si la cible est dans le Golfe hors Arabie Saoudite.
+def _blob(company_row) -> str:
+    return ((company_row.get("notes") or "") + " "
+            + (company_row.get("city") or "") + " "
+            + (company_row.get("website") or "")).lower()
 
-    Sert a la fois au corps du mail (adapt_for_gulf) et au choix du CV joint
-    (pick_cv) : les deux doivent toujours dire la meme chose.
+
+def is_ksa(company_row) -> bool:
+    """True seulement si le pays Arabie Saoudite est POSITIVEMENT reconnu."""
+    blob = _blob(company_row)
+    if any(m in blob for m in GULF_MARKERS):
+        return False          # un marqueur Golfe explicite l'emporte
+    if (company_row.get("website") or "").lower().endswith(".sa"):
+        return True
+    if ".sa/" in blob or ".com.sa" in blob:
+        return True
+    return any(c in blob for c in KSA_CITIES) or any(m in blob for m in KSA_MARKERS)
+
+
+def is_gulf_non_ksa(company_row: dict) -> bool:
+    """True si la cible n'est PAS identifiee comme saoudienne.
+
+    Source unique pour le corps du mail (adapt_for_gulf) ET le CV joint
+    (pick_cv) : les deux doivent toujours dire la meme chose. Defaut sur
+    "Golfe neutre" — c'est le sens sur lequel une erreur ne coute rien.
     """
-    blob = ((company_row.get("notes") or "") + " " + (company_row.get("city") or "")).lower()
-    return any(m in blob for m in GULF_MARKERS)
+    return not is_ksa(company_row)
 
 
 def adapt_for_gulf(body: str, company_row: dict) -> str:
