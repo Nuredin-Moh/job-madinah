@@ -81,10 +81,8 @@ def summarize():
     sent = read_csv("sent_history.csv")
     companies = read_csv("companies.csv")
     sent_names = {(r.get("company") or "").strip().lower() for r in sent}
-    # Meme definition que orchestrator.select_today_batch : priority == 1,
-    # MX_VALID, email present, jamais envoye. Le 15.08.2026 le rapport disait
-    # "103 cibles = 6 jours" alors que l'envoi n'en voyait que 19 (les 84 autres
-    # etaient en priorite 2, jamais prises) -> alerte manquee.
+    # Meme definition que orchestrator.select_today_batch : MX_VALID, email
+    # present, jamais envoye, priorite 1 OU 2 (la priorite ordonne, ne filtre plus).
     def _prio(r):
         try:
             return int((r.get("priority") or "0").strip())
@@ -92,14 +90,15 @@ def summarize():
             return 0
     queue_depth = sum(
         1 for r in companies
-        if _prio(r) == 1
+        if _prio(r) in (1, 2)
         and (r.get("validation_status") or "").strip() == "MX_VALID"
         and (r.get("email") or "").strip()
         and (r.get("name") or "").strip().lower() not in sent_names
     )
+    # Lignes valides qu'AUCUNE priorite acceptee ne couvre : anomalie a signaler.
     stranded_prio2 = sum(
         1 for r in companies
-        if _prio(r) == 2
+        if _prio(r) not in (1, 2)
         and (r.get("validation_status") or "").strip() == "MX_VALID"
         and (r.get("email") or "").strip()
         and (r.get("name") or "").strip().lower() not in sent_names
@@ -170,8 +169,8 @@ def render_text(s):
     elif days_left < 3:
         L.append("  /!\\ RESERVE BASSE (< 3 jours) - recharger avant qu'elle ne soit vide")
     if s.get("stranded_prio2"):
-        L.append(f"  /!\\ {s['stranded_prio2']} cibles valides bloquees en priorite 2 (jamais envoyees) "
-                 "- passer en priorite 1 dans data/companies.csv")
+        L.append(f"  /!\\ {s['stranded_prio2']} cibles valides avec une priorite hors (1,2) - jamais envoyees "
+                 "- corriger la colonne priority dans data/companies.csv")
     L.append("")
     L.append("--- Cold-email outreach ---")
     L.append(f"  Total emails sent:   {s['emails_total']}")

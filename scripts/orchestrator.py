@@ -249,15 +249,27 @@ def load_companies() -> list[dict]:
         return list(csv.DictReader(f))
 
 
+# La priorite ORDONNE la file, elle ne la filtre plus.
+# Historique : trois fois (01.08, 12.08, 21.08.2026) un refill a ecrit des
+# cibles valides en priority=2 alors que l'envoi n'acceptait que priority==1
+# -> des dizaines de cibles echouees en silence et des jours a zero envoi.
+# Desormais toute ligne MX_VALID avec un email part ; prio 1 d'abord.
+SENDABLE_PRIORITIES = (1, 2)
+
+
+def _priority(row) -> int:
+    try:
+        return int((row.get("priority") or "0").strip())
+    except ValueError:
+        return 0
+
+
 def select_today_batch(companies: list[dict], already_sent: set, cap: int) -> tuple[list[dict], list[dict]]:
     """Return (sendable, portal_only) lists for today's run, both already capped."""
     sendable, portal_only = [], []
     for row in companies:
-        try:
-            priority = int((row.get("priority") or "0").strip())
-        except ValueError:
-            priority = 0
-        if priority != 1:
+        priority = _priority(row)
+        if priority not in SENDABLE_PRIORITIES:
             continue
         name = (row.get("name") or "").strip()
         if not name or name in already_sent:
@@ -278,6 +290,8 @@ def select_today_batch(companies: list[dict], already_sent: set, cap: int) -> tu
                     f"{days_left:.1f} days at {cap}/day — refill soon")
     else:
         log("INFO", f"Queue depth: {len(sendable)} sendable = {days_left:.1f} days")
+    # Prio 1 d'abord, prio 2 ensuite ; ordre stable a l'interieur de chaque groupe.
+    sendable.sort(key=_priority)
     # Cap the daily batch on the SENDABLE side first; portal_only is observational.
     return sendable[:cap], portal_only[:cap]
 
