@@ -48,6 +48,14 @@ BOUNCES_FILE = ROOT / "data" / "bounces.txt"
 PLACEHOLDER_PATTERN = re.compile(r"\[[A-Z_]{2,}\]")
 # Termes qui ne doivent JAMAIS apparaitre dans un mail vise hors Arabie Saoudite.
 KSA_TOKENS = ("saudi arabia", "vision 2030", "madinah", "medina", " ksa")
+# Boites qui ne lisent PAS les candidatures : y ecrire brule la cible et
+# genere une reponse automatique (28.08.2026 : customercare@flyin.com a
+# renvoye un message type "merci de nous avoir contactes" + lien de booking).
+NON_HIRING_HANDLES = (
+    "customercare", "customer-support", "customersupport", "support",
+    "help", "helpdesk", "service", "booking", "bookings", "reservation",
+    "reservations", "orders", "billing", "noreply", "no-reply", "donotreply",
+)
 GENERIC_GREETINGS = {
     "dear hiring manager",
     "dear sir or madam",
@@ -173,6 +181,16 @@ def qa_draft(draft: dict, bounces: set, recent: set) -> tuple[bool, list[str]]:
     else:
         if cv.endswith("-Gulf.pdf"):
             failures.append(f"KSA target but Gulf-targeted CV attached: {cv}")
+
+    # 5c) Destinataire : une boite service-client ne traite pas les candidatures.
+    for addr in (draft["to"] if isinstance(draft["to"], list) else [draft["to"]]):
+        handle = (addr.split("@", 1)[0] or "").strip().lower()
+        if any(handle == h or handle.startswith(h + ".") or handle.startswith(h + "-")
+               for h in NON_HIRING_HANDLES):
+            failures.append(
+                f"Customer-service mailbox, not a hiring one: {addr} "
+                "— find a careers/hr address or drop the row"
+            )
 
     # 6) Recipients sanity
     for addr in to_list:

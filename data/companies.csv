@@ -739,11 +739,11 @@ Al Sorayai Group,Retail,1,https://www.al-sorayai.com,care@al-sorayai.com,Jeddah,
 Boutique Group,Hospitality,1,https://www.boutiquegroup.com,info@boutiquegroup.com,Riyadh,auto-refill-routine,MX_VALID,Director of Marketing | cv:hospitality
 El Khayyat Center,Retail,1,https://elkhayyatcenter.com,info@el-khayyat.com,Jeddah,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
 CATRION Group,F&B,1,https://www.catrion.com,info@catrion.com,Jeddah,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
-Nofa Resorts,Hospitality,1,https://www.nofaresorts.com,reservations@nofaresorts.com,Riyadh,auto-refill-routine,MX_VALID,Director of Sales and Marketing | cv:hospitality
+Nofa Resorts,Hospitality,1,https://www.nofaresorts.com,recruitment@nofaresorts.com,Riyadh,auto-refill-routine,MX_VALID,"Director of Sales and Marketing | cv:hospitality | 28.08: reservations@ remplace par recruitment@ (SMTP RCPT 250, faux handle 550, hr@ existe aussi)"
 Century 21 Saudi,Real Estate,1,https://century21.sa,info@century21.sa,Riyadh,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
-Flyin.com,Tourism,1,https://www.flyin.com,customercare@flyin.com,Riyadh,auto-refill-routine,MX_VALID,Performance Marketing Manager | cv:generic
+Flyin.com,Tourism,1,https://www.flyin.com,customercare@flyin.com,Riyadh,auto-refill-routine,DROP_NO_HIRING_MAILBOX,"Performance Marketing Manager | cv:generic | 28.08: boite service client, aucune adresse RH n'existe (careers/hr/jobs/recruitment tous 550) - retire de la file"
 Umm Al Qura for Development and Construction,Real Estate,1,https://www.ummalqura.com.sa,info@ummalqura.com.sa,Makkah,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
-Nana,Retail,1,https://nana.sa,support@nana.sa,Riyadh,auto-refill-routine,MX_VALID,E-commerce Marketing Manager | cv:generic
+Nana,Retail,1,https://nana.sa,support@nana.sa,Riyadh,auto-refill-routine,DROP_NO_HIRING_MAILBOX,"E-commerce Marketing Manager | cv:generic | 28.08: boite service client, aucune adresse RH n'existe (careers/hr/jobs/recruitment tous 550) - retire de la file"
 BAAN Holding Group,Hospitality,1,https://www.baanholding.com,info@baanholding.com,Riyadh,auto-refill-routine,MX_VALID,Group Marketing Director | cv:hospitality
 Deyaar Development,Real Estate,2,https://www.deyaar.ae,contactus@deyaar.ae,Dubai,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:UAE
 Digital Wave X,Agency,2,https://digitalwavex.ae,career@digitalwavex.ae,Dubai,auto-refill-routine,MX_VALID,Performance Marketing Manager | cv:generic | country:UAE
@@ -752,9 +752,9 @@ Dubai Medical University Hospital,Healthcare,2,https://dmuh.ae,careers@dmuh.ae,D
 Msheireb Properties,Real Estate,2,https://www.msheirebproperties.com,customerservice@msheireb.com,Doha,auto-refill-routine,MX_VALID,Brand Marketing Manager | cv:generic | country:Qatar
 Century Hotel Doha,Hospitality,2,https://www.centuryhoteldoha.com,info@centuryhoteldoha.com,Doha,auto-refill-routine,MX_VALID,Marketing Manager | cv:hospitality | country:Qatar
 Qanect Communications,Agency,2,https://www.qanect.com,info@qanect.com,Doha,auto-refill-routine,MX_VALID,Account Director | cv:generic | country:Qatar
-The Sultan Center,Retail,2,https://corporate.sultan-center.com,Customer-support@sultan-center.com,Kuwait City,auto-refill-routine,MX_VALID,Marketing Director | cv:generic | country:Kuwait
+The Sultan Center,Retail,2,https://corporate.sultan-center.com,hr@sultan-center.com,Kuwait City,auto-refill-routine,MX_VALID,"Marketing Director | cv:generic | country:Kuwait | 28.08: service client remplace par hr@ (SMTP RCPT 250, faux handle 550)"
 National Real Estate Company,Real Estate,2,https://www.nrec.com.kw,info@nrec.com.kw,Kuwait City,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Kuwait
-CliqTechno,Agency,2,https://www.cliqtechno.com,sales@cliqtechno.com,Farwaniya,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:Kuwait
+CliqTechno,Agency,2,https://www.cliqtechno.com,sales@cliqtechno.com,Farwaniya,auto-refill-routine,DROP_NO_HIRING_MAILBOX,"Digital Marketing Manager | cv:generic | country:Kuwait | 28.08: boite service client, aucune adresse RH n'existe (careers/hr/jobs/recruitment tous 550) - retire de la file"
 BMMI Group,Retail,2,https://www.bmmigroup.com,getintouch@bmmi.com.bh,Manama,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Bahrain
 Al Nahda Resort & Spa,Hospitality,2,https://alnahdaresort.com,stay@alnahdaresort.com,Barka,auto-refill-routine,MX_VALID,Marketing Manager | cv:hospitality | country:Oman
 MESDAC,Agency,2,https://www.mesdac.com,info@mesdac.com,Muscat,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:Oman
