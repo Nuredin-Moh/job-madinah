@@ -208,6 +208,23 @@ SENT_LOG_HEADERS = ["timestamp", "company", "email", "persona", "result", "detai
 PORTAL_QUEUE_HEADERS = ["date", "company", "sector", "portal_url", "status", "notes"]
 
 
+MIN_DAILY_FOR_SKIP = int(os.environ.get("JOB_MADINAH_MIN_DAILY", "12"))
+
+
+def count_sent_today() -> int:
+    """Nombre de mails deja envoyes aujourd'hui (lu dans sent_history.csv)."""
+    if not SENT_HISTORY.exists():
+        return 0
+    today = datetime.now().strftime("%Y-%m-%d")
+    n = 0
+    with SENT_HISTORY.open("r", encoding="utf-8", newline="") as f:
+        for row in csv.DictReader(f):
+            if (row.get("date") or "").strip()[:10] == today and \
+               (row.get("status") or "").strip().lower() == "sent":
+                n += 1
+    return n
+
+
 def load_already_sent() -> set:
     """Return set of company names already in sent_history.csv."""
     if not SENT_HISTORY.exists():
@@ -465,7 +482,19 @@ def main() -> int:
     already_sent = load_already_sent()
     log("INFO", f"Already sent in history: {len(already_sent)} companies")
 
-    cap = 5 if args.dry_run else DAILY_CAP
+    # Garde-fou d'idempotence : le cron GitHub Actions est peu fiable (le run
+    # du 27.08.2026 a demarre avec 11h de retard, celui du 28.08 pas du tout).
+    # Un second cron de rattrapage tourne donc dans la journee ; il doit rester
+    # SANS EFFET si le batch du jour est deja parti, sinon on enverrait 2x le
+    # quota quotidien (risque de classement en spam).
+    sent_today = count_sent_today()
+    if not args.dry_run and sent_today >= MIN_DAILY_FOR_SKIP:
+        log("INFO", f"Already {sent_today} emails sent today (>= {MIN_DAILY_FOR_SKIP}) — nothing to do")
+        return 0
+    if sent_today:
+        log("INFO", f"{sent_today} emails already sent today — sending the remainder")
+
+    cap = 5 if args.dry_run else max(0, DAILY_CAP - sent_today)
     sendable, portal_only = select_today_batch(companies, already_sent, cap)
     log("INFO", f"Today batch: {len(sendable)} sendable, {len(portal_only)} portal-only")
 

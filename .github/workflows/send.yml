@@ -4,6 +4,12 @@ on:
     # 06:00 UTC = 09:00 Madinah (KSA UTC+3) = 07:00 Morocco
     # Daily warmup window 15-20 mails/day then stable 20/day.
     - cron: "0 6 * * *"
+    # Rattrapage : le cron GitHub Actions est regulierement retarde ou saute
+    # (27.08.2026 declenche a 17:10 au lieu de 06:00 ; 28.08 jamais declenche).
+    # Ces deux passes sont SANS EFFET si le batch du jour est deja parti —
+    # orchestrator.py sort immediatement si >= JOB_MADINAH_MIN_DAILY envoyes.
+    - cron: "0 11 * * *"
+    - cron: "0 16 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
