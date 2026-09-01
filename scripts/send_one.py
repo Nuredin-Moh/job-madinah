@@ -44,6 +44,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--json", required=True, help="draft as JSON string")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--follow-up", metavar="RAISON",
+                    help="autorise une adresse deja contactee (relance sollicitee). "
+                         "La raison est journalisee.")
     args = ap.parse_args()
 
     draft = json.loads(args.json)
@@ -64,8 +67,11 @@ def main():
         for r in csv.DictReader(o.SENT_HISTORY.open(encoding="utf-8")):
             already.add((r.get("email") or "").strip().lower())
     if draft["to"].strip().lower() in already:
-        o.log("ERROR", f"{draft['to']} already in sent_history — refusing duplicate")
-        return 3
+        if not args.follow_up:
+            o.log("ERROR", f"{draft['to']} already in sent_history — refusing duplicate "
+                           "(use --follow-up '<raison>' for a solicited reply)")
+            return 3
+        o.log("INFO", f"{draft['to']} already contacted — follow-up allowed: {args.follow_up}")
 
     o.log("INFO", f"send_one -> {draft['to']} | {draft['subject']} | cv={draft['cv']}")
     if args.dry_run:

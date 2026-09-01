@@ -12,6 +12,11 @@ on:
         description: 'JSON: {"to","subject","body","cv","company","persona"}'
         required: true
         type: string
+      follow_up:
+        description: "Relance sollicitee : raison (autorise une adresse deja contactee)"
+        required: false
+        default: ""
+        type: string
       dry_run:
         description: "Afficher sans envoyer"
         required: false
@@ -44,12 +49,12 @@ jobs:
           SMTP_FROM: ${{ secrets.SMTP_FROM }}
           SMTP_USE_SSL: ${{ secrets.SMTP_USE_SSL }}
           DRAFT_JSON: ${{ github.event.inputs.draft_json }}
+          FOLLOW_UP: ${{ github.event.inputs.follow_up }}
         run: |
-          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
-            python3 scripts/send_one.py --json "$DRAFT_JSON" --dry-run
-          else
-            python3 scripts/send_one.py --json "$DRAFT_JSON"
-          fi
+          ARGS=()
+          [ -n "$FOLLOW_UP" ] && ARGS+=(--follow-up "$FOLLOW_UP")
+          [ "${{ github.event.inputs.dry_run }}" = "true" ] && ARGS+=(--dry-run)
+          python3 scripts/send_one.py --json "$DRAFT_JSON" "${ARGS[@]}"
 
       - name: Commit sent-state
         if: always() && github.event.inputs.dry_run != 'true'
