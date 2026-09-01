@@ -1,0 +1,53 @@
+name: employers-watch
+
+# Veille mensuelle des employeurs qui ont repondu a une candidature spontanee
+# en renvoyant vers leur portail. N'envoie un mail QUE s'il y a du nouveau.
+on:
+  schedule:
+    # 07:00 UTC le 1er de chaque mois = 10:00 Riyad
+    - cron: "27 7 1 * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Afficher sans envoyer"
+        required: false
+        default: "false"
+        type: choice
+        options: ["false", "true"]
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Check employer career portals
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          REPORT_RECIPIENT: ${{ secrets.REPORT_RECIPIENT }}
+        run: |
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            python3 scripts/employers_watch.py --dry-run
+          else
+            python3 scripts/employers_watch.py
+          fi
+
+      - name: Commit seen-state
+        if: always() && github.event.inputs.dry_run != 'true'
+        run: |
+          git config user.name "job-madinah-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/employers_seen.json 2>/dev/null || true
+          if git diff --cached --quiet; then echo "[INFO] no state change"; else
+            git commit -m "auto: employers watch $(date -u +'%Y-%m-%d') [skip ci]" && git push
+          fi
