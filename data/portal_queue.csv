@@ -1946,3 +1946,11 @@ date,company,sector,portal_url,status,notes
 2026-09-12,Novotel Madinah,Hotel 4*,https://careers.accor.com/,manual_application_required,DM Manager 2026 actif - novotelmadinah.com DOMAIN_NOT_FOUND - portail Accor uniquement
 2026-09-12,Dar Al Iman InterContinental,Hotel 5*,https://careers.ihg.com/,manual_application_required,IHG flagship - hr.daraliman@ihg.com + careers@daraliman.com BOUNCED - portail IHG MENA + DM Sarah Khan LinkedIn
 2026-09-12,InterContinental Dar Al Hijra,Hotel 5*,https://careers.ihg.com/,manual_application_required,IHG sister property - hr.daralhijra@ihg.com BOUNCED - portail IHG + LinkedIn HR MENA
+2026-09-12,Rua Al-Madinah Holding,Mega-projet PIF,https://talent.ruaalmadinah.com/Careers/search,manual_application_required,PIF Vision 2030 flagship Madinah - careers@ruaalmadinah.com BOUNCED - portail uniquement + LinkedIn HR
+2026-09-12,Knowledge Economic City,Mega-projet,https://www.madinahkec.com/workwithkec,manual_application_required,20k jobs project - tous patterns @madinahkec.com REJECT Outlook M365 - portail careers uniquement
+2026-09-12,Anwar Al Madinah Movenpick,Hotel 5*,https://careers.accor.com/,manual_application_required,Accor flagship - hr.almadina@movenpick.com BOUNCED - portail Accor central + LinkedIn cluster HR KSA
+2026-09-12,Pullman ZamZam Madinah,Hotel 5*,https://careers.accor.com/,manual_application_required,Face Haram - h7187-hr@accor.com BOUNCED + hr@pullman-zamzam-madina.com BOUNCED - portail Accor uniquement
+2026-09-12,Sofitel Shahd Al Madinah,Hotel luxe,https://careers.accor.com/,manual_application_required,Accor luxury - hr.shahd@sofitel.com BOUNCED - portail Accor + LinkedIn KSA luxury cluster
+2026-09-12,Novotel Madinah,Hotel 4*,https://careers.accor.com/,manual_application_required,DM Manager 2026 actif - novotelmadinah.com DOMAIN_NOT_FOUND - portail Accor uniquement
+2026-09-12,Dar Al Iman InterContinental,Hotel 5*,https://careers.ihg.com/,manual_application_required,IHG flagship - hr.daraliman@ihg.com + careers@daraliman.com BOUNCED - portail IHG MENA + DM Sarah Khan LinkedIn
+2026-09-12,InterContinental Dar Al Hijra,Hotel 5*,https://careers.ihg.com/,manual_application_required,IHG sister property - hr.daralhijra@ihg.com BOUNCED - portail IHG + LinkedIn HR MENA
