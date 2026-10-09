@@ -97,7 +97,7 @@ def main():
 
     skipped = max(0, len(followups) - CAP)
 
-    # Summary to Nuredin
+    # Summary (log only)
     lines = [f"Follow-ups auto-sent: {len(sent)} (failed: {len(failed)}, deferred beyond cap: {skipped})", ""]
     for c, to, v in sent:
         lines.append(f"  - {c} <{to}> (version {v})")
@@ -106,17 +106,8 @@ def main():
         lines.append("Failed:")
         for c, why in failed:
             lines.append(f"  - {c}: {why}")
-    body = "\n".join(lines)
-    try:
-        msg = MIMEMultipart()
-        msg["From"] = SMTP_FROM
-        msg["To"] = RECIPIENT
-        msg["Subject"] = f"[Job Madinah] {len(sent)} follow-ups sent automatically"
-        msg.attach(MIMEText(body, "plain", "utf-8"))
-        with smtp_connect() as server:
-            server.send_message(msg)
-    except Exception as e:  # noqa: BLE001
-        print(f"[WARN] summary email failed: {e}", file=sys.stderr)
+    # Recap kept in the Actions log only: Nuredin asked (09.10.2026) to stop the summary email.
+    print("\n".join(lines))
 
     print(f"[OK] done: {len(sent)} sent, {len(failed)} failed, {skipped} deferred")
     return 0
