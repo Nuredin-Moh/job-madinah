@@ -14,8 +14,7 @@ Anti-bullshit policy
   or by company name ("Dear {Company} Team,").
 - NO `[phone]` placeholders — phone is hardcoded to Nuredin's real number.
 - NO fabricated numbers. Only verifiable facts from Nuredin's CV are used:
-    * CHF 2M+ annual budgets handled at Publicis Geneva (Nestlé, BCGE)
-    * 10+ years of senior marketing experience
+    * CHF 2M+ annual budgets handled at Publicis Media Lausanne (Nestlé, BCGE)
     * ROAS 4.2x on optimised paid campaigns
     * 90% client retention at Digital Swiss Agency (CEO)
     * Master CREA Geneva
@@ -110,27 +109,27 @@ SECTOR_HOOK = {
 
 # -------- Fit blocks — verifiable facts ONLY --------
 # Sources used:
-#   - 10+ years senior marketing (CV / LinkedIn).
-#   - CHF 2M+ annual budgets at Publicis Geneva on Nestlé and BCGE accounts.
+#   - No year count anywhere (removed 10.10.2026: the dated roles do not add up to 10 years).
+#   - CHF 2M+ annual budgets at Publicis Media Lausanne on Nestlé and BCGE accounts.
 #   - ROAS 4.2x average on optimised paid campaigns (DSA internal reporting).
 #   - 90% client retention at Digital Swiss Agency.
 #   - Master CREA Geneva.
 # All other figures previously hard-coded (€2.1M, €1.2M, +47%, €480K, 35%)
 # have been removed because they were not traceable to a verifiable source.
 COMMON_FIT_LINES = [
-    "- 10+ years senior marketing across hospitality, retail and tech",
-    "- CHF 2M+ annual budgets handled at Publicis Geneva (Nestlé, BCGE accounts)",
+    "- Senior marketing across hospitality, retail and tech",
+    "- CHF 2M+ annual budgets handled at Publicis Media Lausanne (Nestlé, BCGE accounts)",
     "- ROAS 4.2x average on optimised paid campaigns",
     "- 90% client retention at Digital Swiss Agency (CEO, current)",
     "- Master in Digital Marketing — CREA Geneva",
 ]
 
 SECTOR_INTRO = {
-    "hotel": "I have led digital growth for hospitality and luxury brands for 10+ years (ex-Publicis Geneva, currently CEO Digital Swiss Agency).",
-    "retail": "I have 10+ years scaling retail and luxury brands across MENA and EU (ex-Publicis Geneva, currently CEO Digital Swiss Agency).",
-    "agence": "I bring 10+ years of agency and client-side experience (ex-Publicis Geneva, currently CEO Digital Swiss Agency).",
-    "tech": "I have 10+ years scaling brands across MENA and EU (ex-Publicis Geneva, currently CEO Digital Swiss Agency).",
-    "generic": "I am a Senior Digital Marketing Manager with 10+ years driving growth for hospitality, retail and tech brands (ex-Publicis Geneva, currently CEO Digital Swiss Agency).",
+    "hotel": "I have led digital growth for hospitality and luxury brands (ex-Publicis Media Lausanne, currently CEO Digital Swiss Agency).",
+    "retail": "I have scaled retail and luxury brands across MENA and EU (ex-Publicis Media Lausanne, currently CEO Digital Swiss Agency).",
+    "agence": "I bring agency and client-side experience (ex-Publicis Media Lausanne, currently CEO Digital Swiss Agency).",
+    "tech": "I have scaled brands across MENA and EU (ex-Publicis Media Lausanne, currently CEO Digital Swiss Agency).",
+    "generic": "I am a Senior Digital Marketing Manager driving growth for hospitality, retail and tech brands (ex-Publicis Media Lausanne, currently CEO Digital Swiss Agency).",
 }
 
 

@@ -103,7 +103,7 @@ SUBJECT_TPL = "Senior Digital Marketing Manager — interest in {company}"
 
 TEMPLATE_HR = """Dear {first_name},
 
-I am Nuredin Mohamed Ali, a Senior Digital Marketing Manager with 10+ years of experience across hospitality, e-commerce and Vision 2030-aligned brands. I came across {company} while mapping marketing teams across Saudi Arabia, and the trajectory of the organisation stood out.
+I am Nuredin Mohamed Ali, a Senior Digital Marketing Manager with experience across hospitality, e-commerce and Vision 2030-aligned brands. I came across {company} while mapping marketing teams across Saudi Arabia, and the trajectory of the organisation stood out.
 
 What I bring:
 - Multi-million euro media plans across Meta, Google, TikTok and programmatic
@@ -136,7 +136,7 @@ Nuredin Mohamed Ali
 
 TEMPLATE_CEO = """Dear {first_name},
 
-I am Nuredin Mohamed Ali, Senior Digital Marketing Manager with 10+ years building and leading marketing organisations across Europe and MENA. I am writing directly because I have been following {company} and would like to be considered for a senior marketing leadership role on your team.
+I am Nuredin Mohamed Ali, Senior Digital Marketing Manager with experience building and leading marketing organisations across Europe and MENA. I am writing directly because I have been following {company} and would like to be considered for a senior marketing leadership role on your team.
 
 In short: full-funnel ownership, multi-million budgets, team building, and a strong cultural fit for Saudi Arabia — I am a native Arabic and French speaker (English C1) and operate confidently in multicultural environments.
 
