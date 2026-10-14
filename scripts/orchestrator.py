@@ -171,19 +171,45 @@ def pick_template(email: str) -> tuple[str, str]:
     return "hiring_manager", TEMPLATE_HIRING
 
 
-def first_name_from_email(email: str) -> str:
-    """Cheap heuristic: 'careers@x' → 'Hiring Team'; 'firstname.lastname@x' → 'Firstname'."""
+# Mailbox words that are never a person's first name. A handle starting with one
+# of them gets "Dear Hiring Team," (before 14.10.2026, ~250 of 1050 mails opened
+# with "Dear Hello," / "Dear Customerservice," / "Dear Sales,").
+GENERIC_HANDLES = {
+    "careers", "career", "hr", "hrd", "jobs", "job", "info", "contact", "contactus",
+    "recruitment", "recruitments", "recruit", "recruiting", "recruiter", "talent",
+    "hiring", "hireme", "apply", "cv", "resume", "people", "join", "hello", "hi",
+    "marketing", "sales", "customerservice", "customercare", "customer", "care",
+    "support", "service", "services", "help", "admin", "office", "mail", "email",
+    "enquiry", "enquiries", "inquiry", "inquiries", "crm", "pr", "media", "press",
+    "communications", "comms", "corporate", "cs", "connect", "admission",
+    "admissions", "reservations", "reservation", "booking", "bookings", "team",
+    "general", "business", "partners", "partnership", "feedback", "webmaster",
+    "noreply", "no", "saudi", "ksa", "uae", "riyadh", "jeddah", "dammam", "khobar",
+    "dubai", "doha", "qatar", "kuwait", "bahrain", "oman", "muscat",
+    "al", "el", "investor", "investors", "ir", "hra", "dao", "gulf", "group",
+}
+
+
+def first_name_from_email(email: str, company: str = "") -> str:
+    """'firstname.lastname@x' → 'Firstname'; anything else → 'Hiring Team'.
+
+    A single-word handle (hello@, sales@, mnagah@) is never trusted as a first
+    name: only a separated handle whose first part is a plausible name is used.
+    """
     if not email or "@" not in email:
         return "Hiring Team"
-    handle = email.split("@", 1)[0]
-    if handle.lower() in {"careers", "career", "hr", "jobs", "info", "contact", "recruitment"}:
+    handle = email.split("@", 1)[0].strip()
+    parts = [p for p in re.split(r"[._\-+]", handle) if p]
+    if len(parts) < 2:
         return "Hiring Team"
-    # split on common separators
-    parts = re.split(r"[._\-+]", handle)
-    if not parts or not parts[0]:
+    first = parts[0]
+    if (len(first) < 2 or not first.isalpha()
+            or first.lower() in GENERIC_HANDLES
+            or any(p.lower() in GENERIC_HANDLES for p in parts[1:2])):
         return "Hiring Team"
-    first = parts[0].strip()
-    if not first or any(ch.isdigit() for ch in first):
+    # gloria.management@gloria-hotels.com : the "name" is the company's
+    company_words = set(re.findall(r"[a-z]+", company.lower()))
+    if first.lower() in company_words or first.lower() == "".join(re.findall(r"[a-z]+", company.lower())):
         return "Hiring Team"
     return first.capitalize()
 
@@ -355,6 +381,9 @@ def is_ksa(company_row) -> bool:
         return True
     if ".sa/" in blob or ".com.sa" in blob:
         return True
+    # Maaden (Waad Al Shamal), HTMi (Jazan) : ville hors liste, mais adresse en .sa
+    if (company_row.get("email") or "").strip().lower().endswith(".sa"):
+        return True
     return any(c in blob for c in KSA_CITIES) or any(m in blob for m in KSA_MARKERS)
 
 
@@ -384,7 +413,7 @@ def build_draft(company_row: dict) -> dict:
     sector = (company_row.get("sector") or "").strip()
     email = (company_row.get("email") or "").strip()
     persona, template = pick_template(email)
-    first_name = first_name_from_email(email)
+    first_name = first_name_from_email(email, name)
     body = template.format(first_name=first_name, company=name)
     body = adapt_for_gulf(body, company_row)
     cv = pick_cv(sector, company_row)

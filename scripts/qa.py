@@ -55,6 +55,9 @@ NON_HIRING_HANDLES = (
     "customercare", "customer-support", "customersupport", "support",
     "help", "helpdesk", "service", "booking", "bookings", "reservation",
     "reservations", "orders", "billing", "noreply", "no-reply", "donotreply",
+    # 14.10.2026 : customerservice@arabianshield.com est passe et a repondu
+    # « ecrivez a career@ » — ces boites ne traitent pas les candidatures non plus.
+    "customerservice", "customer", "care", "cs", "complaints",
 )
 GENERIC_GREETINGS = {
     "dear hiring manager",
