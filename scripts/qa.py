@@ -59,6 +59,10 @@ NON_HIRING_HANDLES = (
     # 14.10.2026 : customerservice@arabianshield.com est passe et a repondu
     # « ecrivez a career@ » — ces boites ne traitent pas les candidatures non plus.
     "customerservice", "customer", "care", "cs", "complaints",
+    # 08.11.2026 (audit des routines) : boites commerciales, meme probleme —
+    # enquire@bankofsharjah.com, sales@rakproperties.ae et sales@alzorah.ae
+    # allaient partir des que la file a ete debloquee.
+    "sales", "enquire", "enquiry", "enquiries", "inquiry", "inquiries",
 )
 GENERIC_GREETINGS = {
     "dear hiring manager",

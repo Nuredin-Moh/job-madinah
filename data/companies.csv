@@ -1102,7 +1102,7 @@ Bank Dhofar,Banking,2,https://www.bankdhofar.com,Careers@Bankdhofar.com,Muscat,a
 Al Maha Petroleum Products Marketing,Retail (fuel and convenience),2,https://www.almaha.com.om,almaha@almaha.com.om,Muscat,auto-refill-routine,MX_VALID,Marketing and Digital Manager | cv:generic | country:Oman
 Burjeel Holdings,Healthcare,2,https://burjeelholdings.com,careers@burjeelholdings.com,Abu Dhabi,auto-refill-routine,MX_VALID,Senior Digital Marketing Manager | cv:generic | country:UAE
 Manazel Specialists Real Estate,Real Estate,2,https://www.manazelspecialists.com,info@manazelspecialists.ae,Abu Dhabi,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:UAE
-Bank of Sharjah,Banking,2,https://www.bankofsharjah.com,enquire@bankofsharjah.com,Sharjah,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:UAE
+Bank of Sharjah,Banking,2,https://www.bankofsharjah.com,enquire@bankofsharjah.com,Sharjah,auto-refill-routine,DROP_NO_HIRING_MAILBOX,Digital Marketing Manager | cv:generic | country:UAE | qa-drop 2026-11-08: boite commerciale (enquire@) refusee par la QA ; adresse RH pas encore cherchee
 Julphar (Gulf Pharmaceutical Industries),Healthcare / Pharma,2,https://www.julphar.net,humanresource@julphar.net,Ras Al Khaimah,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:UAE
 Qaf Coffee Roasters,Food and Beverage,1,https://qafcoffee.com,store@qafcoffee.com,Al Khobar,auto-refill-routine,MX_VALID,E-commerce Marketing Manager | cv:generic
 Shrq Coffee Roasters,Food and Beverage,1,https://shrqcoffee.com,info@shrqcoffee.com,Eastern Province,auto-refill-routine,MX_VALID,Brand Marketing Manager | cv:generic
@@ -1155,7 +1155,7 @@ Specialized Food Services (SFS),FMCG,1,https://sfs.com.sa,customerservice@sfs.co
 Eagle Hills,Real Estate,2,https://www.eaglehills.com,info@eaglehills.com,Abu Dhabi,auto-refill-routine,MX_VALID,Marketing Director | cv:generic | country:UAE
 Doha Clinic Hospital,Healthcare,2,https://dohaclinichospital.com,info@dchqatar.com,Doha,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Qatar
 Almuftah Group,Conglomerate,2,https://almuftah.com,almuftah@almuftah.com,Doha,auto-refill-routine,MX_VALID,Group Marketing Manager | cv:generic | country:Qatar
-RAK Properties,Real Estate,2,https://www.rakproperties.ae,sales@rakproperties.ae,Ras Al Khaimah,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:UAE
+RAK Properties,Real Estate,2,https://www.rakproperties.ae,sales@rakproperties.ae,Ras Al Khaimah,auto-refill-routine,DROP_NO_HIRING_MAILBOX,Marketing Manager | cv:generic | country:UAE | qa-drop 2026-11-08: boite commerciale (sales@) refusee par la QA ; adresse RH pas encore cherchee
 Hadi Clinic,Healthcare,2,https://www.hadiclinic.com.kw,info@hadiclinic.com.kw,Kuwait City,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:Kuwait
 Suhail Bahwan Group,Conglomerate,2,https://www.suhailbahwangroup.com,info@suhailbahwangroup.com,Muscat,auto-refill-routine,MX_VALID,Group Marketing Manager | cv:generic | country:Oman
 Alhazm Mall,Retail,2,https://alhazm.com,info@alhazm.com,Doha,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Qatar
@@ -1165,7 +1165,7 @@ Ghitha Holding,FMCG,2,https://ghitha.com,info@ghitha.com,Abu Dhabi,auto-refill-r
 Ebrahim K. Kanoo,Automotive,2,https://ekkanoo.com,careers@ekkanoo.com.bh,Manama,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Bahrain
 Zawawi Group,Conglomerate,2,https://www.zawawigroup.com,info@zawawigroup.com,Muscat,auto-refill-routine,MX_VALID,Group Marketing Manager | cv:generic | country:Oman
 Al Masaood Group,Conglomerate,2,https://www.masaood.com,info@masaood.com,Abu Dhabi,auto-refill-routine,MX_VALID,Group Marketing Director | cv:generic | country:UAE
-Al Zorah Development,Real Estate,2,https://alzorah.ae,sales@alzorah.ae,Ajman,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:UAE
+Al Zorah Development,Real Estate,2,https://alzorah.ae,sales@alzorah.ae,Ajman,auto-refill-routine,DROP_NO_HIRING_MAILBOX,Marketing Manager | cv:generic | country:UAE | qa-drop 2026-11-08: boite commerciale (sales@) refusee par la QA ; adresse RH pas encore cherchee
 Taiba Hospital,Healthcare,2,https://www.taibahospital.com,info@taibahospital.com,Kuwait City,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:Kuwait
 Royale Hayat Hospital,Healthcare,2,https://royalehayat.com,hr@royalehayat.com,Hawalli,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Kuwait
 Ramez Group,Retail,2,https://ramezgroup.com,jobs@ramezgroup.com,Isa Town,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:Bahrain
