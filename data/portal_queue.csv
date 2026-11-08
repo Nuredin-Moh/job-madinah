@@ -4313,3 +4313,19 @@ date,company,sector,portal_url,status,notes
 2026-11-08,Publicis Groupe Riyadh,Agence,https://careers.publicisgroupe.com/,manual_application_required,Ex-Publicis Geneve reseau direct - M365 catch-all bloque tous patterns - LinkedIn priority
 2026-11-08,STC Group,Telco,https://www.stc.com.sa/en/careers,manual_application_required,Telco leader - MX self-hosted PTR REJECT tous patterns - portail STC + LinkedIn
 2026-11-08,Tibah Airports,Aviation,https://tibahairports.com/careers,manual_application_required,Operateur aeroport Madinah - SMTP timeout serveur down - portail + LinkedIn
+2026-11-08,Marafiq Madinah,Utilities,https://www.marafiq.com.sa/careers,manual_application_required,Utilities Madinah Knowledge Economic City - M365 catch-all bloque - portail uniquement
+2026-11-08,Saja Al Madinah Hotel,Hotel 5*,https://sajahotels.com/careers,manual_application_required,Hotel face Haram - sajahotels.com M365 catch-all bloque tous patterns - portail + LinkedIn HR
+2026-11-08,Frontel Al Harithia Madinah,Hotel 4*,https://www.frontelhotels.com,manual_application_required,Frontel chain Madinah - domaine dedie sans MX - portail groupe + LinkedIn
+2026-11-08,Elaf Taibah Hotel,Hotel 4*,https://www.elafgroup.com/hotels/elaf-taibah,manual_application_required,Propriete Elaf Group Madinah - elaftaibah.com sans MX + elafgroup.com M365 REJECT - portail Elaf + LinkedIn
+2026-11-08,Anwar Al Madinah (asset),Hotel 5*,https://careers.accor.com/,manual_application_required,Anwar Al Madinah complexe - domaines dedies sans MX - portail Accor central + LinkedIn cluster KSA
+2026-11-08,Makarem Hotels,Hotel,https://www.makarem.com.sa/careers,manual_application_required,Chaine saoudienne Madinah & Makkah - makarem.com.sa sans MX resolvable - portail + LinkedIn HR
+2026-11-08,Boudl Group,Hospitality,https://www.boudl.com.sa/careers,manual_application_required,Aparthotels KSA - boudl.com.sa sans MX resolvable - portail + LinkedIn
+2026-11-08,Al Noor Mall Madinah,Retail/Mall,https://www.alnoormall.com,manual_application_required,Mall majeur Madinah - Hostinger MX generique pas de mailbox careers - LinkedIn property management + contact form
+2026-11-08,Al Rashid Mega Mall Madinah,Retail/Mall,https://www.alrashidmall.com,manual_application_required,Mega mall Madinah - MX self-hosted pas de mailbox careers public - contact form + LinkedIn
+2026-11-08,Arabian Centres (Cenomi Centers),Retail/Mall,https://www.cenomicenters.com/careers,manual_application_required,Operateur malls Aliat/Noor Madinah - arabiancentres.com M365 catch-all - portail Cenomi + LinkedIn
+2026-11-08,Panda Retail (Savola),Retail,https://www.panda.com.sa/careers,manual_application_required,Hypermarches Savola presence Madinah - panda.com.sa M365 catch-all - portail + LinkedIn
+2026-11-08,ROSHN Group,Real Estate PIF,https://careers.roshn.sa/,manual_application_required,Giga real estate PIF communautes nationales - roshn.sa M365 catch-all - portail Workday + LinkedIn
+2026-11-08,Sumou Real Estate,Real Estate,https://www.sumou.com.sa/careers,manual_application_required,Developpeur KSA Madinah projects - sumou.com.sa M365 catch-all - portail + LinkedIn
+2026-11-08,The Social Clinic (Sahara),Agence,https://thesocialclinic.com/careers,manual_application_required,Agence social media KSA - thesocialclinic.com M365 catch-all - portail + LinkedIn (distinct socialclinic.sa)
+2026-11-08,MCN / FP7 McCann KSA,Agence,https://www.mccann.com/careers/,manual_application_required,Reseau McCann/FP7 MENA - fp7.com/mccann.com Pphosted patterns careers non confirmes - portail + LinkedIn
+2026-11-08,Taibah University,Education,https://www.taibahu.edu.sa/careers,manual_application_required,Universite Madinah - taibahu.edu.sa M365 catch-all - portail academique + LinkedIn (marketing/comms dept)
