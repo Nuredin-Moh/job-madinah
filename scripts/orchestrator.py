@@ -3,21 +3,27 @@
 Orchestrator — daily sending pipeline for job-madinah outreach.
 
 Pipeline:
-1) Load data/companies.csv → select today's batch (priority=1, validation_status in {MX_VALID, PORTAL_ONLY},
-   not already sent in data/sent_history.csv, capped at JOB_MADINAH_DAILY_CAP).
+1) Load data/companies.csv → every sendable row (priority 1 or 2, validation_status MX_VALID,
+   email present, not already sent in data/sent_history.csv), priority 1 first.
 2) For each company:
    - Build persona target (CEO/Founder, HR Director, Hiring Manager) based on heuristics.
    - Generate draft (subject + body) from EN templates (CEO/HR/Hiring).
    - Pick CV PDF (Hospitality if sector contains hotel/hospitality/hajj/umrah/travel,
      otherwise Generic Senior Marketing).
-3) Run QA pipeline (anti-bounce, anti-typo, anti-generic) on drafts that have a real email.
-4) For PORTAL_ONLY companies → write to data/portal_queue.csv (manual application required).
+3) Run QA pipeline (anti-bounce, anti-typo, anti-generic) chunk by chunk, walking down the
+   queue until JOB_MADINAH_DAILY_CAP drafts have PASSED: a rejected row never blocks the
+   rows behind it (before 08.11.2026 only the first CAP rows were checked, and 17 rejected
+   customer-service mailboxes froze the queue from 16.10 to 08.11). Rejected rows are
+   recorded once in data/qa_rejected.csv (company, email, reasons).
+4) For PORTAL_ONLY companies → write to data/portal_queue.csv (manual application required),
+   once per company (before 08.11.2026 every run re-appended them: 4314 rows for 20 companies).
 5) For valid-email drafts that PASSED QA → send via Gmail SMTP (smtp.gmail.com:587 STARTTLS).
 6) Append to data/sent_history.csv + data/sent_log.csv.
 
 Usage:
   python3 scripts/orchestrator.py            # full run (sends emails)
-  python3 scripts/orchestrator.py --dry-run  # render up to 5 mails, NO SEND
+  python3 scripts/orchestrator.py --dry-run  # QA + render up to 5 mails (JOB_MADINAH_DRY_RUN_CAP),
+                                             # NO SEND, no data file written
 
 Env vars:
 - GMAIL_USER (sender)
@@ -39,6 +45,7 @@ import socket
 socket.setdefaulttimeout(60)
 import subprocess
 import sys
+import time
 from datetime import datetime
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
@@ -53,6 +60,7 @@ COMPANIES_CSV = DATA_DIR / "companies.csv"
 SENT_HISTORY = DATA_DIR / "sent_history.csv"
 SENT_LOG = DATA_DIR / "sent_log.csv"
 PORTAL_QUEUE = DATA_DIR / "portal_queue.csv"
+QA_REJECTED = DATA_DIR / "qa_rejected.csv"
 BOUNCES_FILE = DATA_DIR / "bounces.txt"
 
 CV_DIR = Path(
@@ -81,6 +89,10 @@ SMTP_USE_SSL = os.environ.get("SMTP_USE_SSL", "0") == "1"
 DAILY_CAP = int(os.environ.get("JOB_MADINAH_DAILY_CAP", "17"))
 # Seuil d'alerte (en jours d'envoi restants) avant que la file ne soit vide.
 QUEUE_WARN_DAYS = float(os.environ.get("JOB_MADINAH_QUEUE_WARN_DAYS", "3"))
+# Nombre de brouillons rendus par --dry-run.
+DRY_RUN_CAP = int(os.environ.get("JOB_MADINAH_DRY_RUN_CAP", "5"))
+# Temps maximum passe a descendre la file en QA (le job GitHub coupe a 15 min).
+QA_TIME_BUDGET_S = float(os.environ.get("JOB_MADINAH_QA_TIME_BUDGET_S", "480"))
 
 SENDABLE_STATUSES = {"MX_VALID"}
 PORTAL_STATUSES = {"PORTAL_ONLY"}
@@ -232,6 +244,19 @@ def pick_cv(sector: str, company_row=None) -> str:
 SENT_HISTORY_HEADERS = ["date", "company", "email", "persona", "cv", "subject", "status"]
 SENT_LOG_HEADERS = ["timestamp", "company", "email", "persona", "result", "details"]
 PORTAL_QUEUE_HEADERS = ["date", "company", "sector", "portal_url", "status", "notes"]
+QA_REJECTED_HEADERS = ["first_seen", "company", "email", "reasons"]
+
+
+def load_keys(path: Path, *fields: str) -> set:
+    """Set of lowercased tuples (or strings for one field) already present in a CSV."""
+    if not path.exists():
+        return set()
+    keys = set()
+    with path.open("r", encoding="utf-8", newline="") as f:
+        for row in csv.DictReader(f):
+            vals = tuple((row.get(k) or "").strip().lower() for k in fields)
+            keys.add(vals[0] if len(vals) == 1 else vals)
+    return keys
 
 
 MIN_DAILY_FOR_SKIP = int(os.environ.get("JOB_MADINAH_MIN_DAILY", "12"))
@@ -307,9 +332,15 @@ def _priority(row) -> int:
         return 0
 
 
-def select_today_batch(companies: list[dict], already_sent: set, cap: int) -> tuple[list[dict], list[dict]]:
-    """Return (sendable, portal_only) lists for today's run, both already capped."""
-    sendable, portal_only = [], []
+def select_candidates(companies: list[dict], already_sent: set) -> tuple[list[dict], list[dict]]:
+    """Return (sendable, portal_only) for today's run, NOT capped.
+
+    sendable : every MX_VALID row with an email, never sent, priority 1 first
+               (stable order inside each priority). The QA decides later which
+               of them really go out.
+    portal_only : one row per company.
+    """
+    sendable, portal_only, portal_names = [], [], set()
     for row in companies:
         priority = _priority(row)
         if priority not in SENDABLE_PRIORITIES:
@@ -320,22 +351,36 @@ def select_today_batch(companies: list[dict], already_sent: set, cap: int) -> tu
         status = (row.get("validation_status") or "").strip().upper()
         if status in SENDABLE_STATUSES and (row.get("email") or "").strip():
             sendable.append(row)
-        elif status in PORTAL_STATUSES:
+        elif status in PORTAL_STATUSES and name.lower() not in portal_names:
+            portal_names.add(name.lower())
             portal_only.append(row)
-    # Alerte de profondeur de file : le 12.08.2026 la file s'est videe en
-    # silence (11 envois le 11, 0 le 12) et personne ne l'a su avant coup.
-    days_left = len(sendable) / cap if cap else 0
-    if len(sendable) < cap:
-        log("WARN", f"QUEUE EMPTY TODAY: only {len(sendable)} sendable targets left "
-                    f"(cap {cap}) — refill data/companies.csv NOW")
-    elif days_left < QUEUE_WARN_DAYS:
-        log("WARN", f"QUEUE LOW: {len(sendable)} sendable targets left = "
-                    f"{days_left:.1f} days at {cap}/day — refill soon")
-    else:
-        log("INFO", f"Queue depth: {len(sendable)} sendable = {days_left:.1f} days")
     # Prio 1 d'abord, prio 2 ensuite ; ordre stable a l'interieur de chaque groupe.
     sendable.sort(key=_priority)
-    # Cap the daily batch on the SENDABLE side first; portal_only is observational.
+    return sendable, portal_only
+
+
+def log_queue_depth(n: int, cap: int, label: str = "sendable") -> None:
+    # Alerte de profondeur de file : le 12.08.2026 la file s'est videe en
+    # silence (11 envois le 11, 0 le 12) et personne ne l'a su avant coup.
+    days_left = n / cap if cap else 0
+    if n < cap:
+        log("WARN", f"QUEUE EMPTY TODAY: only {n} {label} targets left "
+                    f"(cap {cap}) — refill data/companies.csv NOW")
+    elif days_left < QUEUE_WARN_DAYS:
+        log("WARN", f"QUEUE LOW: {n} {label} targets left = "
+                    f"{days_left:.1f} days at {cap}/day — refill soon")
+    else:
+        log("INFO", f"Queue depth: {n} {label} = {days_left:.1f} days")
+
+
+def select_today_batch(companies: list[dict], already_sent: set, cap: int) -> tuple[list[dict], list[dict]]:
+    """Return (sendable, portal_only) lists, both capped (kept for helper scripts).
+
+    main() no longer sends this capped slice as-is: it walks down the whole
+    queue with qa_until_cap(), so a rejected row cannot block the next ones.
+    """
+    sendable, portal_only = select_candidates(companies, already_sent)
+    log_queue_depth(len(sendable), cap)
     return sendable[:cap], portal_only[:cap]
 
 
@@ -491,6 +536,123 @@ def run_qa(drafts_json: Path) -> Path:
     return drafts_json.with_suffix(".qa.json")
 
 
+def _read_json_list(path: Path) -> list:
+    if not path.exists():
+        return []
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        return data if isinstance(data, list) else []
+    except Exception as e:  # noqa: BLE001
+        log("WARN", f"Could not parse {path}: {e}")
+        return []
+
+
+def _draft_key(d: dict) -> tuple:
+    to = d.get("to")
+    to = ",".join(to) if isinstance(to, list) else (to or "")
+    return ((d.get("csv_id") or "").strip().lower(), to.strip().lower())
+
+
+def qa_until_cap(candidates: list[dict], cap: int) -> tuple[list[dict], list[dict], int]:
+    """Walk down the queue, QA chunk by chunk, until `cap` drafts have passed.
+
+    Returns (passed[:cap], rejected, examined). `rejected` items are
+    {"company", "to", "failures"}. A draft that fails QA is skipped and the
+    next row is tried, so a bad row can never freeze the queue again.
+    Before 08.11.2026 only the first `cap` rows were checked: 17 customer-service
+    mailboxes at the head of the queue meant 0 send per run from 16.10 to 08.11.
+    At most one draft per company passes (duplicate names in companies.csv).
+    """
+    passed, rejected = [], []
+    passed_companies = set()
+    examined = 0
+    if cap <= 0 or not candidates:
+        return passed, rejected, examined
+    chunk = max(cap * 2, 10)
+    start = time.monotonic()
+    n_chunk = 0
+    while len(passed) < cap and examined < len(candidates):
+        if time.monotonic() - start > QA_TIME_BUDGET_S:
+            log("WARN", f"QA time budget ({QA_TIME_BUDGET_S:.0f}s) reached after "
+                        f"{examined} rows — stopping here, the rest waits for the next run")
+            break
+        n_chunk += 1
+        batch = candidates[examined:examined + chunk]
+        examined += len(batch)
+        drafts = [build_draft(row) for row in batch]
+        drafts_json = Path(f"/tmp/drafts_to_send_{n_chunk:02d}.json")
+        with drafts_json.open("w", encoding="utf-8") as f:
+            json.dump(drafts, f, indent=2, ensure_ascii=False)
+        qa_out = run_qa(drafts_json)
+        if not qa_out.exists():
+            log("WARN", f"QA output missing at {qa_out}; treating this chunk as not-passed")
+        ok_keys = {_draft_key(d) for d in _read_json_list(qa_out)}
+        reasons = {_draft_key(r): r.get("failures") or []
+                   for r in _read_json_list(drafts_json.with_suffix(".rejected.json"))}
+        for d in drafts:
+            k = _draft_key(d)
+            if k in ok_keys:
+                if d["company"].strip().lower() in passed_companies or len(passed) >= cap:
+                    continue
+                passed_companies.add(d["company"].strip().lower())
+                passed.append(d)
+            else:
+                rejected.append({
+                    "company": d.get("company", ""),
+                    "to": d.get("to", ""),
+                    "failures": reasons.get(k) or ["QA did not pass this draft (no reason returned)"],
+                })
+    return passed, rejected, examined
+
+
+def record_qa_rejections(rejected: list[dict], today_str: str) -> int:
+    """Append each rejected (company, email) once to data/qa_rejected.csv."""
+    known = load_keys(QA_REJECTED, "company", "email")
+    added = 0
+    for r in rejected:
+        key = ((r.get("company") or "").strip().lower(), (r.get("to") or "").strip().lower())
+        if key in known:
+            continue
+        known.add(key)
+        append_row(QA_REJECTED, QA_REJECTED_HEADERS, {
+            "first_seen": today_str,
+            "company": (r.get("company") or "").strip(),
+            "email": (r.get("to") or "").strip(),
+            "reasons": " ; ".join(r.get("failures") or [])[:500],
+        })
+        added += 1
+    return added
+
+
+def queue_portal_rows(portal_only: list[dict], today_str: str) -> int:
+    """Append PORTAL_ONLY companies to portal_queue.csv only if not already queued.
+
+    Before 08.11.2026 each run (3 per day) re-appended the same companies:
+    4314 rows for 20 companies.
+    """
+    known = load_keys(PORTAL_QUEUE, "company")
+    added = 0
+    for row in portal_only:
+        name = (row.get("name") or "").strip()
+        if not name or name.lower() in known:
+            continue
+        known.add(name.lower())
+        append_row(
+            PORTAL_QUEUE,
+            PORTAL_QUEUE_HEADERS,
+            {
+                "date": today_str,
+                "company": name,
+                "sector": (row.get("sector") or "").strip(),
+                "portal_url": (row.get("source") or "").strip(),
+                "status": "manual_application_required",
+                "notes": (row.get("notes") or "").strip()[:200],
+            },
+        )
+        added += 1
+    return added
+
+
 # ---------- Main ----------
 
 
@@ -523,59 +685,46 @@ def main() -> int:
     if sent_today:
         log("INFO", f"{sent_today} emails already sent today — sending the remainder")
 
-    cap = 5 if args.dry_run else max(0, DAILY_CAP - sent_today)
-    sendable, portal_only = select_today_batch(companies, already_sent, cap)
-    log("INFO", f"Today batch: {len(sendable)} sendable, {len(portal_only)} portal-only")
+    cap = DRY_RUN_CAP if args.dry_run else max(0, DAILY_CAP - sent_today)
+    candidates, portal_only = select_candidates(companies, already_sent)
+    log_queue_depth(len(candidates), cap, "sendable (before QA)")
+    log("INFO", f"Candidates: {len(candidates)} sendable before QA, {len(portal_only)} portal-only")
 
-    # 1) Build drafts for sendable batch
-    drafts = [build_draft(row) for row in sendable]
+    # 1-2) Build drafts + QA, walking down the queue until `cap` drafts pass.
+    qa_drafts, rejected, examined = qa_until_cap(candidates, cap)
+    log("INFO", f"QA passed: {len(qa_drafts)} (cap {cap}) — {examined} rows examined, "
+                f"{len(rejected)} rejected and skipped")
+    for r in rejected:
+        log("SKIP", f"[{r['company']}] {r['to']} — " + " ; ".join(r["failures"])[:300])
+    if len(qa_drafts) < cap and examined >= len(candidates):
+        log("WARN", f"REAL QUEUE EMPTY: only {len(qa_drafts)} rows pass QA out of "
+                    f"{len(candidates)} candidates — refill data/companies.csv with real HR addresses")
 
-    # 2) Write drafts JSON + run QA
-    drafts_json = Path("/tmp/drafts_to_send.json")
-    with drafts_json.open("w", encoding="utf-8") as f:
-        json.dump(drafts, f, indent=2, ensure_ascii=False)
-    qa_out = run_qa(drafts_json)
-    qa_drafts: list[dict] = []
-    if qa_out.exists():
-        try:
-            qa_drafts = json.loads(qa_out.read_text(encoding="utf-8"))
-        except Exception as e:  # noqa: BLE001
-            log("WARN", f"Could not parse QA output: {e}")
-            qa_drafts = []
-    else:
-        log("WARN", f"QA output missing at {qa_out}; treating all drafts as not-passed")
-        qa_drafts = []
-
-    log("INFO", f"QA passed: {len(qa_drafts)}/{len(drafts)}")
-
-    # 3) Portal-only → manual queue
     today_str = datetime.now().strftime("%Y-%m-%d")
-    for row in portal_only:
-        append_row(
-            PORTAL_QUEUE,
-            PORTAL_QUEUE_HEADERS,
-            {
-                "date": today_str,
-                "company": (row.get("name") or "").strip(),
-                "sector": (row.get("sector") or "").strip(),
-                "portal_url": (row.get("source") or "").strip(),
-                "status": "manual_application_required",
-                "notes": (row.get("notes") or "").strip()[:200],
-            },
-        )
 
-    # 4) Send (or dry-run)
+    # 4) Dry-run : nothing is sent and no data file is written.
     if args.dry_run:
         out_dir = Path("/tmp/dry_run_drafts")
         out_dir.mkdir(parents=True, exist_ok=True)
-        for i, d in enumerate(drafts, 1):
+        for i, d in enumerate(qa_drafts, 1):
             fp = out_dir / f"draft_{i:02d}_{re.sub(r'[^A-Za-z0-9]+', '_', d['company'])}.eml.txt"
             fp.write_text(
                 f"TO: {d['to']}\nSUBJECT: {d['subject']}\nCV: {d['cv']}\nPERSONA: {d['persona']}\n\n{d['body']}",
                 encoding="utf-8",
             )
-        log("OK", f"DRY-RUN rendered {len(drafts)} mails into {out_dir}, NO SEND.")
+        (out_dir / "qa_rejected.txt").write_text(
+            "\n".join(f"{r['company']} | {r['to']} | {' ; '.join(r['failures'])}" for r in rejected) + "\n",
+            encoding="utf-8",
+        )
+        log("OK", f"DRY-RUN rendered {len(qa_drafts)} QA-passed mails into {out_dir} "
+                  f"({len(rejected)} rejected listed in qa_rejected.txt), NO SEND.")
         return 0
+
+    # 3) Bookkeeping : rejected rows once in qa_rejected.csv, portals once in portal_queue.csv.
+    n_rej = record_qa_rejections(rejected, today_str)
+    n_portal = queue_portal_rows(portal_only, today_str)
+    log("INFO", f"Recorded {n_rej} new QA rejection(s) in {QA_REJECTED.name}, "
+                f"{n_portal} new portal(s) in {PORTAL_QUEUE.name}")
 
     sent_ok = 0
     sent_fail = 0
@@ -613,7 +762,8 @@ def main() -> int:
             sent_fail += 1
             log("FAIL", f"{d.get('company')}: {details}")
 
-    log("INFO", f"=== Done: {sent_ok} sent, {sent_fail} failed, {len(portal_only)} portal-only queued ===")
+    log("INFO", f"=== Done: {sent_ok} sent, {sent_fail} failed, {len(rejected)} QA-rejected skipped, "
+                f"{n_portal} new portal-only queued ===")
     return 0 if sent_fail == 0 else 1
 
 

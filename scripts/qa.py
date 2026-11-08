@@ -19,6 +19,7 @@ Exit 0 = all drafts pass QA. Exit 1 = at least one draft failed.
 Each failed draft is logged with reason; failed drafts are stripped from output.
 
 Output: /tmp/drafts_to_send.qa.json — only drafts that passed QA.
+        /tmp/drafts_to_send.rejected.json — failed drafts with their reasons.
 """
 
 import csv
@@ -232,6 +233,7 @@ def main():
     log("INFO", f"Loaded {len(recent)} recent recipients (last 30d)")
 
     passed = []
+    rejected = []
     failed_count = 0
     for i, draft in enumerate(drafts, 1):
         csv_id = draft.get("csv_id", f"draft-{i}")
@@ -241,6 +243,7 @@ def main():
             passed.append(draft)
         else:
             failed_count += 1
+            rejected.append({"csv_id": csv_id, "to": draft.get("to", ""), "failures": failures})
             log("FAIL", f"[{csv_id}] FAILED:")
             for f in failures:
                 log("FAIL", f"  - {f}")
@@ -252,6 +255,9 @@ def main():
     with out_path.open("w", encoding="utf-8") as f:
         json.dump(passed, f, indent=2, ensure_ascii=False)
     log("INFO", f"QA output written to {out_path}")
+    # Reasons of the rejected drafts, read by orchestrator.py (data/qa_rejected.csv).
+    with drafts_path.with_suffix(".rejected.json").open("w", encoding="utf-8") as f:
+        json.dump(rejected, f, indent=2, ensure_ascii=False)
 
     return 0 if failed_count == 0 else 1
 

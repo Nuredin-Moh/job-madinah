@@ -540,7 +540,7 @@ Tabuk Agricultural Development Company,Agriculture,1,https://tadco-agri.com,onli
 Qassim Cement Company,Industrial,1,https://qcc.com.sa,qcc@qcc.com.sa,Buraidah,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
 Jazan Development and Investment Company,Agriculture,1,https://jazadco.com.sa,info@jazadco.com.sa,Jazan,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
 Al Radi Rose,Industrial,1,https://alradi-rose.com,info@alradi-rose.com,Taif,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
-Al-Taif National Dairy Factory,Food and Beverage,1,https://www.taifdairy.com,hq@taifdairy.com.sa,Taif,auto-refill-routine,MX_VALID,Brand Manager | cv:brand
+Al-Taif National Dairy Factory,Food and Beverage,1,https://www.taifdairy.com,hq@taifdairy.com.sa,Taif,auto-refill-routine,DROP_NO_MX,Brand Manager | cv:brand | qa-drop 2026-11-08: aucun MX pour taifdairy.com.sa ni taifdairy.com ; aucune adresse RH publiee trouvee (site officiel + recherche web)
 Iridium Hotel,Hospitality,1,https://iridium-hotel.com,info@iridium-hotel.com,Taif,auto-refill-routine,MX_VALID,Marketing Manager | cv:hospitality
 Sulaiman Alrajhi University,Education,1,https://sr.edu.sa,recruitment@sr.edu.sa,Al Bukayriyah,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
 Ramz Al-Qassim Real Estate,Real Estate,1,https://ramzalqasim.com,contact@ramzalqasim.com,Unaizah,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
@@ -787,7 +787,7 @@ ACWA Power,Energy,1,https://www.acwapower.com,corporate.communications@acwapower
 National Metal Manufacturing and Casting Co,Industrial,1,https://www.maadaniyah.com,info@maadaniyah.com,Dammam,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
 Saudi Paper Manufacturing Co,Industrial,1,https://saudipaper.com,careers@saudipaper.com,Dammam,auto-refill-routine,MX_VALID,E-commerce Marketing Manager | cv:generic
 Binzagr Company,FMCG,1,https://www.binzagr.com.sa,info@binzagr.com.sa,Jeddah,auto-refill-routine,MX_VALID,Brand Marketing Manager | cv:brand
-Abha Chamber of Commerce and Industry,Chamber of Commerce,1,https://www.abhacci.org.sa,Support@abhacci.org.sa,Abha,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
+Abha Chamber of Commerce and Industry,Chamber of Commerce,1,https://www.abhacci.org.sa,Support@abhacci.org.sa,Abha,auto-refill-routine,DROP_NO_HIRING_MAILBOX,Digital Marketing Manager | cv:generic | qa-drop 2026-11-08: boite service client refusee par la QA ; aucune adresse RH publiee trouvee (site officiel + recherche web)
 Al Themal Hospital,Healthcare,1,https://althemal.com.sa,info@althemal.com.sa,Abha,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
 Al Ghad International Colleges Abha,Education,1,https://alghadabha.com,abhad@gc.edu.sa,Abha,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
 Asir Coffee Association,Food and Beverage,1,https://asir-coffee.org,info@asir-coffee.org,Abha,auto-refill-routine,MX_VALID,Brand Manager | cv:brand
@@ -808,7 +808,7 @@ City University Ajman,Education,2,https://cu.ac.ae,info@cu.ac.ae,Ajman,auto-refi
 Ain Al Khaleej Hospital,Healthcare,2,https://www.ak-hospital.com,info@ak-hospital.com,Al Ain,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:UAE
 Hamriyah Free Zone Authority,Logistics,2,https://www.hfza.ae,info@hfza.ae,Sharjah,auto-refill-routine,MX_VALID,Brand Marketing Manager | cv:brand | country:UAE
 Sharjah Media City Shams,Media,2,https://www.shams.ae,info@shams.ae,Sharjah,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:UAE
-Oceanic Khorfakkan Resort and Spa,Hospitality,2,https://www.oceanichotel.com,reservations@oceanichotel.com,Khorfakkan,auto-refill-routine,MX_VALID,Marketing Manager | cv:hospitality | country:UAE
+Oceanic Khorfakkan Resort and Spa,Hospitality,2,https://www.oceanichotel.com,reservations@oceanichotel.com,Khorfakkan,auto-refill-routine,DROP_NO_HIRING_MAILBOX,Marketing Manager | cv:hospitality | country:UAE | qa-drop 2026-11-08: boite reservations refusee par la QA ; aucune adresse RH publiee trouvee (site officiel + recherche web)
 Sandy Beach Hotel and Resort,Hospitality,2,https://sandybeach.ae,hello@sandybeach.ae,Fujairah,auto-refill-routine,MX_VALID,E-commerce Marketing Manager | cv:hospitality | country:UAE
 Indian Excellent Private School,Education,2,https://iessharjah.com,info@iessharjah.com,Sharjah,auto-refill-routine,MX_VALID,Social Media Manager | cv:generic | country:UAE
 RAK Academy,Education,2,https://www.rakacademy.org,admission@rakacademy.org,Ras Al Khaimah,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:UAE
@@ -914,7 +914,7 @@ Bahrain Chamber of Commerce and Industry,Business,2,https://www.bahrainchamber.b
 Awal Gulf Manufacturing,Manufacturing,2,https://www.awalgulf.com,info@awalgulf.com,Sitra,auto-refill-routine,MX_VALID,Brand Manager | cv:brand | country:Bahrain
 Euro Motors,Automotive,2,https://www.euromotors.com.bh,euromotors@euromotors.com.bh,Manama,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:Bahrain
 Asyad Group,Logistics,2,https://www.asyad.com,ASYAD@asyad.om,Muscat,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Oman
-Badr Al Samaa Hospitals,Healthcare,2,https://www.badralsamaahospitals.com,support@badralsamaahospitals.com,Muscat,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:Oman
+Badr Al Samaa Hospitals,Healthcare,2,https://www.badralsamaahospitals.com,support@badralsamaahospitals.com,Muscat,auto-refill-routine,DROP_NO_HIRING_MAILBOX,"Digital Marketing Manager | cv:generic | country:Oman | qa-drop 2026-11-08: boite support refusee par la QA ; pas d'adresse RH, formulaire https://badralsamaahospitals.com/careers"
 Oman Airports,Aviation,2,https://www.omanairports.co.om,careers@omanairports.com,Muscat,auto-refill-routine,MX_VALID,Brand Manager | cv:brand | country:Oman
 Al Buraimi University College,Education,2,https://www.buc.edu.om,info@buc.edu.om,Al Buraimi,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Oman
 Aldar Properties,Real Estate,2,https://www.aldar.com,sales@aldar.com,Abu Dhabi,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:UAE
@@ -924,7 +924,7 @@ Al Naboodah Group Enterprises,Construction,2,https://www.alnaboodah.com,communic
 Medcare Hospitals and Medical Centres,Healthcare,2,https://www.medcare.ae,info@medcare.ae,Dubai,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:UAE
 Horizon School Dubai,Education,2,https://www.horizonschooldubai.com,info@horizonschooldubai.com,Dubai,auto-refill-routine,MX_VALID,Marketing and Admissions Manager | cv:generic | country:UAE
 Ambassador School Dubai,Education,2,https://www.ambassadorschool.com,admissions@ambassadorschool.com,Dubai,auto-refill-routine,MX_VALID,Marketing and Admissions Manager | cv:generic | country:UAE
-Ounass,E-commerce,2,https://www.ounass.ae,customercare@ounass.com,Dubai,auto-refill-routine,MX_VALID,E-commerce Marketing Manager | cv:brand | country:UAE
+Ounass,E-commerce,2,https://www.ounass.ae,customercare@ounass.com,Dubai,auto-refill-routine,DROP_NO_HIRING_MAILBOX,"E-commerce Marketing Manager | cv:brand | country:UAE | qa-drop 2026-11-08: boite service client refusee par la QA ; pas d'adresse RH, portail https://careers.ounass.com"
 Easa Saleh Al Gurg Group,Retail,2,https://www.algurg.com,careers@algurg.ae,Dubai,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:UAE
 University Hospital Sharjah,Healthcare,2,https://www.uhs.ae,info@uhs.ae,Sharjah,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:UAE
 Arabian Sky Travels,Tourism,1,https://arabianskytravels.com,info@arabianskytravels.com,Jeddah,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
@@ -932,14 +932,14 @@ Filim Productions,Media,1,https://filim.tv,INFO@FILIM.TV,Riyadh,auto-refill-rout
 Tahaluf,Events,1,https://tahaluf.sa,info@tahaluf.sa,Riyadh,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
 Pro Events,Events,1,https://proevents.sa,info@proevents.sa,Dhahran,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
 Raqamyah,Fintech,1,https://raqamyah.com,contactus@raqamyah.com,Riyadh,auto-refill-routine,MX_VALID,Performance Marketing Manager | cv:generic
-SiFi,Fintech,1,https://sifi.sa,support@sifi.sa,Riyadh,auto-refill-routine,MX_VALID,Performance Marketing Manager | cv:generic
+SiFi,Fintech,1,https://sifi.sa,support@sifi.sa,Riyadh,auto-refill-routine,DROP_NO_HIRING_MAILBOX,"Performance Marketing Manager | cv:generic | qa-drop 2026-11-08: boite service client refusee par la QA ; pas d'adresse RH, candidature par portail https://sifi.zohorecruit.sa/jobs/careers (poste Digital Marketing Lead vu)"
 Telr,Fintech,2,https://www.telr.com,marketing@telr.com,Dubai,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:UAE
 Mohebi Logistics,Logistics,2,https://mohebi.com,zmh@mohebi.com,Dubai,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:UAE
 Switz Group,Food,2,https://www.switzgroup.com,info@switzgroup.com,Dubai,auto-refill-routine,MX_VALID,Brand Manager | cv:brand | country:UAE
 Exclusive Links Real Estate Brokers,Real Estate,2,https://www.exclusive-links.com,robyn@exclusive-links.com,Dubai,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:UAE
 Sharjah Mega Mall,Retail,2,https://www.megamall.ae,info@megamall.ae,Sharjah,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:UAE
 Dutco Group,Conglomerate,2,https://www.dutco.com,info@dutco.com,Dubai,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:UAE
-JA Resorts and Hotels,Hospitality,2,https://www.jaresortshotels.com,reservations.jatheresort@jaresorts.com,Dubai,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:hospitality | country:UAE
+JA Resorts and Hotels,Hospitality,2,https://www.jaresortshotels.com,reservations.jatheresort@jaresorts.com,Dubai,auto-refill-routine,DROP_NO_HIRING_MAILBOX,"Digital Marketing Manager | cv:hospitality | country:UAE | qa-drop 2026-11-08: boite reservations refusee par la QA ; pas d'adresse RH, portail https://careers.jaresortshotels.com"
 Lifecare Hospital,Healthcare,2,https://lifecarehospital.ae,info@lifecarehospital.ae,Abu Dhabi,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:UAE
 Al Ain Zoo,Tourism,2,https://www.alainzoo.com,info@alainzoo.ae,Al Ain,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:UAE
 ADNEC Group,Events,2,https://www.adnec.ae,customer.services@adnec.ae,Abu Dhabi,auto-refill-routine,MX_VALID,Marketing Director | cv:generic | country:UAE
@@ -988,8 +988,9 @@ Five Seasons Hotel and Spa,Hospitality,1,https://fiveseasons-hotel.com,info@five
 Shafa Tabuk,Industrial,1,https://shafatabuk.com,info@shafatabuk.com,Tabuk,auto-refill-routine,MX_VALID,Business Development and Marketing Manager | cv:generic
 Saudi Cement Company,Industrial,1,https://saudicement.com.sa,IR@saudicement.com.sa,Dammam,auto-refill-routine,MX_VALID,Marketing and Communications Manager | cv:generic
 Arabian Pipeline and Services Company ANABEEB,Industrial,1,http://www.anabeeb.com,info@anabeeb.com,Dammam,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
-Warwick Al Khobar,Hospitality,1,https://www.warwickhotels.com,reservations.alkhobar@warwickhotelsmena.com,Al Khobar,auto-refill-routine,MX_VALID,Director of Marketing and Communications | cv:hospitality
-British International School Al Khobar,Education,1,https://bisak.org,support@bisak.org,Al Khobar,auto-refill-routine,MX_VALID,Marketing and Admissions Manager | cv:generic
+Warwick Al Khobar,Hospitality,1,https://www.warwickhotels.com,reservations.alkhobar@warwickhotelsmena.com,Al Khobar,auto-refill-routine,DROP_NO_HIRING_MAILBOX,"Director of Marketing and Communications | cv:hospitality | qa-drop 2026-11-08: boite reservations refusee par la QA ; pas d'adresse RH, portail https://www.warwickhotels.com/careers"
+British International School Al Khobar,Education,1,https://bisak.org,support@bisak.org,Al Khobar,auto-refill-routine,DROP_NO_HIRING_MAILBOX,Marketing and Admissions Manager | cv:generic | qa-drop 2026-11-08: boite service client refusee par la QA ; remplacee par personnel@bisak.org (ligne suivante)
+British International School Al Khobar,Education,1,https://bisak.org,personnel@bisak.org,Al Khobar,https://bisak.org/about-bisak/working-with-bisak/,MX_VALID,Marketing and Admissions Manager | cv:generic | 2026-11-08: adresse CV publiee sur la page Working at BISAK officielle (remplace support@) ; MX Microsoft 365
 Mohammad Al Mana College for Medical Sciences,Education,1,https://www.machs.edu.sa,admission@machs.edu.sa,Dammam,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
 Dammam Airports Company,Aviation,1,https://daco.sa,info@daco.sa,Dammam,auto-refill-routine,MX_VALID,Brand and Digital Marketing Manager | cv:brand
 Al Jazeera Medical Hospital,Healthcare,1,https://aljazeerahospital.com.sa,info@aljazeerahospital.com.sa,Riyadh,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
@@ -999,13 +1000,13 @@ Khoshaim and Associates,Legal,1,https://www.khoshaim.com,Info@khoshaim.com,Riyad
 Injaz Consulting Group,Consulting,1,https://injaz-consulting.com,info@injaz-consulting.com,Riyadh,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
 PROVEN Arabia,Consulting,1,https://provenarabia.com,info@provenarabia.com,Riyadh,auto-refill-routine,MX_VALID,Performance Marketing Manager | cv:generic
 Bakkah Learning,Education,1,https://bakkah.com,contactus@bakkah.com,Riyadh,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
-Maien Al Madina Four Hotels,Hospitality,1,https://www.maienalmadina.com,reservations@maienalmadina.com,Madinah,auto-refill-routine,MX_VALID,Marketing Manager | cv:hospitality
+Maien Al Madina Four Hotels,Hospitality,1,https://www.maienalmadina.com,reservations@maienalmadina.com,Madinah,auto-refill-routine,DROP_NO_HIRING_MAILBOX,Marketing Manager | cv:hospitality | qa-drop 2026-11-08: boite reservations refusee par la QA ; aucune adresse RH publiee trouvee (site officiel + recherche web)
 Al Aqeeq Hotels Group,Hospitality,1,https://aqeeqhotels.com,info@aqeeqhotels.com,Madinah,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:hospitality
 Worth Hotel Group,Hospitality,1,https://worthhotelgroup.com,info@worthhotelgroup.com,Madinah,auto-refill-routine,MX_VALID,Marketing Manager | cv:hospitality
 Maysan International Group,Hospitality,1,https://maysangroup.com,info@maysangroup.com,Makkah,auto-refill-routine,MX_VALID,Brand Manager | cv:hospitality
 Batoul Hotels,Hospitality,1,https://batoulhotels.com,info@batoulhotels.com,Makkah,auto-refill-routine,MX_VALID,Social Media Manager | cv:hospitality
 Marasem Al Masiah Tourism,Hospitality,1,https://marasemalmaseiah.com,info@marasemalmaseiah.com,Makkah,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:hospitality
-Province Al Sham Hotel,Hospitality,1,https://provincealshammadinah.com,reservation@provincealshammadinah.com,Madinah,auto-refill-routine,MX_VALID,Marketing Manager | cv:hospitality
+Province Al Sham Hotel,Hospitality,1,https://provincealshammadinah.com,reservation@provincealshammadinah.com,Madinah,auto-refill-routine,DROP_NO_HIRING_MAILBOX,Marketing Manager | cv:hospitality | qa-drop 2026-11-08: boite reservations refusee par la QA ; aucune adresse RH publiee trouvee (site officiel + recherche web)
 Tilal Hotels,Hospitality,1,https://tilalhotels.com,info.makkah@tilalhotels.com,Makkah,auto-refill-routine,MX_VALID,Marketing Manager | cv:hospitality
 Harat Ward,Food and Beverage,1,https://harat-ward.com,info@harat-ward.com,Al Khobar,auto-refill-routine,MX_VALID,Social Media Manager | cv:brand
 Code Advertising Agency,Marketing,1,https://code-adv.com,contact@code-adv.com,Dammam,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
@@ -1132,10 +1133,12 @@ Arabian Shield Cooperative Insurance,Insurance,1,https://www.der3.com,customerse
 Saudi Arabian Cooperative Insurance Company (SAICO),Insurance,1,https://www.saico.com.sa,contactus@saico.com.sa,Riyadh,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
 Salama Cooperative Insurance,Insurance,1,https://salama.com.sa,customer.care@salama.com.sa,Jeddah,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
 MDLBEAST,Entertainment,1,https://mdlbeast.com,care@mdlbeast.com,Riyadh,auto-refill-routine,MX_VALID,Brand Marketing Manager | cv:generic
-Qoyod,SaaS,1,https://www.qoyod.com,support@qoyod.com,Riyadh,auto-refill-routine,MX_VALID,Performance Marketing Manager | cv:generic
+Qoyod,SaaS,1,https://www.qoyod.com,support@qoyod.com,Riyadh,auto-refill-routine,DROP_NO_HIRING_MAILBOX,Performance Marketing Manager | cv:generic | qa-drop 2026-11-08: boite support refusee par la QA ; remplacee par careers@qoyod.com (ligne suivante)
+Qoyod,SaaS,1,https://www.qoyod.com,careers@qoyod.com,Riyadh,https://www.qoyod.com/en/knowledge-base/how-to-apply-for-a-job-or-join-the-qoyod-team/,MX_VALID,"Performance Marketing Manager | cv:generic | 2026-11-08: adresse candidatures publiee sur le site officiel (remplace support@) ; MX Google, domaine catch-all"
 Manga Productions,Media,1,https://manga.com.sa,info@manga.com.sa,Riyadh,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
 Hakbah (Noon Hakbah IT),Fintech,1,https://hakbah.sa,care@hakbah.com,Riyadh,auto-refill-routine,MX_VALID,Growth Marketing Manager | cv:generic
-Quara Finance,Fintech,1,https://quarafinance.com.sa,customercare@quarafinance.com,Riyadh,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
+Quara Finance,Fintech,1,https://quarafinance.com.sa,customercare@quarafinance.com,Riyadh,auto-refill-routine,DROP_NO_HIRING_MAILBOX,Digital Marketing Manager | cv:generic | qa-drop 2026-11-08: boite service client refusee par la QA ; remplacee par career@quarafinance.com (ligne suivante)
+Quara Finance,Fintech,1,https://quarafinance.com.sa,career@quarafinance.com,Riyadh,https://quarafinance.com.sa/careers/,MX_VALID,Digital Marketing Manager | cv:generic | 2026-11-08: adresse de l'equipe recrutement publiee sur la page Careers officielle (remplace customercare@) ; MX present
 Al-Jeraisy Group,Retail,1,https://www.jeraisy.com,info@jeraisy.com,Riyadh,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
 Ghazi Al-Rajhi Holding Group,Conglomerate,1,https://www.alrajhiholding.net,info@alrajhiholding.com,Riyadh,auto-refill-routine,MX_VALID,Marketing Director | cv:generic
 Adline Media,Events,1,https://adlinemedia.sa,info@adlinemedia.me,Riyadh,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
@@ -1146,9 +1149,9 @@ Surrati Perfumes,Beauty,1,https://www.surratiperfumes.com,info@surratiperfumes.c
 Saudi Perfume & Cosmetics Company (SPCI),Beauty,1,https://spci-sa.com,info@spci-sa.com,Jeddah,auto-refill-routine,MX_VALID,Brand Marketing Manager | cv:generic
 Al Rehab Perfumes,Beauty,1,https://www.alrehab.com,sales@alrehab.com,Jeddah,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
 GymNation KSA,Fitness,1,https://gymnation.com/en-sa/,getfit@gymnation.com,Riyadh,auto-refill-routine,MX_VALID,Performance Marketing Manager | cv:generic
-Jetour KSA (NMS),Automotive,1,https://www.jetourksa.com,customercare@jetourksa.com,Riyadh,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic
+Jetour KSA (NMS),Automotive,1,https://www.jetourksa.com,customercare@jetourksa.com,Riyadh,auto-refill-routine,DROP_NO_HIRING_MAILBOX,"Digital Marketing Manager | cv:generic | qa-drop 2026-11-08: boite service client refusee par la QA ; pas d'adresse RH, portail du groupe https://apply.workable.com/united-motors-group"
 National Food Industries Company (Luna),FMCG,1,http://www.luna.com.sa,info@nfic.com.sa,Jeddah,auto-refill-routine,MX_VALID,Brand Marketing Manager | cv:generic
-Specialized Food Services (SFS),FMCG,1,https://sfs.com.sa,customerservice@sfs.com.sa,Jeddah,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
+Specialized Food Services (SFS),FMCG,1,https://sfs.com.sa,customerservice@sfs.com.sa,Jeddah,auto-refill-routine,DROP_NO_HIRING_MAILBOX,Marketing Manager | cv:generic | qa-drop 2026-11-08: boite service client refusee par la QA ; aucune adresse RH publiee trouvee (site officiel + recherche web)
 Eagle Hills,Real Estate,2,https://www.eaglehills.com,info@eaglehills.com,Abu Dhabi,auto-refill-routine,MX_VALID,Marketing Director | cv:generic | country:UAE
 Doha Clinic Hospital,Healthcare,2,https://dohaclinichospital.com,info@dchqatar.com,Doha,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Qatar
 Almuftah Group,Conglomerate,2,https://almuftah.com,almuftah@almuftah.com,Doha,auto-refill-routine,MX_VALID,Group Marketing Manager | cv:generic | country:Qatar
@@ -1156,7 +1159,7 @@ RAK Properties,Real Estate,2,https://www.rakproperties.ae,sales@rakproperties.ae
 Hadi Clinic,Healthcare,2,https://www.hadiclinic.com.kw,info@hadiclinic.com.kw,Kuwait City,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:Kuwait
 Suhail Bahwan Group,Conglomerate,2,https://www.suhailbahwangroup.com,info@suhailbahwangroup.com,Muscat,auto-refill-routine,MX_VALID,Group Marketing Manager | cv:generic | country:Oman
 Alhazm Mall,Retail,2,https://alhazm.com,info@alhazm.com,Doha,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Qatar
-Sharjah Cooperative Society,Retail,2,https://www.shjcoop.ae,customercare@shjcoop.ae,Sharjah,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:UAE
+Sharjah Cooperative Society,Retail,2,https://www.shjcoop.ae,customercare@shjcoop.ae,Sharjah,auto-refill-routine,DROP_NO_HIRING_MAILBOX,"Digital Marketing Manager | cv:generic | country:UAE | qa-drop 2026-11-08: boite service client refusee par la QA ; pas d'adresse RH publiee, portail carrieres du site officiel"
 Al Abdulghani Motors,Automotive,2,https://www.aamotors.com,jobs@aamotors.com,Doha,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Qatar
 Ghitha Holding,FMCG,2,https://ghitha.com,info@ghitha.com,Abu Dhabi,auto-refill-routine,MX_VALID,Brand Marketing Manager | cv:generic | country:UAE
 Ebrahim K. Kanoo,Automotive,2,https://ekkanoo.com,careers@ekkanoo.com.bh,Manama,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic | country:Bahrain
@@ -1168,8 +1171,8 @@ Royale Hayat Hospital,Healthcare,2,https://royalehayat.com,hr@royalehayat.com,Ha
 Ramez Group,Retail,2,https://ramezgroup.com,jobs@ramezgroup.com,Isa Town,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:generic | country:Bahrain
 Kudu,Restaurants,1,https://www.kudu.com.sa,info@kudu.com.sa,Riyadh,auto-refill-routine,MX_VALID,Marketing Manager | cv:brand
 Al Saedan Real Estate,RealEstate,1,https://www.alsaedan.com,Info@alsaedan.com,Riyadh,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
-Berain Water,FMCG,1,https://berain.com.sa,care@berain.com.sa,Riyadh,auto-refill-routine,MX_VALID,Brand Marketing Manager | cv:brand
-Jazeera Paints,Manufacturing,1,https://www.jazeerapaints.com,help@jazeerapaints.com,Riyadh,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:brand
+Berain Water,FMCG,1,https://berain.com.sa,care@berain.com.sa,Riyadh,auto-refill-routine,DROP_NO_HIRING_MAILBOX,Brand Marketing Manager | cv:brand | qa-drop 2026-11-08: boite service client refusee par la QA ; aucune adresse RH publiee trouvee (site officiel + recherche web)
+Jazeera Paints,Manufacturing,1,https://www.jazeerapaints.com,help@jazeerapaints.com,Riyadh,auto-refill-routine,DROP_NO_HIRING_MAILBOX,Digital Marketing Manager | cv:brand | qa-drop 2026-11-08: boite help refusee par la QA ; aucune adresse RH publiee trouvee (site officiel + recherche web)
 Ataa Educational Company,Education,1,https://www.ataa.sa,info@ataa.sa,Riyadh,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
 Mama Noura,Restaurants,1,https://mamanoura.com,info@mamanoura.com,Riyadh,auto-refill-routine,MX_VALID,Marketing Manager | cv:brand
 Naqi Water,FMCG,1,https://naqiwater.com,info@naqiwater.com,Unaizah,auto-refill-routine,MX_VALID,Brand Marketing Manager | cv:brand
@@ -1181,11 +1184,11 @@ Osus Real Estate,RealEstate,1,https://osus.com.sa,info@osus.com.sa,Riyadh,auto-r
 Kyan Cafe,Restaurants,1,https://kyancafe.com,jobs@kyancafe.com,Buraidah,auto-refill-routine,MX_VALID,Marketing Manager | cv:brand
 Mayar Holding,Holding,1,https://www.mayar.com.sa,info@mayar.com.sa,Riyadh,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
 Jeeny,Technology,1,https://www.jeeny.me,inquiries@jeeny.me,Riyadh,auto-refill-routine,MX_VALID,Performance Marketing Manager | cv:generic
-Rubaiyat,Fashion,1,https://rubaiyat.com,care@rubaiyat.com,Jeddah,auto-refill-routine,MX_VALID,E-commerce Marketing Manager | cv:brand
+Rubaiyat,Fashion,1,https://rubaiyat.com,care@rubaiyat.com,Jeddah,auto-refill-routine,DROP_NO_HIRING_MAILBOX,E-commerce Marketing Manager | cv:brand | qa-drop 2026-11-08: boite service client refusee par la QA ; aucune adresse RH publiee trouvee (site officiel + recherche web)
 Arab East Colleges,Education,1,https://www.arabeast.edu.sa,info@arabeast.edu.sa,Riyadh,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
 Ibn Sina National College,Education,1,https://www.ibnsina.edu.sa,info@ibnsina.edu.sa,Jeddah,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
 Al Daajan Holding,FMCG,1,https://www.daajan.com,info@daajan.com,Al Rass,auto-refill-routine,MX_VALID,Marketing Manager | cv:brand
-Al Muneef Company,FMCG,1,https://www.almuneef.com,care@almuneef.com,Riyadh,auto-refill-routine,MX_VALID,Brand Marketing Manager | cv:brand
+Al Muneef Company,FMCG,1,https://www.almuneef.com,care@almuneef.com,Riyadh,auto-refill-routine,DROP_NO_HIRING_MAILBOX,Brand Marketing Manager | cv:brand | qa-drop 2026-11-08: boite service client refusee par la QA ; aucune adresse RH publiee trouvee (site officiel + recherche web)
 AlAbdullatif Furniture,Retail,1,https://www.alabdullatif.com,media@af.sa,Riyadh,auto-refill-routine,MX_VALID,Digital Marketing Manager | cv:brand
 Mawarid Manpower Solutions,Services,1,https://www.mawarid.com.sa,info@mawarid.com.sa,Riyadh,auto-refill-routine,MX_VALID,Marketing Manager | cv:generic
 Saudi Research and Media Group (SRMG),Media,1,https://www.srmg.com,careers@srmg.com,Riyadh,auto-refill-routine,MX_VALID,Digital Marketing Director | cv:generic
