@@ -19,3 +19,4 @@ first_seen,company,email,reasons
 2026-11-08,Ounass,customercare@ounass.com,"Customer-service mailbox, not a hiring one: customercare@ounass.com ; companies.csv -> DROP_NO_HIRING_MAILBOX"
 2026-11-08,JA Resorts and Hotels,reservations.jatheresort@jaresorts.com,"Customer-service mailbox, not a hiring one: reservations.jatheresort@jaresorts.com ; companies.csv -> DROP_NO_HIRING_MAILBOX"
 2026-11-08,Sharjah Cooperative Society,customercare@shjcoop.ae,"Customer-service mailbox, not a hiring one: customercare@shjcoop.ae ; companies.csv -> DROP_NO_HIRING_MAILBOX"
+2026-11-23,Qatar Security Systems Company,careers@qss.qa,No MX record for qss.qa (anti-bounce)
